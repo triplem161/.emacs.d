@@ -70,6 +70,8 @@ Exec-path-from-shell : get paths file
 
 ** Themes
 *** Custom.el 
+Separate the custom theme code to its own file
+
 #+BEGIN_SRC emacs-lisp
   (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
   (load custom-file)
