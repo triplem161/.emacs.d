@@ -1,0 +1,43 @@
+#+TITLE: Emacs Configuration
+#+AUTHOR: Marion Maignan
+
+* Personnal Informations
+
+#+begin_src emacs-lisp
+(setq user-full-name "Maignan Marion"
+      user-mail-address "maigmarion@gmail.com")
+#+end_src
+  
+* Settings
+** Systems Settings
+*** Windows
+*** Mac
+** Customize Settings
+*** UI
+
+#+BEGIN_SRC emacs-lisp
+
+#+END_SRC
+
+#+begin_src emacs-lisp
+
+(menu-bar-mode -1)
+(scroll-bar-mode -1)
+(tool-bar-mode -1)
+
+#+end_src
+
+
+*** Font & Environment Language
+
+#+begin_src emacs-lisp
+
+(set-frame-font "Roboto Mono 15")
+(set-language-environment "UTF-8")
+
+#+end_src
+
+** Themes
+** Mode Line
+
+* Modes
