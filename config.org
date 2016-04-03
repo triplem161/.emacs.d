@@ -8,6 +8,11 @@
       user-mail-address "maigmarion@gmail.com")
 #+end_src
   
+* Require
+#+BEGIN_SRC emacs-lisp
+  (require 'cl)
+  (require 'cc-mode)
+#+END_SRC
 * Systems
 ** Windows
 ** Mac
@@ -36,6 +41,8 @@ Exec-path-from-shell : get paths file
 
 ** UI
 #+BEGIN_SRC emacs-lisp
+  (defalias 'yes-or-no-p 'y-or-n-p)
+
   (add-hook 'emacs-startup-hook 'toggle-frame-fullscreen)
 
   (setq inhibit-startup-message t)
@@ -88,7 +95,7 @@ Exec-path-from-shell : get paths file
   (use-package csharp-mode
     :ensure t
     :mode ("\\.cs\\'" . csharp-mode)
-    :config (add-hook 'csharp-mode 'omnisharp-mode)
+    :init (add-hook 'csharp-mode-hook 'omnisharp-mode)
   )
 #+END_SRC
 
@@ -97,6 +104,7 @@ Exec-path-from-shell : get paths file
   (use-package omnisharp
     :ensure t
     :bind (("C-u" . omnisharp-navigate-to-solution-file))
+    :config (add-to-list 'company-backends 'company-omnisharp)
   )
 #+END_SRC
 ** Company
@@ -109,3 +117,41 @@ Exec-path-from-shell : get paths file
   )
 #+END_SRC
 
+** Helm
+#+BEGIN_SRC emacs-lisp
+  (use-package helm
+    :ensure t
+    :bind (
+           ("C-h b" . helm-buffers-list)
+           ("M-x" . helm-M-x)
+           ("C-x C-f" . helm-find-files)
+           ("C-h C-b" . helm-bookmarks)
+           ("C-h m" . helm-imenu)
+           ("C-h C-f" . omnisharp-helm-find-symbols)
+           :map helm-map
+              (
+               ("<tab>" . helm-execute-persistent-action)
+              )
+         )
+   :config (helm-autoresize-mode t)
+  )
+
+#+END_SRC
+** Web Mode
+#+BEGIN_SRC emacs-lisp
+  (use-package web-mode
+    :ensure t
+  )
+#+END_SRC
+** JS2
+#+BEGIN_SRC emacs-lisp
+  (use-package js2-mode
+    :ensure t
+  )
+#+END_SRC
+** Emmet
+#+BEGIN_SRC emacs-lisp
+  (use-package emmet-mode
+    :ensure t
+  )
+#+END_SRC
