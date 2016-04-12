@@ -160,3 +160,7 @@ Separate the custom theme code to its own file
     :mode ("\\.html\\'" . web-mode)
   )
 #+END_SRC
+** Yasnippet
+(use-package yasnippet
+  :ensure t
+)
