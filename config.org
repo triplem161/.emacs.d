@@ -92,12 +92,23 @@ Separate the custom theme code to its own file
 
 ** Mode Line
 * Modes
+** Yasnippet
+
+#+BEGIN_SRC emacs-lisp
+  (use-package yasnippet
+    :ensure t
+  )
+#+END_SRC
+   
 ** CSharp 
 #+BEGIN_SRC emacs-lisp
   (use-package csharp-mode
     :ensure t
     :mode ("\\.cs\\'" . csharp-mode)
-    :init (add-hook 'csharp-mode-hook 'omnisharp-mode)
+    :init
+    (add-hook 'csharp-mode-hook 'omnisharp-mode)
+    (yas-reload-all)
+    (add-hook 'csharp-mode-hook 'yas-minor-mode)
   )
 #+END_SRC
 
@@ -160,7 +171,4 @@ Separate the custom theme code to its own file
     :mode ("\\.html\\'" . web-mode)
   )
 #+END_SRC
-** Yasnippet
-(use-package yasnippet
-  :ensure t
-)
+
