@@ -4,7 +4,7 @@
 (package-initialize)
 
 (unless (package-installed-p 'use-package)
-  (package-refresh-content)
+  (package-refresh-contents)
   (package-install 'use-package))
 
 (eval-when-compile
