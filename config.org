@@ -2,12 +2,10 @@
 #+AUTHOR: Marion Maignan
 
 * Personnal Informations
-
 #+begin_src emacs-lisp
 (setq user-full-name "Maignan Marion"
       user-mail-address "maigmarion@gmail.com")
-#+end_src
-  
+#+end_src  
 * Require
 #+BEGIN_SRC emacs-lisp
   (require 'cl)
@@ -65,6 +63,7 @@ Exec-path-from-shell : get paths file
   (setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
   (setq auto-save-file-name-transforms '((".*" "~/.emacs.d/auto-save-list" t)))
 
+
   (show-paren-mode t)
 
 #+END_SRC
@@ -91,6 +90,9 @@ Separate the custom theme code to its own file
 #+END_SRC
 
 ** Mode Line
+#+BEGIN_SRC emacs-lisp
+
+#+END_SRC
 * Modes
 ** Magit
 #+BEGIN_SRC emacs-lisp
@@ -190,5 +192,21 @@ Separate the custom theme code to its own file
     :ensure t
     :mode ("\\.html\\'" . web-mode)
   )
-#}+END_SRC
+#+END_SRC
    
+** Flycheck
+#+BEGIN_SRC emacs-lisp
+  (use-package flycheck
+    :ensure t
+    :init
+    (global-flycheck-mode t)
+  )
+#+END_SRC
+** Org Bullet
+#+BEGIN_SRC emacs-lisp
+  (use-package org-bullets
+    :ensure t
+    :config
+    (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+  )
+#+END_SRC
