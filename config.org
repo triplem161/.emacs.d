@@ -22,8 +22,10 @@ Exec-path-from-shell : get paths file
     (use-package exec-path-from-shell
       :ensure t
       :init (exec-path-from-shell-initialize)
-    )
+      )
 
+    (setq mac-command-modifier 'meta)
+    (setq mac-option-modifier 'nil)
   )
 #+END_SRC
 
@@ -109,7 +111,8 @@ Separate the custom theme code to its own file
   )
 #+END_SRC
    
-** CSharp 
+** C# Development
+*** CSharp 
 #+BEGIN_SRC emacs-lisp
   (use-package csharp-mode
     :ensure t
@@ -124,12 +127,19 @@ Separate the custom theme code to its own file
   )
 #+END_SRC
 
-** Omnisharp
+*** Omnisharp
 #+BEGIN_SRC emacs-lisp
   (use-package omnisharp
     :ensure t
     :bind (("C-u" . omnisharp-navigate-to-solution-file))
     :config (add-to-list 'company-backends 'company-omnisharp)
+  )
+#+END_SRC
+** Python Development
+*** Elpy
+#+BEGIN_SRC emacs-lisp
+  (use-package elpy
+    :ensure t
   )
 #+END_SRC
 ** Company
