@@ -220,3 +220,11 @@ Separate the custom theme code to its own file
     (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
   )
 #+END_SRC
+** Move Text
+#+BEGIN_SRC emacs-lisp
+  (use-package move-text
+    :ensure t
+    :config
+    (move-text-default-bindings)
+  )
+#+END_SRC
