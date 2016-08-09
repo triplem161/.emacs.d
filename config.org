@@ -103,6 +103,13 @@ Separate the custom theme code to its own file
     :bind ("C-c g" . magit-status)
   )
 #+END_SRC
+** Dsvn
+#+BEGIN_SRC emacs-lisp
+  (use-package dsvn
+    :ensure t
+    :bind ("C-c s" . svn-status)
+  )
+#+END_SRC
 ** Yasnippet
 
 #+BEGIN_SRC emacs-lisp
@@ -226,5 +233,11 @@ Separate the custom theme code to its own file
     :ensure t
     :config
     (move-text-default-bindings)
+  )
+#+END_SRC
+** Rest Client
+#+BEGIN_SRC emacs-lisp
+  (use-package restclient
+    :ensure t
   )
 #+END_SRC
