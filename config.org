@@ -241,3 +241,9 @@ Separate the custom theme code to its own file
     :ensure t
   )
 #+END_SRC
+** Json Reformat
+#+BEGIN_SRC emacs-lisp
+  (use-package json-reformat
+    :ensure t
+  )
+#+END_SRC
