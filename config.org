@@ -97,30 +97,30 @@ Separate the custom theme code to its own file
 #+END_SRC
 * Modes
 ** Magit
-#+BEGIN_SRC emacs-lisp
+   #+BEGIN_SRC emacs-lisp
   (use-package magit
     :ensure t
     :bind ("C-c g" . magit-status)
   )
-#+END_SRC
+   #+END_SRC
 ** Dsvn
-#+BEGIN_SRC emacs-lisp
+   #+BEGIN_SRC emacs-lisp
   (use-package dsvn
     :ensure t
     :bind ("C-c s" . svn-status)
   )
-#+END_SRC
+   #+END_SRC
 ** Yasnippet
-
-#+BEGIN_SRC emacs-lisp
+   
+   #+BEGIN_SRC emacs-lisp
   (use-package yasnippet
     :ensure t
   )
-#+END_SRC
+   #+END_SRC
    
 ** C# Development
 *** CSharp 
-#+BEGIN_SRC emacs-lisp
+    #+BEGIN_SRC emacs-lisp
   (use-package csharp-mode
     :ensure t
     :mode ("\\.cs\\'" . csharp-mode)
@@ -132,36 +132,36 @@ Separate the custom theme code to its own file
       (add-hook 'csharp-mode-hook 'yas-minor-mode)
       )   
   )
-#+END_SRC
-
+    #+END_SRC
+    
 *** Omnisharp
-#+BEGIN_SRC emacs-lisp
+    #+BEGIN_SRC emacs-lisp
   (use-package omnisharp
     :ensure t
     :bind (("C-u" . omnisharp-navigate-to-solution-file))
     :config (add-to-list 'company-backends 'company-omnisharp)
   )
-#+END_SRC
+    #+END_SRC
 ** Python Development
 *** Elpy
-#+BEGIN_SRC emacs-lisp
+    #+BEGIN_SRC emacs-lisp
   (use-package elpy
     :ensure t
     :config (elpy-enable)
   )
-#+END_SRC
+    #+END_SRC
 ** Company
-#+BEGIN_SRC emacs-lisp
+   #+BEGIN_SRC emacs-lisp
   (use-package company
     :ensure t
     :init (add-hook 'after-init-hook 'global-company-mode)
     :config (setq company-idle-delay 0.2
                   company-minimum-prefix-length 2)  
   )
-#+END_SRC
+   #+END_SRC
    
 ** Ivy / Swipper / Counsel
-#+BEGIN_SRC emacs-lisp
+   #+BEGIN_SRC emacs-lisp
   (use-package ivy
     :ensure t
     :bind
@@ -181,75 +181,76 @@ Separate the custom theme code to its own file
     :bind
     ("C-s" . swiper)
   )
-#+END_SRC
+   #+END_SRC
 ** Avy
-#+BEGIN_SRC emacs-lisp
+   #+BEGIN_SRC emacs-lisp
   (use-package avy
     :ensure t
     :bind ("M-s" . avy-goto-char)
     )
-#+END_SRC
+   #+END_SRC
 ** JS2
-#+BEGIN_SRC emacs-lisp
+   #+BEGIN_SRC emacs-lisp
   (use-package js2-mode
     :ensure t
     :mode ("\\.js\\'" . js2-mode)
   )
-#+END_SRC
+   #+END_SRC
 ** Emmet
-#+BEGIN_SRC emacs-lisp
+   #+BEGIN_SRC emacs-lisp
   (use-package emmet-mode
     :ensure t
     :config
     (add-hook 'web-mode-hook 'emmet-mode)
   )
-#+END_SRC
+   #+END_SRC
 ** Web Mode
-#+BEGIN_SRC emacs-lisp
+   #+BEGIN_SRC emacs-lisp
   (use-package web-mode
     :ensure t
     :mode ("\\.html\\'" . web-mode)
   )
-#+END_SRC
+   #+END_SRC
    
 ** Flycheck
-#+BEGIN_SRC emacs-lisp
+   #+BEGIN_SRC emacs-lisp
   (use-package flycheck
     :ensure t
     :init
     (global-flycheck-mode t)
   )
-#+END_SRC
+   #+END_SRC
 ** Org Bullet
-#+BEGIN_SRC emacs-lisp
+   #+BEGIN_SRC emacs-lisp
   (use-package org-bullets
     :ensure t
     :config
     (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
   )
-#+END_SRC
+   #+END_SRC
 ** Move Text
-#+BEGIN_SRC emacs-lisp
+   #+BEGIN_SRC emacs-lisp
   (use-package move-text
     :ensure t
     :config
     (move-text-default-bindings)
   )
-#+END_SRC
+   #+END_SRC
 ** Rest Client
-#+BEGIN_SRC emacs-lisp
+   #+BEGIN_SRC emacs-lisp
   (use-package restclient
     :ensure t
   )
-#+END_SRC
+   #+END_SRC
 ** Json Reformat
-#+BEGIN_SRC emacs-lisp
+   #+BEGIN_SRC emacs-lisp
   (use-package json-reformat
     :ensure t
   )
-#+END_SRC
+   #+END_SRC
 ** Circe
-#+BEGIN_SRC emacs-lisp
+   Not working properly yet. Probably need to set TLS correctly
+   #+BEGIN_SRC emacs-lisp
   (setq freenode-password "dob260989")
 
   (use-package circe
@@ -261,4 +262,13 @@ Separate the custom theme code to its own file
            :channels ("#emacs")
            :nickserv-password ,freenode-password)))
   )
-#+END_SRC
+   #+END_SRC
+** Google this
+   #+BEGIN_SRC emacs-lisp
+     (use-package google-this
+       :ensure t
+       :bind ("C-c C-w" . google-this-mode-submap)
+       :init
+       (google-this-mode t)
+     )
+   #+END_SRC
