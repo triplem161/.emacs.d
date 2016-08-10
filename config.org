@@ -136,11 +136,12 @@ Separate the custom theme code to its own file
     
 *** Omnisharp
     #+BEGIN_SRC emacs-lisp
-  (use-package omnisharp
-    :ensure t
-    :bind (("C-u" . omnisharp-navigate-to-solution-file))
-    :config (add-to-list 'company-backends 'company-omnisharp)
-  )
+      (use-package omnisharp
+        :ensure t
+        :bind (("C-u" . omnisharp-navigate-to-solution-file)
+               ("C-c u" . omnisharp-find-usages))
+        :config (add-to-list 'company-backends 'company-omnisharp)
+      )
     #+END_SRC
 ** Python Development
 *** Elpy
@@ -267,7 +268,7 @@ Separate the custom theme code to its own file
    #+BEGIN_SRC emacs-lisp
      (use-package google-this
        :ensure t
-       :bind ("C-c C-w" . google-this-mode-submap)
+       :bind ("C-c w" . google-this-search)
        :init
        (google-this-mode t)
      )
