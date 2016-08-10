@@ -13,6 +13,15 @@
 #+END_SRC
 * Systems
 ** Windows
+   Set putty for tramp mode : [[http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html][Bin for putty]]
+#+BEGIN_SRC emacs-lisp
+  (when (eq system-type 'windows-nt)
+  (require 'tramp)
+  (set-default 'tramp-default-method "plink")
+    )
+
+
+#+END_SRC
 ** Mac
 Exec-path-from-shell : get paths file  
 
