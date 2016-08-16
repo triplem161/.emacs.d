@@ -282,3 +282,10 @@ Separate the custom theme code to its own file
        (google-this-mode t)
      )
    #+END_SRC
+** Org Capture
+#+BEGIN_SRC emacs-lisp
+  (define-key global-map "\C-ct" 'org-capture)
+  (setq org-default-notes-file "/Users/Marion/Google Drive/Todo List/todo.org")
+
+#+END_SRC
+
