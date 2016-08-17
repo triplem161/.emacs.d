@@ -284,9 +284,8 @@ Separate the custom theme code to its own file
    #+END_SRC
 ** Org Capture
 #+BEGIN_SRC emacs-lisp
-   (setq org-default-notes-file "C:/Users/Marion/Desktop/test.org")
+  (define-key global-map "\C-ct" 'org-capture)
+  (setq org-default-notes-file "/Users/Marion/Google Drive/Todo List/todo.org")
+
 #+END_SRC
 
-
-  (define-key global-map "\C-c t" 'org-capture)
-#+END_SRC
