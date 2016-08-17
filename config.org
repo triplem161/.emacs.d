@@ -282,3 +282,11 @@ Separate the custom theme code to its own file
        (google-this-mode t)
      )
    #+END_SRC
+** Org Capture
+#+BEGIN_SRC emacs-lisp
+   (setq org-default-notes-file "C:/Users/Marion/Desktop/test.org")
+#+END_SRC
+
+
+  (define-key global-map "\C-c t" 'org-capture)
+#+END_SRC
