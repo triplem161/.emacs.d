@@ -62,6 +62,8 @@ Exec-path-from-shell : get paths file
   (tool-bar-mode -1)
   (setq ring-bell-function 'ignore)
 
+  (setq-default indent-tabs-mode nil)
+  (setq-default tab-width 4)
 #+END_SRC
    
 ** Edition
@@ -122,9 +124,10 @@ Separate the custom theme code to its own file
 ** Yasnippet
    
    #+BEGIN_SRC emacs-lisp
-  (use-package yasnippet
-    :ensure t
-  )
+     (use-package yasnippet
+       :ensure t
+       :config (yas-global-mode 1)
+     )
    #+END_SRC
    
 ** C# Development
@@ -293,4 +296,12 @@ Separate the custom theme code to its own file
   (setq org-default-notes-file "/Users/Marion/Google Drive/Todo List/todo.org")
 
 #+END_SRC
-
+   
+** Pivotal Tracker
+#+BEGIN_SRC emacs-lisp
+  (use-package pivotal-tracker
+    :ensure t
+    :config
+    (setq pivotal-api-token "4bfc18370422bbd2ff8ddaa63a387152")
+    )
+#+END_SRC
