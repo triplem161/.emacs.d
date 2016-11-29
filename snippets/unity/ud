@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: Debug Unity
+# key: ud
+# --
+
+Debug.Log("$1");
