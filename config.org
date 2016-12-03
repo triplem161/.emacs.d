@@ -174,7 +174,7 @@ Separate the custom theme code to its own file
   )
    #+END_SRC
    
-** Ivy / Swipper / Counsel
+** Ivy / Swipper / Counsel / Smex
    #+BEGIN_SRC emacs-lisp
      (use-package ivy
        :ensure t
@@ -191,13 +191,18 @@ Separate the custom theme code to its own file
        :ensure t
        :bind
        (("C-c y" . counsel-yank-pop)
-        ("C-c i" . counsel-imenu))
-       )
+        ("C-c i" . counsel-imenu)
+        ("M-x" . counsel-M-x))
+     )
 
      (use-package swiper
        :ensure t
        :bind
        ("C-s" . swiper)
+     )
+
+     (use-package smex
+       :ensure t
      )
    #+END_SRC
 ** Avy
