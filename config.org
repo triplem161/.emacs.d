@@ -122,14 +122,14 @@ Separate the custom theme code to its own file
   )
    #+END_SRC
 ** Yasnippet
-   
    #+BEGIN_SRC emacs-lisp
      (use-package yasnippet
        :ensure t
-       :config (yas-global-mode 1)
+       :init (add-hook 'prog-mode-hook #'yas-minor-mode)
+       :config
+       (yas-reload-all)
      )
-   #+END_SRC
-   
+   #+END_SRC 
 ** C# Development
 *** CSharp 
     #+BEGIN_SRC emacs-lisp
