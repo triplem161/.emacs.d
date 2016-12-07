@@ -64,6 +64,8 @@ Exec-path-from-shell : get paths file
 
   (setq-default indent-tabs-mode nil)
   (setq-default tab-width 4)
+
+  (setq ns-pop-up-frames nil)
 #+END_SRC
    
 ** Edition
