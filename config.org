@@ -66,6 +66,9 @@ Exec-path-from-shell : get paths file
   (setq-default tab-width 4)
 
   (setq ns-pop-up-frames nil)
+
+  ;;Highlight the cursor line
+  (global-hl-line-mode t)
 #+END_SRC
    
 ** Edition
