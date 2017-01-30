@@ -209,6 +209,12 @@ Separate the custom theme code to its own file
      (use-package smex
        :ensure t
      )
+
+     (use-package avy-zap
+       :ensure t
+       :bind
+       (("M-z" . avy-zap-to-char-dwim))
+     )
    #+END_SRC
 ** Avy
    #+BEGIN_SRC emacs-lisp
