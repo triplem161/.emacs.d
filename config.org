@@ -154,7 +154,7 @@ Exec-path-from-shell : get paths file
 
 ** Mode Line
 #+BEGIN_SRC emacs-lisp
-
+(display-time-mode 1)
 #+END_SRC
 * Modes
 ** Magit
@@ -203,7 +203,9 @@ Exec-path-from-shell : get paths file
         :bind (("C-u" . omnisharp-navigate-to-solution-file)
                ("C-c u" . omnisharp-find-usages)
                ("C-c d" . omnisharp-go-to-definition))
-        :config (add-to-list 'company-backends 'company-omnisharp)
+        :config
+        (add-to-list 'company-backends 'company-omnisharp)
+        (setq omnisharp-imenu-support t)
       )
     #+END_SRC
 ** Python Development
@@ -297,7 +299,7 @@ Exec-path-from-shell : get paths file
     :ensure t
     :init
     (global-flycheck-mode t)
-  )
+   )
    #+END_SRC
 ** Org Bullet
    #+BEGIN_SRC emacs-lisp
