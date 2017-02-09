@@ -323,11 +323,12 @@ Exec-path-from-shell : get paths file
    #+END_SRC
 ** Move Text
    #+BEGIN_SRC emacs-lisp
-  (use-package move-text
-    :ensure t
-    :config
-    (move-text-default-bindings)
-  )
+     (use-package move-text
+       :ensure t
+       :init
+       (bind-key "M-p" 'move-text-up)
+       (bind-key "M-n" 'move-text-down)
+     )
    #+END_SRC
 ** Rest Client
    #+BEGIN_SRC emacs-lisp
