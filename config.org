@@ -10,15 +10,15 @@
 #+BEGIN_SRC emacs-lisp
   (require 'cl)
   (require 'cc-mode)
-;;(require 'package)
-;;(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
-(setq package-archives
-      '(("gnu"             . "https://elpa.gnu.org/packages/")
-        ("melpa"           . "http://melpa.org/packages/")
-        ;; ("melpa-stable" . "http://stable.melpa.org/packages/")
-        ;; ("elpy"         . "http://jorgenschaefer.github.io/packages/")
-        ;; ("org"          . "http://orgmode.org/elpa/") ;; for org-plus-contrib
-        ))
+  ;;(require 'package)
+  ;;(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
+  (setq package-archives
+        '(("gnu"             . "https://elpa.gnu.org/packages/")
+          ("melpa"           . "http://melpa.org/packages/")
+          ;; ("melpa-stable" . "http://stable.melpa.org/packages/")
+          ;; ("elpy"         . "http://jorgenschaefer.github.io/packages/")
+          ;; ("org"          . "http://orgmode.org/elpa/") ;; for org-plus-contrib
+          ))
 #+END_SRC
 * Systems
 ** Windows
@@ -79,7 +79,7 @@ Exec-path-from-shell : get paths file
   ;;Highlight the cursor line
   (global-hl-line-mode t)
 #+END_SRC
-   
+
 ** Edition
 
 #+BEGIN_SRC emacs-lisp
@@ -90,9 +90,11 @@ Exec-path-from-shell : get paths file
   (setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
   (setq auto-save-file-name-transforms '((".*" "~/.emacs.d/auto-save-list" t)))
 
+  ;;Clean up spaces before saving
+  (add-hook 'before-save-hook 'whitespace-cleanup)
 
   (show-paren-mode t)
-
+  (setq show-paren-delay 0)
 #+END_SRC
 
 ** Font
@@ -158,9 +160,9 @@ Exec-path-from-shell : get paths file
   )
 #+END_SRC
 *** Current Theme
-	#+BEGIN_SRC emacs-lisp
+    #+BEGIN_SRC emacs-lisp
   (load-theme 'zenburn t)
-	#+END_SRC
+    #+END_SRC
 
 ** Mode Line
 #+BEGIN_SRC emacs-lisp
