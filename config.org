@@ -381,6 +381,7 @@ Exec-path-from-shell : get paths file
     (setq pivotal-api-token "4bfc18370422bbd2ff8ddaa63a387152")
     )
 #+END_SRC
+
 ** Xcode / Swift
 
    Only called when the environment is a Mac OS
@@ -403,9 +404,27 @@ Exec-path-from-shell : get paths file
 
      )
    #+END_SRC
+
 ** Shader Mode
+
    #+BEGIN_SRC emacs-lisp
      (use-package shader-mode
        :ensure t
      )
+   #+END_SRC
+
+** PlantUML
+
+   #+BEGIN_SRC emacs-lisp
+     (use-package plantuml-mode
+       :ensure t
+     )
+   #+END_SRC
+
+** Auctex
+
+   #+BEGIN_SRC emacs-lisp
+     ;; (use-package auctex
+     ;;   :ensure t
+     ;; )
    #+END_SRC
