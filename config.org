@@ -2,95 +2,104 @@
 #+AUTHOR: Marion Maignan
 
 * Personnal Informations
-#+begin_src emacs-lisp
-(setq user-full-name "Maignan Marion"
-	  user-mail-address "maigmarion@gmail.com")
-#+end_src
+
+	#+begin_src emacs-lisp
+	  (setq user-full-name "Maignan Marion"
+			user-mail-address "maigmarion@gmail.com")
+	#+end_src
+
 * Require
-#+BEGIN_SRC emacs-lisp
-  (require 'cl)
-  (require 'cc-mode)
-  ;;(require 'package)
-  ;;(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
-  (setq package-archives
-		'(("gnu"             . "https://elpa.gnu.org/packages/")
-		  ("melpa"           . "http://melpa.org/packages/")
-		  ;; ("melpa-stable" . "http://stable.melpa.org/packages/")
-		  ;; ("elpy"         . "http://jorgenschaefer.github.io/packages/")
-		  ;; ("org"          . "http://orgmode.org/elpa/") ;; for org-plus-contrib
-		  ))
-#+END_SRC
+
+	#+BEGIN_SRC emacs-lisp
+	  (require 'cl)
+	  (require 'cc-mode)
+	  ;;(require 'package)
+	  ;;(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
+	  (setq package-archives
+			'(("gnu"				. "https://elpa.gnu.org/packages/")
+			  ("melpa"		   . "http://melpa.org/packages/")
+			  ;; ("melpa-stable" . "http://stable.melpa.org/packages/")
+			  ;; ("elpy"		   . "http://jorgenschaefer.github.io/packages/")
+			  ;; ("org"		   . "http://orgmode.org/elpa/") ;; for org-plus-contrib
+			  )
+			)
+	#+END_SRC
+
 * Systems
 ** Windows
+
    Set putty for tramp mode : [[http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html][Bin for putty]]
-#+BEGIN_SRC emacs-lisp
-  (when (eq system-type 'windows-nt)
-  (require 'tramp)
-  (set-default 'tramp-default-method "plink")
-	)
 
+	#+BEGIN_SRC emacs-lisp
+	  (when (eq system-type 'windows-nt)
+		(require 'tramp)
+		(set-default 'tramp-default-method "plink")
+		)
+	#+END_SRC
 
-#+END_SRC
 ** Mac
-Exec-path-from-shell : get paths file
 
-#+BEGIN_SRC emacs-lisp
-  (when (eq system-type 'darwin)
+   Exec-path-from-shell : get paths file
 
-	(use-package exec-path-from-shell
-	  :ensure t
-	  :init (exec-path-from-shell-initialize)
-	  )
+	#+BEGIN_SRC emacs-lisp
+	  (when (eq system-type 'darwin)
 
-	(setq mac-command-modifier 'meta)
-	(setq mac-option-modifier 'nil)
-  )
-#+END_SRC
+		(use-package exec-path-from-shell
+		  :ensure t
+		  :init (exec-path-from-shell-initialize)
+		  )
+
+		(setq mac-command-modifier 'meta)
+		(setq mac-option-modifier 'nil)
+		)
+	#+END_SRC
 
 * Settings
 ** Encoding
-#+BEGIN_SRC emacs-lisp
-  (setq locale-coding-system 'utf-8)
-  (set-terminal-coding-system 'utf-8)
-  (set-keyboard-coding-system 'utf-8)
-  (set-selection-coding-system 'utf-8)
-  (prefer-coding-system 'utf-8)
-#+END_SRC
+
+	#+BEGIN_SRC emacs-lisp
+	  (setq locale-coding-system 'utf-8)
+	  (set-terminal-coding-system 'utf-8)
+	  (set-keyboard-coding-system 'utf-8)
+	  (set-selection-coding-system 'utf-8)
+	  (prefer-coding-system 'utf-8)
+	#+END_SRC
 
 ** Font
-#+BEGIN_SRC emacs-lisp
+
+	#+BEGIN_SRC emacs-lisp
 	  (set-default-font "Fira Code 18" )
-	(let ((alist '((33 . ".\\(?:\\(?:==\\|!!\\)\\|[!=]\\)")
-				   (35 . ".\\(?:###\\|##\\|_(\\|[#(?[_{]\\)")
-				   (36 . ".\\(?:>\\)")
-				   (37 . ".\\(?:\\(?:%%\\)\\|%\\)")
-				   (38 . ".\\(?:\\(?:&&\\)\\|&\\)")
-				   (42 . ".\\(?:\\(?:\\*\\*/\\)\\|\\(?:\\*[*/]\\)\\|[*/>]\\)")
-				   (43 . ".\\(?:\\(?:\\+\\+\\)\\|[+>]\\)")
-				   ;;These line make emacs freeze
-				   ;;(45 . ".\\(?:\\(?:-[>-]\\|<<\\|>>\\)\\|[<>}~-]\\)")
-				   ;;(46 . ".\\(?:\\(?:\\.[.<]\\)\\|[.=-]\\)")
-				   ;;(47 . ".\\(?:\\(?:\\*\\*\\|//\\|==\\)\\|[*/=>]\\)")
-				   (48 . ".\\(?:x[a-zA-Z]\\)")
-				   (58 . ".\\(?:::\\|[:=]\\)")
-				   (59 . ".\\(?:;;\\|;\\)")
-				   (60 . ".\\(?:\\(?:!--\\)\\|\\(?:~~\\|->\\|\\$>\\|\\*>\\|\\+>\\|--\\|<[<=-]\\|=[<=>]\\||>\\)\\|[*$+~/<=>|-]\\)")
-				   (61 . ".\\(?:\\(?:/=\\|:=\\|<<\\|=[=>]\\|>>\\)\\|[<=>~]\\)")
-				   (62 . ".\\(?:\\(?:=>\\|>[=>-]\\)\\|[=>-]\\)")
-				   (63 . ".\\(?:\\(\\?\\?\\)\\|[:=?]\\)")
-				   (91 . ".\\(?:]\\)")
-				   (92 . ".\\(?:\\(?:\\\\\\\\\\)\\|\\\\\\)")
-				   (94 . ".\\(?:=\\)")
-				   (119 . ".\\(?:ww\\)")
-				   (123 . ".\\(?:-\\)")
-				   (124 . ".\\(?:\\(?:|[=|]\\)\\|[=>|]\\)")
-				   (126 . ".\\(?:~>\\|~~\\|[>=@~-]\\)")
-				   )
-				 ))
-	  (dolist (char-regexp alist)
-		(set-char-table-range composition-function-table (car char-regexp)
-							  `([,(cdr char-regexp) 0 font-shape-gstring]))))
-#+END_SRC
+	  (let ((alist '((33 . ".\\(?:\\(?:==\\|!!\\)\\|[!=]\\)")
+					 (35 . ".\\(?:###\\|##\\|_(\\|[#(?[_{]\\)")
+					 (36 . ".\\(?:>\\)")
+					 (37 . ".\\(?:\\(?:%%\\)\\|%\\)")
+					 (38 . ".\\(?:\\(?:&&\\)\\|&\\)")
+					 (42 . ".\\(?:\\(?:\\*\\*/\\)\\|\\(?:\\*[*/]\\)\\|[*/>]\\)")
+					 (43 . ".\\(?:\\(?:\\+\\+\\)\\|[+>]\\)")
+					 ;;These line make emacs freeze
+					 ;;(45 . ".\\(?:\\(?:-[>-]\\|<<\\|>>\\)\\|[<>}~-]\\)")
+					 ;;(46 . ".\\(?:\\(?:\\.[.<]\\)\\|[.=-]\\)")
+					 ;;(47 . ".\\(?:\\(?:\\*\\*\\|//\\|==\\)\\|[*/=>]\\)")
+					 (48 . ".\\(?:x[a-zA-Z]\\)")
+					 (58 . ".\\(?:::\\|[:=]\\)")
+					 (59 . ".\\(?:;;\\|;\\)")
+					 (60 . ".\\(?:\\(?:!--\\)\\|\\(?:~~\\|->\\|\\$>\\|\\*>\\|\\+>\\|--\\|<[<=-]\\|=[<=>]\\||>\\)\\|[*$+~/<=>|-]\\)")
+					 (61 . ".\\(?:\\(?:/=\\|:=\\|<<\\|=[=>]\\|>>\\)\\|[<=>~]\\)")
+					 (62 . ".\\(?:\\(?:=>\\|>[=>-]\\)\\|[=>-]\\)")
+					 (63 . ".\\(?:\\(\\?\\?\\)\\|[:=?]\\)")
+					 (91 . ".\\(?:]\\)")
+					 (92 . ".\\(?:\\(?:\\\\\\\\\\)\\|\\\\\\)")
+					 (94 . ".\\(?:=\\)")
+					 (119 . ".\\(?:ww\\)")
+					 (123 . ".\\(?:-\\)")
+					 (124 . ".\\(?:\\(?:|[=|]\\)\\|[=>|]\\)")
+					 (126 . ".\\(?:~>\\|~~\\|[>=@~-]\\)")
+					 )
+				   ))
+		(dolist (char-regexp alist)
+		  (set-char-table-range composition-function-table (car char-regexp)
+								`([,(cdr char-regexp) 0 font-shape-gstring]))))
+	#+END_SRC
 
 ** Themes
 *** Solarized
@@ -125,30 +134,41 @@ Exec-path-from-shell : get paths file
 	#+END_SRC
 
 ** UI
-#+BEGIN_SRC emacs-lisp
-  (defalias 'yes-or-no-p 'y-or-n-p)
 
-  (add-hook 'emacs-startup-hook 'toggle-frame-fullscreen)
+	#+BEGIN_SRC emacs-lisp
+      (defalias 'yes-or-no-p 'y-or-n-p)
 
-  (setq inhibit-startup-message t)
-  (setq initial-scratch-message "")
+      (add-hook 'emacs-startup-hook 'toggle-frame-fullscreen)
 
-  (menu-bar-mode -1)
-  (scroll-bar-mode -1)
-  (tool-bar-mode -1)
-  (setq ring-bell-function 'ignore)
+      (setq inhibit-startup-message t)
+      (setq initial-scratch-message "")
 
-  ;;Set tabs to space 4
-  (setq-default indent-tabs-mode t)
-  (setq-default tab-width 4)
-  (setq tab-stop-list (number-sequence 4 200 4))
-  (global-set-key (kbd "TAB") 'self-insert-command)
+      (menu-bar-mode -1)
+      (scroll-bar-mode -1)
+      (tool-bar-mode -1)
+      (setq ring-bell-function 'ignore)
 
-  (setq ns-pop-up-frames nil)
+      ;;Set tabs to space 4
+      (setq-default c-default-style "bsd"
+        			c-basic-offset 4
+        			indent-tabs-mode 4
+        			tab-width 4)
+      ;; (setq tab-stop-list (number-sequence 4 200 4))
+      ;; (global-set-key (kbd "TAB") 'self-insert-command)
 
-  ;;Highlight the cursor line
-  (global-hl-line-mode t)
-#+END_SRC
+      (add-hook 'prog-mode-hook 'whitespace-mode)
+      (setq whitespace-style '(tabs tab-mark))
+      (setq
+       whitespace-display-mappings
+       '(
+    	 (tab-mark 9 [8728 9] [92 9])
+    	 ))
+
+      (setq ns-pop-up-frames nil)
+
+      ;;Highlight the cursor line
+      (global-hl-line-mode t)
+	#+END_SRC
 
 ** Edition
 
@@ -213,6 +233,7 @@ Exec-path-from-shell : get paths file
 	#+END_SRC
 
 *** Omnisharp
+
 	#+BEGIN_SRC emacs-lisp
 	  (use-package omnisharp
 		:ensure t
@@ -224,6 +245,7 @@ Exec-path-from-shell : get paths file
 		(setq omnisharp-imenu-support t)
 	  )
 	#+END_SRC
+
 ** Python Development
 *** Elpy
 	#+BEGIN_SRC emacs-lisp
@@ -281,7 +303,7 @@ Exec-path-from-shell : get paths file
    #+END_SRC
 ** Avy
    #+BEGIN_SRC emacs-lisp
-  (use-package avy
+	 (use-package avy
 	:ensure t
 	:bind ("M-s" . avy-goto-char)
 	)
@@ -303,10 +325,10 @@ Exec-path-from-shell : get paths file
    #+END_SRC
 ** Web Mode
    #+BEGIN_SRC emacs-lisp
-  (use-package web-mode
+	 (use-package web-mode
 	:ensure t
 	:mode ("\\.html\\'" . web-mode)
-  )
+	   )
    #+END_SRC
 
 ** Flycheck
@@ -394,19 +416,19 @@ Exec-path-from-shell : get paths file
 	[[https://github.com/nathankot/company-sourcekit][Company Sourcekit]]
 
    #+BEGIN_SRC emacs-lisp
-	 (when (eq system-type 'darwin)
+	 ;; (when (eq system-type 'darwin)
 
-	   (use-package swift-mode
-		 :ensure t
-	   )
+	 ;;   (use-package swift-mode
+	 ;;		:ensure t
+	 ;;   )
 
-	   (use-package company-sourcekit
-		 :ensure t
-		 :config
-		 (add-to-list 'company-backends 'company-sourcekit)
-	   )
+	 ;;   (use-package company-sourcekit
+	 ;;		:ensure t
+	 ;;		:config
+	 ;;		(add-to-list 'company-backends 'company-sourcekit)
+	 ;;   )
 
-	 )
+	 ;; )
    #+END_SRC
 
 ** Shader Mode
@@ -420,15 +442,16 @@ Exec-path-from-shell : get paths file
 ** PlantUML
 
    #+BEGIN_SRC emacs-lisp
-	 (use-package plantuml-mode
-	   :ensure t
-	 )
+;;	 (use-package plantuml-mode
+;;	   :ensure t
+;;	 )
    #+END_SRC
 
-** Auctex
+** Latex
 
-   #+BEGIN_SRC emacs-lisp
-	 ;; (use-package auctex
-	 ;;   :ensure t
-	 ;; )
-   #+END_SRC
+	#+BEGIN_SRC emacs-lisp
+	  (use-package tex
+		:defer t
+		:ensure auctex
+		)
+	#+END_SRC

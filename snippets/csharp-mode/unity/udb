@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: Unity Debug Break
+# key: udb
+# --
+Debug.Break();
