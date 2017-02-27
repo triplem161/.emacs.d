@@ -327,7 +327,7 @@
 	#+BEGIN_SRC emacs-lisp
       (use-package web-mode
     	:ensure t
-    	:mode ("\\.jsx\\'" . web-mode)
+    	:mode ("\\.js\\'" . web-mode)
     	:config
     	(setq web-mode-content-type "jsx")
     	)
