@@ -150,7 +150,7 @@
       ;;Set tabs to space 4
       (setq-default c-default-style "bsd"
         			c-basic-offset 4
-        			indent-tabs-mode 4
+        			indent-tabs-mode t
         			tab-width 4)
       ;; (setq tab-stop-list (number-sequence 4 200 4))
       ;; (global-set-key (kbd "TAB") 'self-insert-command)
@@ -418,19 +418,26 @@
 	[[https://github.com/nathankot/company-sourcekit][Company Sourcekit]]
 
    #+BEGIN_SRC emacs-lisp
-	 ;; (when (eq system-type 'darwin)
+     (when (eq system-type 'darwin)
 
-	 ;;   (use-package swift-mode
-	 ;;		:ensure t
-	 ;;   )
+       (use-package swift-mode
+         :ensure t
+         )
 
-	 ;;   (use-package company-sourcekit
-	 ;;		:ensure t
-	 ;;		:config
-	 ;;		(add-to-list 'company-backends 'company-sourcekit)
-	 ;;   )
+       (use-package company-sourcekit
+         :ensure t
+         :config
+         (add-to-list 'company-backends 'company-sourcekit)
+         )
 
-	 ;; )
+       (use-package flycheck-swift
+         :ensure t
+         :config
+         (setq flycheck-swift-sdk-path "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk")
+         (setq flycheck-swift-target "arm64-apple-ios10")
+         (eval-after-load 'flycheck '(flycheck-swift-setup))
+         )
+       )
    #+END_SRC
 
 ** Shader Mode
