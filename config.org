@@ -302,10 +302,13 @@
    #+END_SRC
 ** Avy
    #+BEGIN_SRC emacs-lisp
-	 (use-package avy
-	:ensure t
-	:bind ("M-s" . avy-goto-char)
-	)
+     (use-package avy
+       :ensure t
+       :bind (
+              ("M-s" . avy-goto-char)
+              ("M-l" . avy-goto-line)
+              )
+       )
    #+END_SRC
 ** JS2
    #+BEGIN_SRC emacs-lisp
