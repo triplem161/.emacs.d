@@ -234,15 +234,17 @@
 *** Omnisharp
 
 	#+BEGIN_SRC emacs-lisp
-	  (use-package omnisharp
-		:ensure t
-		:bind (("C-u" . omnisharp-navigate-to-solution-file)
-			   ("C-c u" . omnisharp-find-usages)
-			   ("C-c d" . omnisharp-go-to-definition))
-		:config
-		(add-to-list 'company-backends 'company-omnisharp)
-		(setq omnisharp-imenu-support t)
-	  )
+      (use-package omnisharp
+        :ensure t
+        :bind (:map omnisharp-mode-map
+                    ("C-u" . omnisharp-navigate-to-solution-file)
+                    ("C-c u" . omnisharp-find-usages)     
+                    ("C-c d" . omnisharp-go-to-definition)
+                    )
+        :config
+        (add-to-list 'company-backends 'company-omnisharp)
+        (setq omnisharp-imenu-support t)
+        )
 	#+END_SRC
 
 ** Python Development
