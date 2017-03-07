@@ -330,12 +330,12 @@
 ** Web Mode
 
 	#+BEGIN_SRC emacs-lisp
-	  (use-package web-mode
-		:ensure t
-		:mode ("\\.js\\'" . web-mode)
-		:config
-		(setq web-mode-content-type "jsx")
-		)
+      (use-package web-mode
+        :ensure t
+        :mode ("\\.js\\'" . web-mode)
+        :config
+        (setq-default web-mode-content-type "jsx")
+        )
 	#+END_SRC
 
 ** Flycheck
