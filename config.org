@@ -469,3 +469,10 @@
 		:ensure auctex
 		)
 	#+END_SRC
+** Ediff 
+
+   #+BEGIN_SRC emacs-lisp
+     (use-package ediff
+       :config (setq ediff-window-setup-function 'ediff-setup-windows-plain)
+       )
+   #+END_SRC
