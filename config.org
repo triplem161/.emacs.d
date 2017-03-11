@@ -334,7 +334,9 @@
         :ensure t
         :mode ("\\.js\\'" . web-mode)
         :config
-        (setq-default web-mode-content-type "jsx")
+        (setq web-mode-content-types
+              '(("jsx" . "\\.js[x]?\\'"))
+              )
         )
 	#+END_SRC
 
