@@ -340,6 +340,16 @@
         )
 	#+END_SRC
 
+** Less Mode
+   
+   [[https://github.com/purcell/less-css-mode][Less Mode Git]]
+
+   #+BEGIN_SRC emacs-lisp
+     (use-package less-css-mode
+       :ensure t
+     )
+   #+END_SRC
+
 ** Flycheck
    #+BEGIN_SRC emacs-lisp
   (use-package flycheck
