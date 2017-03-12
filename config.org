@@ -350,6 +350,18 @@
      )
    #+END_SRC
 
+** Rainbow Mode 
+
+   [[https://julien.danjou.info/projects/emacs-packages#rainbow-mode][Rainbow Mode Website]]
+   
+   #+BEGIN_SRC emacs-lisp
+     (use-package rainbow-mode
+       :ensure t
+       ;; :init
+       ;; (add-hook 'less-css-mode-hook 'rainbow-mode) 
+       )
+   #+END_SRC
+
 ** Flycheck
    #+BEGIN_SRC emacs-lisp
   (use-package flycheck
