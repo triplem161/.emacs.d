@@ -357,8 +357,8 @@
    #+BEGIN_SRC emacs-lisp
      (use-package rainbow-mode
        :ensure t
-       ;; :init
-       ;; (add-hook 'less-css-mode-hook 'rainbow-mode) 
+       :init
+       (add-hook 'less-css-mode-hook 'rainbow-mode) 
        )
    #+END_SRC
 
