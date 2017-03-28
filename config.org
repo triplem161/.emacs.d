@@ -155,13 +155,15 @@
 	  ;; (setq tab-stop-list (number-sequence 4 200 4))
 	  ;; (global-set-key (kbd "TAB") 'self-insert-command)
 
-	  (add-hook 'prog-mode-hook 'whitespace-mode)
-	  (setq whitespace-style '(tabs tab-mark))
-	  (setq
-	   whitespace-display-mappings
-	   '(
-		 (tab-mark 9 [8728 9] [92 9])
-		 ))
+
+	  ;; REVIEW THIS CODE IT CAUSES DELETE TRAILING WHITE SPACE TO FAIL
+	  ;; (add-hook 'prog-mode-hook 'whitespace-mode)
+	  ;; (setq whitespace-style '(tabs tab-mark))
+	  ;; (setq
+	  ;;  whitespace-display-mappings
+	  ;;  '(
+	  ;;    (tab-mark 9 [8728 9] [92 9])
+	  ;;    ))
 
 	  (setq ns-pop-up-frames nil)
 
@@ -234,17 +236,17 @@
 *** Omnisharp
 
 	#+BEGIN_SRC emacs-lisp
-      (use-package omnisharp
-        :ensure t
-        :bind (:map omnisharp-mode-map
-                    ("C-u" . omnisharp-navigate-to-solution-file)
-                    ("C-c u" . omnisharp-find-usages)     
-                    ("C-c d" . omnisharp-go-to-definition)
-                    )
-        :config
-        (add-to-list 'company-backends 'company-omnisharp)
-        (setq omnisharp-imenu-support t)
-        )
+	  (use-package omnisharp
+		:ensure t
+		:bind (:map omnisharp-mode-map
+					("C-u" . omnisharp-navigate-to-solution-file)
+					("C-c u" . omnisharp-find-usages)
+					("C-c d" . omnisharp-go-to-definition)
+					)
+		:config
+		(add-to-list 'company-backends 'company-omnisharp)
+		(setq omnisharp-imenu-support t)
+		)
 	#+END_SRC
 
 ** Python Development
@@ -304,13 +306,13 @@
    #+END_SRC
 ** Avy
    #+BEGIN_SRC emacs-lisp
-     (use-package avy
-       :ensure t
-       :bind (
-              ("M-s" . avy-goto-char)
-              ("M-l" . avy-goto-line)
-              )
-       )
+	 (use-package avy
+	   :ensure t
+	   :bind (
+			  ("M-s" . avy-goto-char)
+			  ("M-l" . avy-goto-line)
+			  )
+	   )
    #+END_SRC
 ** JS2
    #+BEGIN_SRC emacs-lisp
@@ -330,36 +332,36 @@
 ** Web Mode
 
 	#+BEGIN_SRC emacs-lisp
-      (use-package web-mode
-        :ensure t
-        :mode ("\\.js\\'" . web-mode)
-        :config
-        (setq web-mode-content-types
-              '(("jsx" . "\\.js[x]?\\'"))
-              )
-        )
+	  (use-package web-mode
+		:ensure t
+		:mode ("\\.js\\'" . web-mode)
+		:config
+		(setq web-mode-content-types
+			  '(("jsx" . "\\.js[x]?\\'"))
+			  )
+		)
 	#+END_SRC
 
 ** Less Mode
-   
+
    [[https://github.com/purcell/less-css-mode][Less Mode Git]]
 
    #+BEGIN_SRC emacs-lisp
-     (use-package less-css-mode
-       :ensure t
-     )
+	 (use-package less-css-mode
+	   :ensure t
+	 )
    #+END_SRC
 
-** Rainbow Mode 
+** Rainbow Mode
 
    [[https://julien.danjou.info/projects/emacs-packages#rainbow-mode][Rainbow Mode Website]]
-   
+
    #+BEGIN_SRC emacs-lisp
-     (use-package rainbow-mode
-       :ensure t
-       :init
-       (add-hook 'less-css-mode-hook 'rainbow-mode) 
-       )
+	 (use-package rainbow-mode
+	   :ensure t
+	   :init
+	   (add-hook 'less-css-mode-hook 'rainbow-mode)
+	   )
    #+END_SRC
 
 ** Flycheck
@@ -447,26 +449,26 @@
 	[[https://github.com/nathankot/company-sourcekit][Company Sourcekit]]
 
    #+BEGIN_SRC emacs-lisp
-     (when (eq system-type 'darwin)
+	 (when (eq system-type 'darwin)
 
-       (use-package swift-mode
-         :ensure t
-         )
+	   (use-package swift-mode
+		 :ensure t
+		 )
 
-       (use-package company-sourcekit
-         :ensure t
-         :config
-         (add-to-list 'company-backends 'company-sourcekit)
-         )
+	   (use-package company-sourcekit
+		 :ensure t
+		 :config
+		 (add-to-list 'company-backends 'company-sourcekit)
+		 )
 
-       (use-package flycheck-swift
-         :ensure t
-         :config
-         (setq flycheck-swift-sdk-path "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk")
-         (setq flycheck-swift-target "arm64-apple-ios10")
-         (eval-after-load 'flycheck '(flycheck-swift-setup))
-         )
-       )
+	   (use-package flycheck-swift
+		 :ensure t
+		 :config
+		 (setq flycheck-swift-sdk-path "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk")
+		 (setq flycheck-swift-target "arm64-apple-ios10")
+		 (eval-after-load 'flycheck '(flycheck-swift-setup))
+		 )
+	   )
    #+END_SRC
 
 ** Shader Mode
@@ -493,10 +495,10 @@
 		:ensure auctex
 		)
 	#+END_SRC
-** Ediff 
+** Ediff
 
    #+BEGIN_SRC emacs-lisp
-     (use-package ediff
-       :config (setq ediff-window-setup-function 'ediff-setup-windows-plain)
-       )
+	 (use-package ediff
+	   :config (setq ediff-window-setup-function 'ediff-setup-windows-plain)
+	   )
    #+END_SRC
