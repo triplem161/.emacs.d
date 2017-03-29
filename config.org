@@ -459,6 +459,7 @@
 		 :ensure t
 		 :config
 		 (add-to-list 'company-backends 'company-sourcekit)
+		 (setq company-sourcekit-use-yasnippet nil)
 		 )
 
 	   (use-package flycheck-swift
