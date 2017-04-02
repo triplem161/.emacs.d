@@ -135,30 +135,28 @@
 ** UI
 
 	#+BEGIN_SRC emacs-lisp
-	  (defalias 'yes-or-no-p 'y-or-n-p)
+      (defalias 'yes-or-no-p 'y-or-n-p)
 
-	  (add-hook 'emacs-startup-hook 'toggle-frame-fullscreen)
+      (add-hook 'emacs-startup-hook 'toggle-frame-fullscreen)
 
-	  (setq inhibit-startup-message t)
-	  (setq initial-scratch-message "")
+      (setq inhibit-startup-message t)
+      (setq initial-scratch-message "")
 
-	  (menu-bar-mode -1)
-	  (scroll-bar-mode -1)
-	  (tool-bar-mode -1)
-	  (setq ring-bell-function 'ignore)
+      (menu-bar-mode -1)
+      (scroll-bar-mode -1)
+      (tool-bar-mode -1)
+      (setq ring-bell-function 'ignore)
 
-	  ;;Set tabs to space 4
-	  (setq-default c-default-style "bsd"
-					c-basic-offset 4
-					indent-tabs-mode t
-					tab-width 4)
-	  ;; (setq tab-stop-list (number-sequence 4 200 4))
-	  ;; (global-set-key (kbd "TAB") 'self-insert-command)
+      ;;Set tabs to space 4
+      (setq-default c-default-style "bsd"
+                    c-basic-offset 4
+                    indent-tabs-mode t
+                    tab-width 4)
 
-	  (setq ns-pop-up-frames nil)
+      (setq ns-pop-up-frames nil)
 
-	  ;;Highlight the cursor line
-	  (global-hl-line-mode t)
+      ;;Highlight the cursor line
+      (global-hl-line-mode t)
 	#+END_SRC
 
 ** Edition
