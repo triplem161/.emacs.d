@@ -155,16 +155,6 @@
 	  ;; (setq tab-stop-list (number-sequence 4 200 4))
 	  ;; (global-set-key (kbd "TAB") 'self-insert-command)
 
-
-	  ;; REVIEW THIS CODE IT CAUSES DELETE TRAILING WHITE SPACE TO FAIL
-	  ;; (add-hook 'prog-mode-hook 'whitespace-mode)
-	  ;; (setq whitespace-style '(tabs tab-mark))
-	  ;; (setq
-	  ;;  whitespace-display-mappings
-	  ;;  '(
-	  ;;    (tab-mark 9 [8728 9] [92 9])
-	  ;;    ))
-
 	  (setq ns-pop-up-frames nil)
 
 	  ;;Highlight the cursor line
@@ -501,4 +491,19 @@
 	 (use-package ediff
 	   :config (setq ediff-window-setup-function 'ediff-setup-windows-plain)
 	   )
+   #+END_SRC
+** Whitespace Mode
+
+   #+BEGIN_SRC emacs-lisp
+     (use-package whitespace
+       :init ()
+       (add-hook 'prog-mode-hook 'whitespace-mode)
+       :config
+       (setq whitespace-style '(tabs tab-mark trailing))
+       (setq
+        whitespace-display-mappings
+        '(
+          (tab-mark 9 [8728 9] [92 9])
+          ))
+     )
    #+END_SRC
