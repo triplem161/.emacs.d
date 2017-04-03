@@ -135,40 +135,28 @@
 ** UI
 
 	#+BEGIN_SRC emacs-lisp
-	  (defalias 'yes-or-no-p 'y-or-n-p)
+      (defalias 'yes-or-no-p 'y-or-n-p)
 
-	  (add-hook 'emacs-startup-hook 'toggle-frame-fullscreen)
+      (add-hook 'emacs-startup-hook 'toggle-frame-fullscreen)
 
-	  (setq inhibit-startup-message t)
-	  (setq initial-scratch-message "")
+      (setq inhibit-startup-message t)
+      (setq initial-scratch-message "")
 
-	  (menu-bar-mode -1)
-	  (scroll-bar-mode -1)
-	  (tool-bar-mode -1)
-	  (setq ring-bell-function 'ignore)
+      (menu-bar-mode -1)
+      (scroll-bar-mode -1)
+      (tool-bar-mode -1)
+      (setq ring-bell-function 'ignore)
 
-	  ;;Set tabs to space 4
-	  (setq-default c-default-style "bsd"
-					c-basic-offset 4
-					indent-tabs-mode t
-					tab-width 4)
-	  ;; (setq tab-stop-list (number-sequence 4 200 4))
-	  ;; (global-set-key (kbd "TAB") 'self-insert-command)
+      ;;Set tabs to space 4
+      (setq-default c-default-style "bsd"
+                    c-basic-offset 4
+                    indent-tabs-mode t
+                    tab-width 4)
 
+      (setq ns-pop-up-frames nil)
 
-	  ;; REVIEW THIS CODE IT CAUSES DELETE TRAILING WHITE SPACE TO FAIL
-	  ;; (add-hook 'prog-mode-hook 'whitespace-mode)
-	  ;; (setq whitespace-style '(tabs tab-mark))
-	  ;; (setq
-	  ;;  whitespace-display-mappings
-	  ;;  '(
-	  ;;    (tab-mark 9 [8728 9] [92 9])
-	  ;;    ))
-
-	  (setq ns-pop-up-frames nil)
-
-	  ;;Highlight the cursor line
-	  (global-hl-line-mode t)
+      ;;Highlight the cursor line
+      (global-hl-line-mode t)
 	#+END_SRC
 
 ** Edition
@@ -502,4 +490,19 @@
 	 (use-package ediff
 	   :config (setq ediff-window-setup-function 'ediff-setup-windows-plain)
 	   )
+   #+END_SRC
+** Whitespace Mode
+
+   #+BEGIN_SRC emacs-lisp
+     (use-package whitespace
+       :init ()
+       (add-hook 'prog-mode-hook 'whitespace-mode)
+       :config
+       (setq whitespace-style '(tabs tab-mark trailing))
+       (setq
+        whitespace-display-mappings
+        '(
+          (tab-mark 9 [8728 9] [92 9])
+          ))
+     )
    #+END_SRC
