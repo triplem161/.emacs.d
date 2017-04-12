@@ -437,27 +437,28 @@
 	[[https://github.com/nathankot/company-sourcekit][Company Sourcekit]]
 
    #+BEGIN_SRC emacs-lisp
-	 (when (eq system-type 'darwin)
+     (when (eq system-type 'darwin)
 
-	   (use-package swift-mode
-		 :ensure t
-		 )
+       (use-package swift-mode
+         :ensure t
+         )
 
-	   (use-package company-sourcekit
-		 :ensure t
-		 :config
-		 (add-to-list 'company-backends 'company-sourcekit)
-		 (setq company-sourcekit-use-yasnippet nil)
-		 )
+       (use-package company-sourcekit
+         :ensure t
+         :config
+         (add-to-list 'company-backends 'company-sourcekit)
+         ;; (setq sourcekit-sourcekittendaemon-executable "~/usr/local/Cellar/sourcekitten/0.17.2/bin/sourcekitten")
+         ;; (setq company-sourcekit-use-yasnippet nil)
+         )
 
-	   (use-package flycheck-swift
-		 :ensure t
-		 :config
-		 (setq flycheck-swift-sdk-path "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk")
-		 (setq flycheck-swift-target "arm64-apple-ios10")
-		 (eval-after-load 'flycheck '(flycheck-swift-setup))
-		 )
-	   )
+       (use-package flycheck-swift
+         :ensure t
+         :config
+         (setq flycheck-swift-sdk-path "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk")
+         (setq flycheck-swift-target "arm64-apple-ios10")
+         (eval-after-load 'flycheck '(flycheck-swift-setup))
+         )
+       )
    #+END_SRC
 
 ** Shader Mode
@@ -505,4 +506,11 @@
           (tab-mark 9 [8728 9] [92 9])
           ))
      )
+   #+END_SRC
+** Undo Tree
+   #+BEGIN_SRC emacs-lisp
+     (use-package undo-tree
+       :ensure t
+       :init (global-undo-tree-mode)
+       )
    #+END_SRC
