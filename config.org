@@ -105,6 +105,7 @@
 #+BEGIN_SRC emacs-lisp
   (use-package solarized-theme
 	:ensure t
+	:defer t
   )
 #+END_SRC
 
@@ -112,19 +113,22 @@
 #+BEGIN_SRC emacs-lisp
   (use-package darkburn-theme
 	:ensure t
-  )
+	:defer t
+	)
 #+END_SRC
 
 *** Ample
 #+BEGIN_SRC emacs-lisp
   (use-package ample-theme
 	:ensure t
+	:defer t
   )
 #+END_SRC
 *** Zenburn
 #+BEGIN_SRC emacs-lisp
   (use-package zenburn-theme
 	:ensure t
+	:defer t
   )
 #+END_SRC
 *** Current Theme
@@ -239,23 +243,25 @@
 		(setq omnisharp-imenu-support t)
 		)
 	#+END_SRC
-
+** C++
+   #+BEGIN_SRC emacs-lisp
+   #+END_SRC
 ** Python Development
 *** Elpy
 	#+BEGIN_SRC emacs-lisp
-  (use-package elpy
-	:ensure t
-	:config (elpy-enable)
-  )
+	  (use-package elpy
+		:ensure t
+		:defer t
+		:config (elpy-enable)
+	  )
 	#+END_SRC
 ** Company
    #+BEGIN_SRC emacs-lisp
-  (use-package company
-	:ensure t
-	:init (add-hook 'after-init-hook 'global-company-mode)
-	:config (setq company-idle-delay 0.2
-				  company-minimum-prefix-length 2)
-  )
+	 (use-package company
+	   :ensure t
+	   :config (setq company-idle-delay 0.2
+					 company-minimum-prefix-length 2)
+	 )
    #+END_SRC
 
 ** Ivy / Swipper / Counsel / Smex
@@ -315,11 +321,12 @@
    #+END_SRC
 ** Emmet
    #+BEGIN_SRC emacs-lisp
-  (use-package emmet-mode
-	:ensure t
-	:config
-	(add-hook 'web-mode-hook 'emmet-mode)
-  )
+	 (use-package emmet-mode
+	   :ensure t
+	   :defer t
+	   :config
+	   (add-hook 'web-mode-hook 'emmet-mode)
+	 )
    #+END_SRC
 ** Web Mode
 
@@ -341,6 +348,7 @@
    #+BEGIN_SRC emacs-lisp
 	 (use-package less-css-mode
 	   :ensure t
+	   :defer t
 	 )
    #+END_SRC
 
@@ -351,6 +359,7 @@
    #+BEGIN_SRC emacs-lisp
 	 (use-package rainbow-mode
 	   :ensure t
+	   :defer t
 	   :init
 	   (add-hook 'less-css-mode-hook 'rainbow-mode)
 	   )
@@ -366,11 +375,13 @@
    #+END_SRC
 ** Org Bullet
    #+BEGIN_SRC emacs-lisp
-  (use-package org-bullets
-	:ensure t
-	:config
-	(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
-  )
+	 (use-package org-bullets
+	   :ensure t
+	   :defer t
+	   :init (add-hook 'org-mode-hook 'org-bullets-mode)
+	   ;; :config
+	   ;; (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+	 )
    #+END_SRC
 ** Move Text
    #+BEGIN_SRC emacs-lisp
@@ -383,30 +394,31 @@
    #+END_SRC
 ** Rest Client
    #+BEGIN_SRC emacs-lisp
-  (use-package restclient
-	:ensure t
-  )
+	 (use-package restclient
+	   :ensure t
+	   :defer t
+	 )
    #+END_SRC
 ** Json Reformat
    #+BEGIN_SRC emacs-lisp
-  (use-package json-reformat
-	:ensure t
-  )
+	 (use-package json-reformat
+	   :ensure t
+	   :defer t
+	 )
    #+END_SRC
 ** Circe
    Not working properly yet. Probably need to set TLS correctly
    #+BEGIN_SRC emacs-lisp
-  (setq freenode-password "dob260989")
-
-  (use-package circe
-	:ensure t
-	:config
-	(setq circe-network-options
-		`(("Freenode"
-		   :nick "triplem_161"
-		   :channels ("#emacs")
-		   :nickserv-password ,freenode-password)))
-  )
+	 (use-package circe
+	   :ensure t
+	   :defer t
+	   :config
+	   (setq circe-network-options
+			 `(("Freenode"
+				:nick "triplem_161"
+				:channels ("#emacs")
+				:nickserv-password ,freenode-password)))
+	   )
    #+END_SRC
 ** Google this
    #+BEGIN_SRC emacs-lisp
@@ -428,6 +440,7 @@
 #+BEGIN_SRC emacs-lisp
   (use-package pivotal-tracker
 	:ensure t
+	:defer t
 	:config
 	(setq pivotal-api-token "4bfc18370422bbd2ff8ddaa63a387152")
 	)
@@ -441,28 +454,31 @@
 	[[https://github.com/nathankot/company-sourcekit][Company Sourcekit]]
 
    #+BEGIN_SRC emacs-lisp
-     (when (eq system-type 'darwin)
+	 (when (eq system-type 'darwin)
 
-       (use-package swift-mode
-         :ensure t
-         )
+	   (use-package swift-mode
+		 :ensure t
+		 :mode ("\\.swift\\'" . swift-mode)
+		 )
 
-       (use-package company-sourcekit
-          :ensure t
-          :config
-          (add-to-list 'company-backends 'company-sourcekit)
-          (setq sourcekit-sourcekittendaemon-executable "~/usr/local/Cellar/sourcekitten/0.17.2/bin/sourcekitten")
-          (setq company-sourcekit-use-yasnippet nil)
-          )
+	   (use-package company-sourcekit
+		 :ensure t
+		 :mode ("\\.swift\\'" . swift-mode)
+		 :config
+		  (add-to-list 'company-backends 'company-sourcekit)
+		  (setq sourcekit-sourcekittendaemon-executable "~/usr/local/Cellar/sourcekitten/0.17.2/bin/sourcekitten")
+		  (setq company-sourcekit-use-yasnippet nil)
+		  )
 
-       (use-package flycheck-swift
-          :ensure t
-          :config
-          (setq flycheck-swift-sdk-path "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk")
-          (setq flycheck-swift-target "arm64-apple-ios10")
-          (eval-after-load 'flycheck '(flycheck-swift-setup))
-          )
-       )
+	   (use-package flycheck-swift
+		 :ensure t
+		 :mode ("\\.swift\\'" . swift-mode)
+		 :config
+		  (setq flycheck-swift-sdk-path "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk")
+		  (setq flycheck-swift-target "arm64-apple-ios10")
+		  (eval-after-load 'flycheck '(flycheck-swift-setup))
+		  )
+	   )
    #+END_SRC
 
 ** Shader Mode
@@ -470,6 +486,7 @@
    #+BEGIN_SRC emacs-lisp
 	 (use-package shader-mode
 	   :ensure t
+	   :defer t
 	 )
    #+END_SRC
 
@@ -477,12 +494,12 @@
 
    #+BEGIN_SRC emacs-lisp
 	 (use-package plantuml-mode
-	:ensure t
-	)
+	   :ensure t
+	   :defer t
+	 )
    #+END_SRC
 
 ** Latex
-
 	#+BEGIN_SRC emacs-lisp
 	  (use-package tex
 		:defer t
@@ -490,11 +507,12 @@
 		)
 	#+END_SRC
 ** Ediff
-
    #+BEGIN_SRC emacs-lisp
 	 (use-package ediff
-	   :config (setq ediff-window-setup-function 'ediff-setup-windows-plain)
-	   )
+	   :defer t
+	   :config
+	   (setq ediff-window-setup-function 'ediff-setup-windows-plain)
+	 )
    #+END_SRC
 ** Whitespace Mode
 
@@ -515,6 +533,7 @@
    #+BEGIN_SRC emacs-lisp
 	 (use-package undo-tree
 	   :ensure t
+	   :defer t
 	   :init (global-undo-tree-mode)
 	   )
    #+END_SRC
