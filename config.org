@@ -2,14 +2,11 @@
 #+AUTHOR: Marion Maignan
 
 * Personnal Informations
-
 	#+begin_src emacs-lisp
 	  (setq user-full-name "Maignan Marion"
 			user-mail-address "maigmarion@gmail.com")
 	#+end_src
-
 * Require
-
 	#+BEGIN_SRC emacs-lisp
 	  (require 'cl)
 	  (require 'cc-mode)
@@ -24,7 +21,6 @@
 			  )
 			)
 	#+END_SRC
-
 * Systems
 ** Windows
 
@@ -55,7 +51,6 @@
 
 * Settings
 ** Encoding
-
 	#+BEGIN_SRC emacs-lisp
 	  (setq locale-coding-system 'utf-8)
 	  (set-terminal-coding-system 'utf-8)
@@ -63,43 +58,10 @@
 	  (set-selection-coding-system 'utf-8)
 	  (prefer-coding-system 'utf-8)
 	#+END_SRC
-
 ** Font
-
 	#+BEGIN_SRC emacs-lisp
-	  (set-default-font "Fira Code 18" )
-	  (let ((alist '((33 . ".\\(?:\\(?:==\\|!!\\)\\|[!=]\\)")
-					 (35 . ".\\(?:###\\|##\\|_(\\|[#(?[_{]\\)")
-					 (36 . ".\\(?:>\\)")
-					 (37 . ".\\(?:\\(?:%%\\)\\|%\\)")
-					 (38 . ".\\(?:\\(?:&&\\)\\|&\\)")
-					 (42 . ".\\(?:\\(?:\\*\\*/\\)\\|\\(?:\\*[*/]\\)\\|[*/>]\\)")
-					 (43 . ".\\(?:\\(?:\\+\\+\\)\\|[+>]\\)")
-					 ;;These line make emacs freeze
-					 ;;(45 . ".\\(?:\\(?:-[>-]\\|<<\\|>>\\)\\|[<>}~-]\\)")
-					 ;;(46 . ".\\(?:\\(?:\\.[.<]\\)\\|[.=-]\\)")
-					 ;;(47 . ".\\(?:\\(?:\\*\\*\\|//\\|==\\)\\|[*/=>]\\)")
-					 (48 . ".\\(?:x[a-zA-Z]\\)")
-					 (58 . ".\\(?:::\\|[:=]\\)")
-					 (59 . ".\\(?:;;\\|;\\)")
-					 (60 . ".\\(?:\\(?:!--\\)\\|\\(?:~~\\|->\\|\\$>\\|\\*>\\|\\+>\\|--\\|<[<=-]\\|=[<=>]\\||>\\)\\|[*$+~/<=>|-]\\)")
-					 (61 . ".\\(?:\\(?:/=\\|:=\\|<<\\|=[=>]\\|>>\\)\\|[<=>~]\\)")
-					 (62 . ".\\(?:\\(?:=>\\|>[=>-]\\)\\|[=>-]\\)")
-					 (63 . ".\\(?:\\(\\?\\?\\)\\|[:=?]\\)")
-					 (91 . ".\\(?:]\\)")
-					 (92 . ".\\(?:\\(?:\\\\\\\\\\)\\|\\\\\\)")
-					 (94 . ".\\(?:=\\)")
-					 (119 . ".\\(?:ww\\)")
-					 (123 . ".\\(?:-\\)")
-					 (124 . ".\\(?:\\(?:|[=|]\\)\\|[=>|]\\)")
-					 (126 . ".\\(?:~>\\|~~\\|[>=@~-]\\)")
-					 )
-				   ))
-		(dolist (char-regexp alist)
-		  (set-char-table-range composition-function-table (car char-regexp)
-								`([,(cdr char-regexp) 0 font-shape-gstring]))))
+	  (set-default-font "Hack 16")
 	#+END_SRC
-
 ** Themes
 *** Solarized
 #+BEGIN_SRC emacs-lisp
@@ -133,11 +95,10 @@
 #+END_SRC
 *** Current Theme
 	#+BEGIN_SRC emacs-lisp
-  (load-theme 'zenburn t)
+	  (load-theme 'zenburn t)
 	#+END_SRC
 
 ** UI
-
 	#+BEGIN_SRC emacs-lisp
 	  (defalias 'yes-or-no-p 'y-or-n-p)
 
@@ -146,9 +107,9 @@
 	  (setq inhibit-startup-message t)
 	  (setq initial-scratch-message "")
 
-	  (menu-bar-mode -1)
-	  (scroll-bar-mode -1)
-	  (tool-bar-mode -1)
+	  (menu-bar-mode 0)
+	  (set-scroll-bar-mode nil)
+	  (tool-bar-mode 0)
 	  (setq ring-bell-function 'ignore)
 
 	  ;;Set tabs to space 4
@@ -162,12 +123,12 @@
 	  ;;Highlight the cursor line
 	  (global-hl-line-mode t)
 	#+END_SRC
-
 ** Edition
 
 #+BEGIN_SRC emacs-lisp
   (add-hook 'after-init-hook 'electric-pair-mode)
 
+  ;; Allow selected text to be replaced
   (delete-selection-mode t)
 
   (setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
@@ -189,10 +150,10 @@
 * Modes
 ** Magit
    #+BEGIN_SRC emacs-lisp
-  (use-package magit
-	:ensure t
-	:bind ("C-c g" . magit-status)
-  )
+	 (use-package magit
+	   :ensure t
+	   :bind ("C-c g" . magit-status)
+	 )
    #+END_SRC
 ** Dsvn
    #+BEGIN_SRC emacs-lisp
@@ -212,7 +173,6 @@
    #+END_SRC
 ** C# Development
 *** CSharp
-
 	#+BEGIN_SRC emacs-lisp
 	  (use-package csharp-mode
 		:ensure t
@@ -224,11 +184,9 @@
 		  (add-hook 'csharp-mode-hook 'omnisharp-mode)
 		  (add-hook 'csharp-mode-hook 'yas-minor-mode)
 		  )
-	  )
+		)
 	#+END_SRC
-
 *** Omnisharp
-
 	#+BEGIN_SRC emacs-lisp
 	  (use-package omnisharp
 		:ensure t
@@ -253,14 +211,14 @@
 		:ensure t
 		:defer t
 		:config (elpy-enable)
-	  )
+		)
 	#+END_SRC
 ** Company
    #+BEGIN_SRC emacs-lisp
 	 (use-package company
 	   :ensure t
 	   :config (setq company-idle-delay 0.2
-					 company-minimum-prefix-length 2)
+						 company-minimum-prefix-length 2)
 	 )
    #+END_SRC
 
@@ -314,10 +272,10 @@
    #+END_SRC
 ** JS2
    #+BEGIN_SRC emacs-lisp
-  (use-package js2-mode
-	:ensure t
-	:mode ("\\.js\\'" . js2-mode)
-  )
+	  (use-package js2-mode
+		 :ensure t
+		 :mode ("\\.js\\'" . js2-mode)
+	  )
    #+END_SRC
 ** Emmet
    #+BEGIN_SRC emacs-lisp
@@ -329,7 +287,6 @@
 	 )
    #+END_SRC
 ** Web Mode
-
 	#+BEGIN_SRC emacs-lisp
 	  (use-package web-mode
 		:ensure t
@@ -340,22 +297,16 @@
 			  )
 		)
 	#+END_SRC
-
 ** Less Mode
-
    [[https://github.com/purcell/less-css-mode][Less Mode Git]]
-
    #+BEGIN_SRC emacs-lisp
 	 (use-package less-css-mode
 	   :ensure t
 	   :defer t
 	 )
    #+END_SRC
-
 ** Rainbow Mode
-
    [[https://julien.danjou.info/projects/emacs-packages#rainbow-mode][Rainbow Mode Website]]
-
    #+BEGIN_SRC emacs-lisp
 	 (use-package rainbow-mode
 	   :ensure t
@@ -364,14 +315,13 @@
 	   (add-hook 'less-css-mode-hook 'rainbow-mode)
 	   )
    #+END_SRC
-
 ** Flycheck
    #+BEGIN_SRC emacs-lisp
-  (use-package flycheck
-	:ensure t
-	:init
-	(global-flycheck-mode t)
-   )
+	 (use-package flycheck
+	   :ensure t
+	   :init
+	   (global-flycheck-mode t)
+	  )
    #+END_SRC
 ** Org Bullet
    #+BEGIN_SRC emacs-lisp
@@ -409,16 +359,16 @@
 ** Circe
    Not working properly yet. Probably need to set TLS correctly
    #+BEGIN_SRC emacs-lisp
-	 (use-package circe
-	   :ensure t
-	   :defer t
-	   :config
-	   (setq circe-network-options
-			 `(("Freenode"
-				:nick "triplem_161"
-				:channels ("#emacs")
-				:nickserv-password ,freenode-password)))
-	   )
+	 ;; (use-package circe
+	 ;;   :ensure t
+	 ;;   :defer t
+	 ;;   :config
+	 ;;   (setq circe-network-options
+	 ;;			`(("Freenode"
+	 ;;			   :nick "triplem_161"
+	 ;;			   :channels ("#emacs")
+	 ;;			   :nickserv-password ,freenode-password)))
+	 ;;   )
    #+END_SRC
 ** Google this
    #+BEGIN_SRC emacs-lisp
@@ -429,76 +379,59 @@
 	   (google-this-mode t)
 	 )
    #+END_SRC
-** Org Capture
-#+BEGIN_SRC emacs-lisp
-  (define-key global-map "\C-ct" 'org-capture)
-  (setq org-default-notes-file "/Users/Marion/Google Drive/Todo List/todo.org")
-
-#+END_SRC
-
 ** Pivotal Tracker
-#+BEGIN_SRC emacs-lisp
-  (use-package pivotal-tracker
-	:ensure t
-	:defer t
-	:config
-	(setq pivotal-api-token "4bfc18370422bbd2ff8ddaa63a387152")
-	)
-#+END_SRC
-
+   #+BEGIN_SRC emacs-lisp
+	 (use-package pivotal-tracker
+	   :ensure t
+	   :defer t
+	   :config
+	   (setq pivotal-api-token "4bfc18370422bbd2ff8ddaa63a387152")
+	   )
+	#+END_SRC
 ** Xcode / Swift
-
    Only called when the environment is a Mac OS
-
-	[[https://github.com/swift-emacs/swift-mode][Swift Git Repository]]
-	[[https://github.com/nathankot/company-sourcekit][Company Sourcekit]]
-
+   [[https://github.com/swift-emacs/swift-mode][Swift Git Repository]]
+   [[https://github.com/nathankot/company-sourcekit][Company Sourcekit]]
    #+BEGIN_SRC emacs-lisp
 	 (when (eq system-type 'darwin)
+		 (use-package swift-mode
+			   :ensure t
+			   :mode ("\\.swift\\'" . swift-mode)
+			   )
 
-	   (use-package swift-mode
-		 :ensure t
-		 :mode ("\\.swift\\'" . swift-mode)
+		 (use-package company-sourcekit
+			 :ensure t
+			 :mode ("\\.swift\\'" . swift-mode)
+			 :config
+			  (add-to-list 'company-backends 'company-sourcekit)
+			  (setq sourcekit-sourcekittendaemon-executable "~/usr/local/Cellar/sourcekitten/0.17.2/bin/sourcekitten")
+			  (setq company-sourcekit-use-yasnippet nil)
+			  )
+
+		 (use-package flycheck-swift
+			   :ensure t
+			   :mode ("\\.swift\\'" . swift-mode)
+			   :config
+				(setq flycheck-swift-sdk-path "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk")
+				(setq flycheck-swift-target "arm64-apple-ios10")
+				(eval-after-load 'flycheck '(flycheck-swift-setup))
+				)
 		 )
-
-	   (use-package company-sourcekit
-		 :ensure t
-		 :mode ("\\.swift\\'" . swift-mode)
-		 :config
-		  (add-to-list 'company-backends 'company-sourcekit)
-		  (setq sourcekit-sourcekittendaemon-executable "~/usr/local/Cellar/sourcekitten/0.17.2/bin/sourcekitten")
-		  (setq company-sourcekit-use-yasnippet nil)
-		  )
-
-	   (use-package flycheck-swift
-		 :ensure t
-		 :mode ("\\.swift\\'" . swift-mode)
-		 :config
-		  (setq flycheck-swift-sdk-path "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk")
-		  (setq flycheck-swift-target "arm64-apple-ios10")
-		  (eval-after-load 'flycheck '(flycheck-swift-setup))
-		  )
-	   )
    #+END_SRC
-
 ** Shader Mode
-
    #+BEGIN_SRC emacs-lisp
 	 (use-package shader-mode
 	   :ensure t
 	   :defer t
 	 )
    #+END_SRC
-
 ** PlantUML
-
    #+BEGIN_SRC emacs-lisp
 	 (use-package plantuml-mode
 	   :ensure t
 	   :defer t
 	 )
    #+END_SRC
-
 ** Latex
 	#+BEGIN_SRC emacs-lisp
 	  (use-package tex
@@ -515,7 +448,6 @@
 	 )
    #+END_SRC
 ** Whitespace Mode
-
    #+BEGIN_SRC emacs-lisp
 	 (use-package whitespace
 	   :init ()
@@ -525,8 +457,8 @@
 	   (setq
 		whitespace-display-mappings
 		'(
-		  (tab-mark 9 [8728 9] [92 9])
-		  ))
+			  (tab-mark 9 [8728 9] [92 9])
+			  ))
 	 )
    #+END_SRC
 ** Undo Tree
