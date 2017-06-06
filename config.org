@@ -87,12 +87,12 @@
   )
 #+END_SRC
 *** Zenburn
-#+BEGIN_SRC emacs-lisp
-  (use-package zenburn-theme
-	:ensure t
-	:defer t
-  )
-#+END_SRC
+	#+BEGIN_SRC emacs-lisp
+	  (use-package zenburn-theme
+		:ensure t
+		:defer t
+	  )
+  #+END_SRC
 *** Current Theme
 	#+BEGIN_SRC emacs-lisp
 	  (load-theme 'zenburn t)
@@ -148,28 +148,15 @@
   (display-time-mode 1)
 #+END_SRC
 * Modes
-** Magit
+** Avy
    #+BEGIN_SRC emacs-lisp
-	 (use-package magit
+	 (use-package avy
 	   :ensure t
-	   :bind ("C-c g" . magit-status)
-	 )
-   #+END_SRC
-** Dsvn
-   #+BEGIN_SRC emacs-lisp
-  (use-package dsvn
-	:ensure t
-	:bind ("C-c s" . svn-status)
-  )
-   #+END_SRC
-** Yasnippet
-   #+BEGIN_SRC emacs-lisp
-	 (use-package yasnippet
-	   :ensure t
-	   :init (add-hook 'prog-mode-hook #'yas-minor-mode)
-	   :config
-	   (yas-reload-all)
-	 )
+	   :bind (
+			  ("M-s" . avy-goto-char)
+			  ("M-l" . avy-goto-line)
+			  )
+	   )
    #+END_SRC
 ** C# Development
 *** CSharp
@@ -177,9 +164,8 @@
 	  (use-package csharp-mode
 		:ensure t
 		:mode ("\\.cs\\'" . csharp-mode)
-		:init
-		(yas-reload-all)
 		:config
+		(yas-reload-all)
 		(progn
 		  (add-hook 'csharp-mode-hook 'omnisharp-mode)
 		  (add-hook 'csharp-mode-hook 'yas-minor-mode)
@@ -204,15 +190,20 @@
 ** C++
    #+BEGIN_SRC emacs-lisp
    #+END_SRC
-** Python Development
-*** Elpy
-	#+BEGIN_SRC emacs-lisp
-	  (use-package elpy
-		:ensure t
-		:defer t
-		:config (elpy-enable)
-		)
-	#+END_SRC
+** Circe
+   Not working properly yet. Probably need to set TLS correctly
+   #+BEGIN_SRC emacs-lisp
+	 ;; (use-package circe
+	 ;;   :ensure t
+	 ;;   :defer t
+	 ;;   :config
+	 ;;   (setq circe-network-options
+	 ;;			`(("Freenode"
+	 ;;			   :nick "triplem_161"
+	 ;;			   :channels ("#emacs")
+	 ;;			   :nickserv-password ,freenode-password)))
+	 ;;   )
+   #+END_SRC
 ** Company
    #+BEGIN_SRC emacs-lisp
 	 (use-package company
@@ -222,6 +213,47 @@
 	 )
    #+END_SRC
 
+** Dsvn
+   #+BEGIN_SRC emacs-lisp
+  (use-package dsvn
+	:ensure t
+	:bind ("C-c s" . svn-status)
+  )
+   #+END_SRC
+** Ediff
+   #+BEGIN_SRC emacs-lisp
+	 (use-package ediff
+	   :defer t
+	   :config
+	   (setq ediff-window-setup-function 'ediff-setup-windows-plain)
+	 )
+   #+END_SRC
+** Emmet
+   #+BEGIN_SRC emacs-lisp
+	 (use-package emmet-mode
+	   :ensure t
+	   :defer t
+	   :config
+	   (add-hook 'web-mode-hook 'emmet-mode)
+	 )
+   #+END_SRC
+** Flycheck
+   #+BEGIN_SRC emacs-lisp
+	 (use-package flycheck
+	   :ensure t
+	   :init
+	   (global-flycheck-mode t)
+	  )
+   #+END_SRC
+** Google this
+   #+BEGIN_SRC emacs-lisp
+	 (use-package google-this
+	   :ensure t
+	   :bind ("C-c w" . google-this-search)
+	   :init
+	   (google-this-mode t)
+	 )
+   #+END_SRC
 ** Ivy / Swipper / Counsel / Smex
    #+BEGIN_SRC emacs-lisp
 	 (use-package ivy
@@ -260,16 +292,6 @@
 	   (("M-z" . avy-zap-to-char-dwim))
 	 )
    #+END_SRC
-** Avy
-   #+BEGIN_SRC emacs-lisp
-	 (use-package avy
-	   :ensure t
-	   :bind (
-			  ("M-s" . avy-goto-char)
-			  ("M-l" . avy-goto-line)
-			  )
-	   )
-   #+END_SRC
 ** JS2
    #+BEGIN_SRC emacs-lisp
 	  (use-package js2-mode
@@ -277,14 +299,110 @@
 		 :mode ("\\.js\\'" . js2-mode)
 	  )
    #+END_SRC
-** Emmet
+** Json Reformat
    #+BEGIN_SRC emacs-lisp
-	 (use-package emmet-mode
+	 (use-package json-reformat
+	   :ensure t
+	   :defer t
+	 )
+   #+END_SRC
+** Latex
+	#+BEGIN_SRC emacs-lisp
+	  (use-package tex
+		:defer t
+		:ensure auctex
+		)
+	#+END_SRC
+** Less Mode
+   [[https://github.com/purcell/less-css-mode][Less Mode Git]]
+   #+BEGIN_SRC emacs-lisp
+	 (use-package less-css-mode
+	   :ensure t
+	   :defer t
+	 )
+   #+END_SRC
+** Magit
+   #+BEGIN_SRC emacs-lisp
+	 (use-package magit
+	   :ensure t
+	   :bind ("C-c g" . magit-status)
+	 )
+   #+END_SRC
+** Move Text
+   #+BEGIN_SRC emacs-lisp
+	 (use-package move-text
+	   :ensure t
+	   :init
+	   (bind-key "M-p" 'move-text-up)
+	   (bind-key "M-n" 'move-text-down)
+	 )
+   #+END_SRC
+** Org Bullet
+   #+BEGIN_SRC emacs-lisp
+	 (use-package org-bullets
+	   :ensure t
+	   :defer t
+	   :init (add-hook 'org-mode-hook 'org-bullets-mode)
+	   ;; :config
+	   ;; (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+	 )
+   #+END_SRC
+** Pivotal Tracker
+   #+BEGIN_SRC emacs-lisp
+	 (use-package pivotal-tracker
 	   :ensure t
 	   :defer t
 	   :config
-	   (add-hook 'web-mode-hook 'emmet-mode)
+	   (setq pivotal-api-token "4bfc18370422bbd2ff8ddaa63a387152")
+	   )
+	#+END_SRC
+** PlantUML
+   #+BEGIN_SRC emacs-lisp
+	 (use-package plantuml-mode
+	   :ensure t
+	   :defer t
 	 )
+   #+END_SRC
+** Python Development
+*** Elpy
+	#+BEGIN_SRC emacs-lisp
+	  (use-package elpy
+		:ensure t
+		:defer t
+		:config (elpy-enable)
+		)
+	#+END_SRC
+** Rainbow Mode
+   [[https://julien.danjou.info/projects/emacs-packages#rainbow-mode][Rainbow Mode Website]]
+   #+BEGIN_SRC emacs-lisp
+	 (use-package rainbow-mode
+	   :ensure t
+	   :defer t
+	   :init
+	   (add-hook 'less-css-mode-hook 'rainbow-mode)
+	   )
+   #+END_SRC
+** Rest Client
+   #+BEGIN_SRC emacs-lisp
+	 (use-package restclient
+	   :ensure t
+	   :defer t
+	 )
+   #+END_SRC
+** Shader Mode
+   #+BEGIN_SRC emacs-lisp
+	 (use-package shader-mode
+	   :ensure t
+	   :defer t
+	 )
+   #+END_SRC
+** Undo Tree
+   #+BEGIN_SRC emacs-lisp
+	 (use-package undo-tree
+	   :ensure t
+	   :defer t
+	   :init (global-undo-tree-mode)
+	   )
    #+END_SRC
 ** Web Mode
 	#+BEGIN_SRC emacs-lisp
@@ -297,97 +415,20 @@
 			  )
 		)
 	#+END_SRC
-** Less Mode
-   [[https://github.com/purcell/less-css-mode][Less Mode Git]]
+** Whitespace Mode
    #+BEGIN_SRC emacs-lisp
-	 (use-package less-css-mode
-	   :ensure t
-	   :defer t
-	 )
-   #+END_SRC
-** Rainbow Mode
-   [[https://julien.danjou.info/projects/emacs-packages#rainbow-mode][Rainbow Mode Website]]
-   #+BEGIN_SRC emacs-lisp
-	 (use-package rainbow-mode
-	   :ensure t
-	   :defer t
-	   :init
-	   (add-hook 'less-css-mode-hook 'rainbow-mode)
-	   )
-   #+END_SRC
-** Flycheck
-   #+BEGIN_SRC emacs-lisp
-	 (use-package flycheck
-	   :ensure t
-	   :init
-	   (global-flycheck-mode t)
-	  )
-   #+END_SRC
-** Org Bullet
-   #+BEGIN_SRC emacs-lisp
-	 (use-package org-bullets
-	   :ensure t
-	   :defer t
-	   :init (add-hook 'org-mode-hook 'org-bullets-mode)
-	   ;; :config
-	   ;; (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
-	 )
-   #+END_SRC
-** Move Text
-   #+BEGIN_SRC emacs-lisp
-	 (use-package move-text
-	   :ensure t
-	   :init
-	   (bind-key "M-p" 'move-text-up)
-	   (bind-key "M-n" 'move-text-down)
-	 )
-   #+END_SRC
-** Rest Client
-   #+BEGIN_SRC emacs-lisp
-	 (use-package restclient
-	   :ensure t
-	   :defer t
-	 )
-   #+END_SRC
-** Json Reformat
-   #+BEGIN_SRC emacs-lisp
-	 (use-package json-reformat
-	   :ensure t
-	   :defer t
-	 )
-   #+END_SRC
-** Circe
-   Not working properly yet. Probably need to set TLS correctly
-   #+BEGIN_SRC emacs-lisp
-	 ;; (use-package circe
-	 ;;   :ensure t
-	 ;;   :defer t
-	 ;;   :config
-	 ;;   (setq circe-network-options
-	 ;;			`(("Freenode"
-	 ;;			   :nick "triplem_161"
-	 ;;			   :channels ("#emacs")
-	 ;;			   :nickserv-password ,freenode-password)))
-	 ;;   )
-   #+END_SRC
-** Google this
-   #+BEGIN_SRC emacs-lisp
-	 (use-package google-this
-	   :ensure t
-	   :bind ("C-c w" . google-this-search)
-	   :init
-	   (google-this-mode t)
-	 )
-   #+END_SRC
-** Pivotal Tracker
-   #+BEGIN_SRC emacs-lisp
-	 (use-package pivotal-tracker
-	   :ensure t
-	   :defer t
+	 (use-package whitespace
+	   :init ()
+	   (add-hook 'prog-mode-hook 'whitespace-mode)
 	   :config
-	   (setq pivotal-api-token "4bfc18370422bbd2ff8ddaa63a387152")
-	   )
-	#+END_SRC
+	   (setq whitespace-style '(tabs tab-mark trailing))
+	   (setq
+		whitespace-display-mappings
+		'(
+			  (tab-mark 9 [8728 9] [92 9])
+			  ))
+	 )
+   #+END_SRC
 ** Xcode / Swift
    Only called when the environment is a Mac OS
    [[https://github.com/swift-emacs/swift-mode][Swift Git Repository]]
@@ -418,54 +459,12 @@
 				)
 		 )
    #+END_SRC
-** Shader Mode
+** Yasnippet
    #+BEGIN_SRC emacs-lisp
-	 (use-package shader-mode
+	 (use-package yasnippet
 	   :ensure t
-	   :defer t
-	 )
-   #+END_SRC
-** PlantUML
-   #+BEGIN_SRC emacs-lisp
-	 (use-package plantuml-mode
-	   :ensure t
-	   :defer t
-	 )
-   #+END_SRC
-** Latex
-	#+BEGIN_SRC emacs-lisp
-	  (use-package tex
-		:defer t
-		:ensure auctex
-		)
-	#+END_SRC
-** Ediff
-   #+BEGIN_SRC emacs-lisp
-	 (use-package ediff
-	   :defer t
+	   :init (add-hook 'prog-mode-hook #'yas-minor-mode)
 	   :config
-	   (setq ediff-window-setup-function 'ediff-setup-windows-plain)
+	   (yas-reload-all)
 	 )
-   #+END_SRC
-** Whitespace Mode
-   #+BEGIN_SRC emacs-lisp
-	 (use-package whitespace
-	   :init ()
-	   (add-hook 'prog-mode-hook 'whitespace-mode)
-	   :config
-	   (setq whitespace-style '(tabs tab-mark trailing))
-	   (setq
-		whitespace-display-mappings
-		'(
-			  (tab-mark 9 [8728 9] [92 9])
-			  ))
-	 )
-   #+END_SRC
-** Undo Tree
-   #+BEGIN_SRC emacs-lisp
-	 (use-package undo-tree
-	   :ensure t
-	   :defer t
-	   :init (global-undo-tree-mode)
-	   )
    #+END_SRC
