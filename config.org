@@ -15,7 +15,7 @@
 	  (setq package-archives
 			'(("gnu"				. "https://elpa.gnu.org/packages/")
 			  ("melpa"		   . "http://melpa.org/packages/")
-			  ;; ("melpa-stable" . "http://stable.melpa.org/packages/")
+			  ("melpa-stable" . "http://stable.melpa.org/packages/")
 			  ;; ("elpy"		   . "http://jorgenschaefer.github.io/packages/")
 			  ;; ("org"		   . "http://orgmode.org/elpa/") ;; for org-plus-contrib
 			  )
@@ -80,12 +80,12 @@
 #+END_SRC
 
 *** Ample
-#+BEGIN_SRC emacs-lisp
-  (use-package ample-theme
-	:ensure t
-	:defer t
-  )
-#+END_SRC
+	#+BEGIN_SRC emacs-lisp
+	  (use-package ample-theme
+		:ensure t
+		:defer t
+	  )
+  #+END_SRC
 *** Zenburn
 	#+BEGIN_SRC emacs-lisp
 	  (use-package zenburn-theme
@@ -142,11 +142,40 @@
 #+END_SRC
 
 ** Mode Line
-#+BEGIN_SRC emacs-lisp
-  ;; (setq display-time-day-and-date t)
-  (setq display-time-day-and-date 1)
-  (display-time-mode 1)
-#+END_SRC
+   #+BEGIN_SRC emacs-lisp
+	 ;; Custom time and date
+	 (setq display-time-day-and-date 1
+		   display-time-default-load-average nil
+		   display-time-24hr-format t)
+
+	 (setq display-time-string-forms
+	   '((propertize
+		  (format-time-string " %d %b %H:%M "))))
+
+	 (display-time-mode 1)
+
+	 ;; Custom line / column number
+	 (setq mode-line-position
+		   '((line-number-mode ("l.%l")))
+		   )
+
+	 ;; Modeline Style
+	 (set-face-attribute 'mode-line nil
+						 :background "#656555"
+						 :foreground "#DCDCCC"
+						 :box '(:line-width 2 :color "#656555")
+						 :overline nil
+						 :underline nil)
+
+	 (set-face-attribute 'mode-line-inactive nil
+						 :background "#656555"
+						 :foreground "#DCDCCC"
+						 :box '(:line-width 2 :color "#656555")
+						 :overline nil
+						 :underline nil)
+
+	 (set-face-attribute 'mode-line-buffer-id nil :foreground "#93E0E3")
+  #+END_SRC
 * Modes
 ** Avy
    #+BEGIN_SRC emacs-lisp
@@ -176,6 +205,7 @@
 	#+BEGIN_SRC emacs-lisp
 	  (use-package omnisharp
 		:ensure t
+		:diminish omnisharp-mode
 		:bind (:map omnisharp-mode-map
 					("C-u" . omnisharp-navigate-to-solution-file)
 					("C-c u" . omnisharp-find-usages)
@@ -223,7 +253,6 @@
 						 company-minimum-prefix-length 2)
 	 )
    #+END_SRC
-
 ** Dsvn
    #+BEGIN_SRC emacs-lisp
   (use-package dsvn
@@ -252,6 +281,7 @@
    #+BEGIN_SRC emacs-lisp
 	 (use-package flycheck
 	   :ensure t
+	   :diminish flycheck-mode
 	   :init
 	   (global-flycheck-mode t)
 	  )
@@ -260,6 +290,7 @@
    #+BEGIN_SRC emacs-lisp
 	 (use-package google-this
 	   :ensure t
+	   :diminish google-this-mode
 	   :bind ("C-c w" . google-this-search)
 	   :init
 	   (google-this-mode t)
@@ -269,6 +300,7 @@
    #+BEGIN_SRC emacs-lisp
 	 (use-package ivy
 	   :ensure t
+	   :diminish ivy-mode
 	   :bind
 	   (("C-x b" . ivy-switch-buffer))
 	   :init
@@ -388,9 +420,8 @@
    #+BEGIN_SRC emacs-lisp
 	 (use-package rainbow-mode
 	   :ensure t
-	   :defer t
-	   :init
-	   (add-hook 'less-css-mode-hook 'rainbow-mode)
+	   :diminish rainbow-mode
+	   :init (rainbow-mode 1)
 	   )
    #+END_SRC
 ** Rest Client
@@ -411,6 +442,7 @@
    #+BEGIN_SRC emacs-lisp
 	 (use-package undo-tree
 	   :ensure t
+	   :diminish undo-tree-mode
 	   :defer t
 	   :init (global-undo-tree-mode)
 	   )
@@ -429,6 +461,7 @@
 ** Whitespace Mode
    #+BEGIN_SRC emacs-lisp
 	 (use-package whitespace
+	   :diminish whitespace-mode
 	   :init ()
 	   (add-hook 'prog-mode-hook 'whitespace-mode)
 	   :config
@@ -474,6 +507,7 @@
    #+BEGIN_SRC emacs-lisp
 	 (use-package yasnippet
 	   :ensure t
+	   :diminish yas-minor-mode
 	   :init (add-hook 'prog-mode-hook #'yas-minor-mode)
 	   :config
 	   (yas-reload-all)
