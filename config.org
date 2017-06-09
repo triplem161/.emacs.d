@@ -204,6 +204,17 @@
 	 ;;			   :nickserv-password ,freenode-password)))
 	 ;;   )
    #+END_SRC
+** CMake
+   #+BEGIN_SRC emacs-lisp
+	 ; Add cmake listfile names to the mode list.
+	 (setq auto-mode-alist
+		   (append
+			'(("CMakeLists\\.txt\\'" . cmake-mode))
+			'(("\\.cmake\\'" . cmake-mode))
+			auto-mode-alist))
+
+	 (autoload 'cmake-mode "/usr/local/Cellar/cmake/3.8.2/share/emacs/site-lisp/cmake/cmake-mode.el" t)
+   #+END_SRC
 ** Company
    #+BEGIN_SRC emacs-lisp
 	 (use-package company
