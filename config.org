@@ -203,19 +203,41 @@
 	#+END_SRC
 *** Omnisharp
 	#+BEGIN_SRC emacs-lisp
-	  (use-package omnisharp
-		:ensure t
-		:diminish omnisharp-mode
-		:bind (:map omnisharp-mode-map
-					("C-u" . omnisharp-navigate-to-solution-file)
-					("C-c u" . omnisharp-find-usages)
-					("C-c d" . omnisharp-go-to-definition)
-					)
-		:config
-		(setq omnisharp-server-executable-path "/usr/local/Cellar/omnisharp-mono/1.19.0/bin/omnisharp")
-		(add-to-list 'company-backends 'company-omnisharp)
-		(setq omnisharp-imenu-support t)
-		)
+			;; Due to issue with the new flavor of omnisharp emacs
+			;; (use-package omnisharp
+			;;   :ensure t
+			;;   :diminish omnisharp-mode
+			;;   :bind (:map omnisharp-mode-map
+			;; 			  ("C-u" . omnisharp-navigate-to-solution-file)
+			;; 			  ("C-c u" . omnisharp-find-usages)
+			;; 			  ("C-c d" . omnisharp-go-to-definition)
+			;; 			  )
+			;;   :config
+			;;   (setq omnisharp-server-executable-path "/usr/local/Cellar/omnisharp-mono/1.19.0/bin/omnisharp")
+			;;   (add-to-list 'company-backends 'company-omnisharp)
+			;;   (setq omnisharp-imenu-support t)
+			;;   )
+
+			;; Use of omnisharp legacy (with old server and curl)
+			(use-package omnisharp
+			  ;;:ensure t
+			  :load-path "legacy-mode/omnisharp/"
+			  :pin manual
+			  :diminish omnisharp-mode
+			  :bind (:map omnisharp-mode-map
+						  ("C-u" . omnisharp-navigate-to-solution-file)
+						  ("C-c u" . omnisharp-find-usages)
+						  ("C-c d" . omnisharp-go-to-definition)
+						  )
+			  :init (require 'omnisharp)
+			  :config
+			  ;;(setq omnisharp-server-executable-path "/usr/local/Cellar/omnisharp-mono/1.19.0/bin/omnisharp")
+			  (eval-after-load 'company
+				'(add-to-list 'company-backends 'company-omnisharp))
+			  (setq omnisharp-server-executable-path "~/Documents/Programming/Utils/omnisharp-server/OmniSharp/bin/Debug/OmniSharp.exe")
+			  (setq omnisharp-curl-executable-path "/usr/bin/curl")
+			  (setq omnisharp-imenu-support t)
+			  )
 	#+END_SRC
 ** C++
    #+BEGIN_SRC emacs-lisp
@@ -249,8 +271,9 @@
    #+BEGIN_SRC emacs-lisp
 	 (use-package company
 	   :ensure t
+	   :init (add-hook 'after-init-hook 'global-company-mode)
 	   :config (setq company-idle-delay 0.2
-						 company-minimum-prefix-length 2)
+					 company-minimum-prefix-length 2)
 	 )
    #+END_SRC
 ** Dsvn
