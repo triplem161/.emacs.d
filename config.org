@@ -2,29 +2,25 @@
 #+AUTHOR: Marion Maignan
 
 * Personnal Informations
-
 	#+begin_src emacs-lisp
 	  (setq user-full-name "Maignan Marion"
 			user-mail-address "maigmarion@gmail.com")
 	#+end_src
-
 * Require
-
 	#+BEGIN_SRC emacs-lisp
-      (require 'cl)
-      (require 'cc-mode)
-      ;;(require 'package)
-      ;;(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
-      (setq package-archives
-            '(("gnu"                . "https://elpa.gnu.org/packages/")
-              ("melpa"         . "http://melpa.org/packages/")
-              ;; ("melpa-stable" . "http://stable.melpa.org/packages/")
-              ;; ("elpy"           . "http://jorgenschaefer.github.io/packages/")
-              ;; ("org"        . "http://orgmode.org/elpa/") ;; for org-plus-contrib
-              )
-            )
+	  (require 'cl)
+	  (require 'cc-mode)
+	  ;;(require 'package)
+	  ;;(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
+	  (setq package-archives
+			'(("gnu"				. "https://elpa.gnu.org/packages/")
+			  ("melpa"		   . "http://melpa.org/packages/")
+			  ("melpa-stable" . "http://stable.melpa.org/packages/")
+			  ;; ("elpy"		   . "http://jorgenschaefer.github.io/packages/")
+			  ;; ("org"		   . "http://orgmode.org/elpa/") ;; for org-plus-contrib
+			  )
+			)
 	#+END_SRC
-
 * Systems
 ** Windows
 
@@ -55,7 +51,6 @@
 
 * Settings
 ** Encoding
-
 	#+BEGIN_SRC emacs-lisp
 	  (setq locale-coding-system 'utf-8)
 	  (set-terminal-coding-system 'utf-8)
@@ -63,48 +58,16 @@
 	  (set-selection-coding-system 'utf-8)
 	  (prefer-coding-system 'utf-8)
 	#+END_SRC
-
 ** Font
-
 	#+BEGIN_SRC emacs-lisp
-	  (set-default-font "Fira Code 18" )
-	  (let ((alist '((33 . ".\\(?:\\(?:==\\|!!\\)\\|[!=]\\)")
-					 (35 . ".\\(?:###\\|##\\|_(\\|[#(?[_{]\\)")
-					 (36 . ".\\(?:>\\)")
-					 (37 . ".\\(?:\\(?:%%\\)\\|%\\)")
-					 (38 . ".\\(?:\\(?:&&\\)\\|&\\)")
-					 (42 . ".\\(?:\\(?:\\*\\*/\\)\\|\\(?:\\*[*/]\\)\\|[*/>]\\)")
-					 (43 . ".\\(?:\\(?:\\+\\+\\)\\|[+>]\\)")
-					 ;;These line make emacs freeze
-					 ;;(45 . ".\\(?:\\(?:-[>-]\\|<<\\|>>\\)\\|[<>}~-]\\)")
-					 ;;(46 . ".\\(?:\\(?:\\.[.<]\\)\\|[.=-]\\)")
-					 ;;(47 . ".\\(?:\\(?:\\*\\*\\|//\\|==\\)\\|[*/=>]\\)")
-					 (48 . ".\\(?:x[a-zA-Z]\\)")
-					 (58 . ".\\(?:::\\|[:=]\\)")
-					 (59 . ".\\(?:;;\\|;\\)")
-					 (60 . ".\\(?:\\(?:!--\\)\\|\\(?:~~\\|->\\|\\$>\\|\\*>\\|\\+>\\|--\\|<[<=-]\\|=[<=>]\\||>\\)\\|[*$+~/<=>|-]\\)")
-					 (61 . ".\\(?:\\(?:/=\\|:=\\|<<\\|=[=>]\\|>>\\)\\|[<=>~]\\)")
-					 (62 . ".\\(?:\\(?:=>\\|>[=>-]\\)\\|[=>-]\\)")
-					 (63 . ".\\(?:\\(\\?\\?\\)\\|[:=?]\\)")
-					 (91 . ".\\(?:]\\)")
-					 (92 . ".\\(?:\\(?:\\\\\\\\\\)\\|\\\\\\)")
-					 (94 . ".\\(?:=\\)")
-					 (119 . ".\\(?:ww\\)")
-					 (123 . ".\\(?:-\\)")
-					 (124 . ".\\(?:\\(?:|[=|]\\)\\|[=>|]\\)")
-					 (126 . ".\\(?:~>\\|~~\\|[>=@~-]\\)")
-					 )
-				   ))
-		(dolist (char-regexp alist)
-		  (set-char-table-range composition-function-table (car char-regexp)
-								`([,(cdr char-regexp) 0 font-shape-gstring]))))
+	  (set-default-font "Hack 16")
 	#+END_SRC
-
 ** Themes
 *** Solarized
 #+BEGIN_SRC emacs-lisp
   (use-package solarized-theme
 	:ensure t
+	:defer t
   )
 #+END_SRC
 
@@ -112,28 +75,30 @@
 #+BEGIN_SRC emacs-lisp
   (use-package darkburn-theme
 	:ensure t
-  )
+	:defer t
+	)
 #+END_SRC
 
 *** Ample
-#+BEGIN_SRC emacs-lisp
-  (use-package ample-theme
-	:ensure t
-  )
-#+END_SRC
+	#+BEGIN_SRC emacs-lisp
+	  (use-package ample-theme
+		:ensure t
+		:defer t
+	  )
+  #+END_SRC
 *** Zenburn
-#+BEGIN_SRC emacs-lisp
-  (use-package zenburn-theme
-	:ensure t
-  )
-#+END_SRC
+	#+BEGIN_SRC emacs-lisp
+	  (use-package zenburn-theme
+		:ensure t
+		:defer t
+	  )
+  #+END_SRC
 *** Current Theme
 	#+BEGIN_SRC emacs-lisp
-  (load-theme 'zenburn t)
+	  (load-theme 'zenburn t)
 	#+END_SRC
 
 ** UI
-
 	#+BEGIN_SRC emacs-lisp
 	  (defalias 'yes-or-no-p 'y-or-n-p)
 
@@ -142,9 +107,9 @@
 	  (setq inhibit-startup-message t)
 	  (setq initial-scratch-message "")
 
-	  (menu-bar-mode -1)
-	  (scroll-bar-mode -1)
-	  (tool-bar-mode -1)
+	  (menu-bar-mode 0)
+	  (set-scroll-bar-mode nil)
+	  (tool-bar-mode 0)
 	  (setq ring-bell-function 'ignore)
 
 	  ;;Set tabs to space 4
@@ -158,12 +123,12 @@
 	  ;;Highlight the cursor line
 	  (global-hl-line-mode t)
 	#+END_SRC
-
 ** Edition
 
 #+BEGIN_SRC emacs-lisp
   (add-hook 'after-init-hook 'electric-pair-mode)
 
+  ;; Allow selected text to be replaced
   (delete-selection-mode t)
 
   (setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
@@ -177,16 +142,139 @@
 #+END_SRC
 
 ** Mode Line
-#+BEGIN_SRC emacs-lisp
-(display-time-mode 1)
-#+END_SRC
-* Modes
-** Magit
    #+BEGIN_SRC emacs-lisp
-  (use-package magit
-	:ensure t
-	:bind ("C-c g" . magit-status)
-  )
+	 ;; Custom time and date
+	 (setq display-time-day-and-date 1
+		   display-time-default-load-average nil
+		   display-time-24hr-format t)
+
+	 (setq display-time-string-forms
+	   '((propertize
+		  (format-time-string " %d %b %H:%M "))))
+
+	 (display-time-mode 1)
+
+	 ;; Custom line / column number
+	 (setq mode-line-position
+		   '((line-number-mode ("l.%l")))
+		   )
+
+	 ;; Modeline Style
+	 (set-face-attribute 'mode-line nil
+						 :background "#656555"
+						 :foreground "#DCDCCC"
+						 :box '(:line-width 2 :color "#656555")
+						 :overline nil
+						 :underline nil)
+
+	 (set-face-attribute 'mode-line-inactive nil
+						 :background "#656555"
+						 :foreground "#DCDCCC"
+						 :box '(:line-width 2 :color "#656555")
+						 :overline nil
+						 :underline nil)
+
+	 (set-face-attribute 'mode-line-buffer-id nil :foreground "#93E0E3")
+  #+END_SRC
+* Modes
+** Avy
+   #+BEGIN_SRC emacs-lisp
+	 (use-package avy
+	   :ensure t
+	   :bind (
+			  ("M-s" . avy-goto-char)
+			  ("M-l" . avy-goto-line)
+			  )
+	   )
+   #+END_SRC
+** C# Development
+*** CSharp
+	#+BEGIN_SRC emacs-lisp
+	  (use-package csharp-mode
+		:ensure t
+		:mode ("\\.cs\\'" . csharp-mode)
+		:config
+		(yas-reload-all)
+		(progn
+		  (add-hook 'csharp-mode-hook 'omnisharp-mode)
+		  (add-hook 'csharp-mode-hook 'yas-minor-mode)
+		  )
+		)
+	#+END_SRC
+*** Omnisharp
+	#+BEGIN_SRC emacs-lisp
+			;; Due to issue with the new flavor of omnisharp emacs
+			;; (use-package omnisharp
+			;;   :ensure t
+			;;   :diminish omnisharp-mode
+			;;   :bind (:map omnisharp-mode-map
+			;; 			  ("C-u" . omnisharp-navigate-to-solution-file)
+			;; 			  ("C-c u" . omnisharp-find-usages)
+			;; 			  ("C-c d" . omnisharp-go-to-definition)
+			;; 			  )
+			;;   :config
+			;;   (setq omnisharp-server-executable-path "/usr/local/Cellar/omnisharp-mono/1.19.0/bin/omnisharp")
+			;;   (add-to-list 'company-backends 'company-omnisharp)
+			;;   (setq omnisharp-imenu-support t)
+			;;   )
+
+			;; Use of omnisharp legacy (with old server and curl)
+			(use-package omnisharp
+			  ;;:ensure t
+			  :load-path "legacy-mode/omnisharp/"
+			  :pin manual
+			  :diminish omnisharp-mode
+			  :bind (:map omnisharp-mode-map
+						  ("C-u" . omnisharp-navigate-to-solution-file)
+						  ("C-c u" . omnisharp-find-usages)
+						  ("C-c d" . omnisharp-go-to-definition)
+						  )
+			  :init (require 'omnisharp)
+			  :config
+			  ;;(setq omnisharp-server-executable-path "/usr/local/Cellar/omnisharp-mono/1.19.0/bin/omnisharp")
+			  (eval-after-load 'company
+				'(add-to-list 'company-backends 'company-omnisharp))
+			  (setq omnisharp-server-executable-path "~/Documents/Programming/Utils/omnisharp-server/OmniSharp/bin/Debug/OmniSharp.exe")
+			  (setq omnisharp-curl-executable-path "/usr/bin/curl")
+			  (setq omnisharp-imenu-support t)
+			  )
+	#+END_SRC
+** C++
+   #+BEGIN_SRC emacs-lisp
+   #+END_SRC
+** Circe
+   Not working properly yet. Probably need to set TLS correctly
+   #+BEGIN_SRC emacs-lisp
+	 ;; (use-package circe
+	 ;;   :ensure t
+	 ;;   :defer t
+	 ;;   :config
+	 ;;   (setq circe-network-options
+	 ;;			`(("Freenode"
+	 ;;			   :nick "triplem_161"
+	 ;;			   :channels ("#emacs")
+	 ;;			   :nickserv-password ,freenode-password)))
+	 ;;   )
+   #+END_SRC
+** CMake
+   #+BEGIN_SRC emacs-lisp
+	 ; Add cmake listfile names to the mode list.
+	 (setq auto-mode-alist
+		   (append
+			'(("CMakeLists\\.txt\\'" . cmake-mode))
+			'(("\\.cmake\\'" . cmake-mode))
+			auto-mode-alist))
+
+	 (autoload 'cmake-mode "/usr/local/Cellar/cmake/3.8.2/share/emacs/site-lisp/cmake/cmake-mode.el" t)
+   #+END_SRC
+** Company
+   #+BEGIN_SRC emacs-lisp
+	 (use-package company
+	   :ensure t
+	   :init (add-hook 'after-init-hook 'global-company-mode)
+	   :config (setq company-idle-delay 0.2
+					 company-minimum-prefix-length 2)
+	 )
    #+END_SRC
 ** Dsvn
    #+BEGIN_SRC emacs-lisp
@@ -195,74 +283,47 @@
 	:bind ("C-c s" . svn-status)
   )
    #+END_SRC
-** Yasnippet
+** Ediff
    #+BEGIN_SRC emacs-lisp
-	 (use-package yasnippet
-	   :ensure t
-	   :init (add-hook 'prog-mode-hook #'yas-minor-mode)
+	 (use-package ediff
+	   :defer t
 	   :config
-	   (yas-reload-all)
+	   (setq ediff-window-setup-function 'ediff-setup-windows-plain)
 	 )
    #+END_SRC
-** C# Development
-*** CSharp
-
-	#+BEGIN_SRC emacs-lisp
-      (use-package csharp-mode
-        :ensure t
-        :mode ("\\.cs\\'" . csharp-mode)
-        :init
-        (yas-reload-all)
-        :config
-        (require 'omnisharp)
-        (progn
-          (add-hook 'csharp-mode-hook 'omnisharp-mode)
-          (add-hook 'csharp-mode-hook 'yas-minor-mode)
-          )
-      )
-	#+END_SRC
-
-*** Omnisharp
-
-	#+BEGIN_SRC emacs-lisp
-      (use-package omnisharp
-        :ensure t
-        :bind (:map omnisharp-mode-map
-                    ("C-u" . omnisharp-navigate-to-solution-file)
-                    ("C-c u" . omnisharp-find-usages)
-                    ("C-c d" . omnisharp-go-to-definition)
-                    )
-        :config
-        ;;(setq omnisharp-server-executable-path "C:\\Programming\\Omnisharp\\omnisharp-roslyn\\artifacts\\publish\\OmniSharp\\default\\net46\\OmniSharp.exe")
-      ;;  (setq omnisharp-server-executable-path "C:\\Programming\\omniros\\OmniSharp.exe")
-        (add-to-list 'company-backends 'company-omnisharp)
-        (setq omnisharp-imenu-support t)
-        (setq omnisharp-company-do-template-completion t)
-        )
-	#+END_SRC
-
-** Python Development
-*** Elpy
-	#+BEGIN_SRC emacs-lisp
-  (use-package elpy
-	:ensure t
-	:config (elpy-enable)
-  )
-	#+END_SRC
-** Company
+** Emmet
    #+BEGIN_SRC emacs-lisp
-  (use-package company
-	:ensure t
-	:init (add-hook 'after-init-hook 'global-company-mode)
-	:config (setq company-idle-delay 0.2
-				  company-minimum-prefix-length 2)
-  )
+	 (use-package emmet-mode
+	   :ensure t
+	   :defer t
+	   :config
+	   (add-hook 'web-mode-hook 'emmet-mode)
+	 )
    #+END_SRC
-
+** Flycheck
+   #+BEGIN_SRC emacs-lisp
+	 (use-package flycheck
+	   :ensure t
+	   :diminish flycheck-mode
+	   :init
+	   (global-flycheck-mode t)
+	  )
+   #+END_SRC
+** Google this
+   #+BEGIN_SRC emacs-lisp
+	 (use-package google-this
+	   :ensure t
+	   :diminish google-this-mode
+	   :bind ("C-c w" . google-this-search)
+	   :init
+	   (google-this-mode t)
+	 )
+   #+END_SRC
 ** Ivy / Swipper / Counsel / Smex
    #+BEGIN_SRC emacs-lisp
 	 (use-package ivy
 	   :ensure t
+	   :diminish ivy-mode
 	   :bind
 	   (("C-x b" . ivy-switch-buffer))
 	   :init
@@ -297,81 +358,41 @@
 	   (("M-z" . avy-zap-to-char-dwim))
 	 )
    #+END_SRC
-** Avy
-   #+BEGIN_SRC emacs-lisp
-	 (use-package avy
-	   :ensure t
-	   :bind (
-			  ("M-s" . avy-goto-char)
-			  ("M-l" . avy-goto-line)
-			  )
-	   )
-   #+END_SRC
 ** JS2
    #+BEGIN_SRC emacs-lisp
-  (use-package js2-mode
-	:ensure t
-	:mode ("\\.js\\'" . js2-mode)
-  )
+	  (use-package js2-mode
+		 :ensure t
+		 :mode ("\\.js\\'" . js2-mode)
+	  )
    #+END_SRC
-** Emmet
+** Json Reformat
    #+BEGIN_SRC emacs-lisp
-  (use-package emmet-mode
-	:ensure t
-	:config
-	(add-hook 'web-mode-hook 'emmet-mode)
-  )
+	 (use-package json-reformat
+	   :ensure t
+	   :defer t
+	 )
    #+END_SRC
-** Web Mode
-
+** Latex
 	#+BEGIN_SRC emacs-lisp
-	  (use-package web-mode
-		:ensure t
-		:mode ("\\.js\\'" . web-mode)
-		:config
-		(setq web-mode-content-types
-			  '(("jsx" . "\\.js[x]?\\'"))
-			  )
+	  (use-package tex
+		:defer t
+		:ensure auctex
 		)
 	#+END_SRC
-
 ** Less Mode
-
    [[https://github.com/purcell/less-css-mode][Less Mode Git]]
-
    #+BEGIN_SRC emacs-lisp
 	 (use-package less-css-mode
 	   :ensure t
+	   :defer t
 	 )
    #+END_SRC
-
-** Rainbow Mode
-
-   [[https://julien.danjou.info/projects/emacs-packages#rainbow-mode][Rainbow Mode Website]]
-
+** Magit
    #+BEGIN_SRC emacs-lisp
-	 (use-package rainbow-mode
+	 (use-package magit
 	   :ensure t
-	   :init
-	   (add-hook 'less-css-mode-hook 'rainbow-mode)
-	   )
-   #+END_SRC
-
-** Flycheck
-   #+BEGIN_SRC emacs-lisp
-  (use-package flycheck
-	:ensure t
-	:init
-	(global-flycheck-mode t)
-   )
-   #+END_SRC
-** Org Bullet
-   #+BEGIN_SRC emacs-lisp
-  (use-package org-bullets
-	:ensure t
-	:config
-	(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
-  )
+	   :bind ("C-c g" . magit-status)
+	 )
    #+END_SRC
 ** Move Text
    #+BEGIN_SRC emacs-lisp
@@ -382,132 +403,88 @@
 	   (bind-key "M-n" 'move-text-down)
 	 )
    #+END_SRC
-** Rest Client
+** Org Bullet
    #+BEGIN_SRC emacs-lisp
-  (use-package restclient
-	:ensure t
-  )
-   #+END_SRC
-** Json Reformat
-   #+BEGIN_SRC emacs-lisp
-  (use-package json-reformat
-	:ensure t
-  )
-   #+END_SRC
-** Circe
-   Not working properly yet. Probably need to set TLS correctly
-   #+BEGIN_SRC emacs-lisp
-  (setq freenode-password "dob260989")
-
-  (use-package circe
-	:ensure t
-	:config
-	(setq circe-network-options
-		`(("Freenode"
-		   :nick "triplem_161"
-		   :channels ("#emacs")
-		   :nickserv-password ,freenode-password)))
-  )
-   #+END_SRC
-** Google this
-   #+BEGIN_SRC emacs-lisp
-	 (use-package google-this
+	 (use-package org-bullets
 	   :ensure t
-	   :bind ("C-c w" . google-this-search)
-	   :init
-	   (google-this-mode t)
+	   :defer t
+	   :init (add-hook 'org-mode-hook 'org-bullets-mode)
+	   ;; :config
+	   ;; (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
 	 )
    #+END_SRC
-** Org Capture
-   #+BEGIN_SRC emacs-lisp
-	 (define-key global-map "\C-ct" 'org-capture)
-	 (setq org-default-notes-file "/Users/Marion/Google Drive/Todo List/todo.org")
-
-	 (setq org-capture-templates
-		   '(("c"
-			  "Code"
-			  entry
-			  (file+headline "~/notes.org" "Code")
-			  "* TODO %^{TITLE} %^G\n:PROPERTIES:\n:Created: %U:Source: %a\n:END:\n%i%?")
-	 ))
-   #+END_SRC
-
 ** Pivotal Tracker
-#+BEGIN_SRC emacs-lisp
-  (use-package pivotal-tracker
-	:ensure t
-	:config
-	(setq pivotal-api-token "4bfc18370422bbd2ff8ddaa63a387152")
-	)
-#+END_SRC
-
-** Xcode / Swift
-
-   Only called when the environment is a Mac OS
-
-	[[https://github.com/swift-emacs/swift-mode][Swift Git Repository]]
-	[[https://github.com/nathankot/company-sourcekit][Company Sourcekit]]
-
    #+BEGIN_SRC emacs-lisp
-	 (when (eq system-type 'darwin)
-
-	   (use-package swift-mode
-		 :ensure t
-		 )
-
-	   (use-package company-sourcekit
-		 :ensure t
-		 :config
-		 (add-to-list 'company-backends 'company-sourcekit)
-		 ;; (setq sourcekit-sourcekittendaemon-executable "~/usr/local/Cellar/sourcekitten/0.17.2/bin/sourcekitten")
-		 ;; (setq company-sourcekit-use-yasnippet nil)
-		 )
-
-	   (use-package flycheck-swift
-		 :ensure t
-		 :config
-		 (setq flycheck-swift-sdk-path "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk")
-		 (setq flycheck-swift-target "arm64-apple-ios10")
-		 (eval-after-load 'flycheck '(flycheck-swift-setup))
-		 )
+	 (use-package pivotal-tracker
+	   :ensure t
+	   :defer t
+	   :config
+	   (setq pivotal-api-token "4bfc18370422bbd2ff8ddaa63a387152")
+	   )
+	#+END_SRC
+** PlantUML
+   #+BEGIN_SRC emacs-lisp
+	 (use-package plantuml-mode
+	   :ensure t
+	   :defer t
+	 )
+   #+END_SRC
+** Python Development
+*** Elpy
+	#+BEGIN_SRC emacs-lisp
+	  (use-package elpy
+		:ensure t
+		:defer t
+		:config (elpy-enable)
+		)
+	#+END_SRC
+** Rainbow Mode
+   [[https://julien.danjou.info/projects/emacs-packages#rainbow-mode][Rainbow Mode Website]]
+   #+BEGIN_SRC emacs-lisp
+	 (use-package rainbow-mode
+	   :ensure t
+	   :diminish rainbow-mode
+	   :init (rainbow-mode 1)
 	   )
    #+END_SRC
-
+** Rest Client
+   #+BEGIN_SRC emacs-lisp
+	 (use-package restclient
+	   :ensure t
+	   :defer t
+	 )
+   #+END_SRC
 ** Shader Mode
-
    #+BEGIN_SRC emacs-lisp
 	 (use-package shader-mode
 	   :ensure t
+	   :defer t
 	 )
    #+END_SRC
-
-** PlantUML
-
+** Undo Tree
    #+BEGIN_SRC emacs-lisp
-	 (use-package plantuml-mode
-	:ensure t
-	)
-   #+END_SRC
-
-** Latex
-
-	#+BEGIN_SRC emacs-lisp
-	  (use-package tex
-		:defer t
-		:ensure auctex
-		)
-	#+END_SRC
-** Ediff
-
-   #+BEGIN_SRC emacs-lisp
-	 (use-package ediff
-	   :config (setq ediff-window-setup-function 'ediff-setup-windows-plain)
+	 (use-package undo-tree
+	   :ensure t
+	   :diminish undo-tree-mode
+	   :defer t
+	   :init (global-undo-tree-mode)
 	   )
    #+END_SRC
+** Web Mode
+	#+BEGIN_SRC emacs-lisp
+	  (use-package web-mode
+		:ensure t
+		:mode ("\\.js\\'" . web-mode)
+		:config
+		(setq web-mode-content-types
+			  '(("jsx" . "\\.js[x]?\\'"))
+			  )
+		)
+	#+END_SRC
 ** Whitespace Mode
-
    #+BEGIN_SRC emacs-lisp
 	 (use-package whitespace
+	   :diminish whitespace-mode
 	   :init ()
 	   (add-hook 'prog-mode-hook 'whitespace-mode)
 	   :config
@@ -515,23 +492,47 @@
 	   (setq
 		whitespace-display-mappings
 		'(
-		  (tab-mark 9 [8728 9] [92 9])
-		  ))
+			  (tab-mark 9 [8728 9] [92 9])
+			  ))
 	 )
    #+END_SRC
-** Undo Tree
+** Xcode / Swift
+   Only called when the environment is a Mac OS
+   [[https://github.com/swift-emacs/swift-mode][Swift Git Repository]]
+   [[https://github.com/nathankot/company-sourcekit][Company Sourcekit]]
    #+BEGIN_SRC emacs-lisp
-	 (use-package undo-tree
-	   :ensure t
-	   :init (global-undo-tree-mode)
-	   )
-   #+END_SRC
-** Haskell
-   #+BEGIN_SRC emacs-lisp
-     (use-package haskell-mode
-       :ensure t
-       :config
-       (setq haskell-compile-cabal-build-command "stack build")
-       )
-   #+END_SRC
+	 (when (eq system-type 'darwin)
+		 (use-package swift-mode
+			   :ensure t
+			   :mode ("\\.swift\\'" . swift-mode)
+			   )
 
+		 (use-package company-sourcekit
+			 :ensure t
+			 :mode ("\\.swift\\'" . swift-mode)
+			 :config
+			  (add-to-list 'company-backends 'company-sourcekit)
+			  (setq sourcekit-sourcekittendaemon-executable "~/usr/local/Cellar/sourcekitten/0.17.2/bin/sourcekitten")
+			  (setq company-sourcekit-use-yasnippet nil)
+			  )
+
+		 (use-package flycheck-swift
+			   :ensure t
+			   :mode ("\\.swift\\'" . swift-mode)
+			   :config
+				(setq flycheck-swift-sdk-path "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk")
+				(setq flycheck-swift-target "arm64-apple-ios10")
+				(eval-after-load 'flycheck '(flycheck-swift-setup))
+				)
+		 )
+   #+END_SRC
+** Yasnippet
+   #+BEGIN_SRC emacs-lisp
+	 (use-package yasnippet
+	   :ensure t
+	   :diminish yas-minor-mode
+	   :init (add-hook 'prog-mode-hook #'yas-minor-mode)
+	   :config
+	   (yas-reload-all)
+	 )
+   #+END_SRC
