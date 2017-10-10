@@ -2,536 +2,472 @@
 #+AUTHOR: Marion Maignan
 
 * Personnal Informations
-	#+begin_src emacs-lisp
-	  (setq user-full-name "Maignan Marion"
-			user-mail-address "maigmarion@gmail.com")
-	#+end_src
+  #+BEGIN_SRC emacs-lisp
+    (setq user-full-name "Maignan Marion"
+	  user-mail-address "maigmarion@gmail.com")
+  #+END_SRC
 * Require
-	#+BEGIN_SRC emacs-lisp
-	  (require 'cl)
-	  (require 'cc-mode)
-	  ;;(require 'package)
-	  ;;(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
-	  (setq package-archives
-			'(("gnu"				. "https://elpa.gnu.org/packages/")
-			  ("melpa"		   . "http://melpa.org/packages/")
-			  ("melpa-stable" . "http://stable.melpa.org/packages/")
-			  ;; ("elpy"		   . "http://jorgenschaefer.github.io/packages/")
-			  ;; ("org"		   . "http://orgmode.org/elpa/") ;; for org-plus-contrib
-			  )
-			)
-	#+END_SRC
+  #+BEGIN_SRC emacs-lisp
+    (require 'cl)
+    (require 'cc-mode)
+    (require 'package)
+    ;;(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
+    (setq package-archives
+	  '(("gnu"				. "https://elpa.gnu.org/packages/")
+	    ("melpa"		   . "http://melpa.org/packages/")
+	    ("melpa-stable" . "http://stable.melpa.org/packages/")
+	    ;; ("elpy"		   . "http://jorgenschaefer.github.io/packages/")
+	    ;; ("org"		   . "http://orgmode.org/elpa/") ;; for org-plus-contrib
+	    )
+	  )
+  #+END_SRC
 * Systems
 ** Windows
-
    Set putty for tramp mode : [[http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html][Bin for putty]]
-
-	#+BEGIN_SRC emacs-lisp
-	  (when (eq system-type 'windows-nt)
-		(require 'tramp)
-		(set-default 'tramp-default-method "plink")
-		)
-	#+END_SRC
-
+   #+BEGIN_SRC emacs-lisp
+     (when (eq system-type 'windows-nt)
+       (require 'tramp)
+       (set-default 'tramp-default-method "plink")
+       )
+   #+END_SRC
 ** Mac
-
    Exec-path-from-shell : get paths file
+   #+BEGIN_SRC emacs-lisp
+     (when (eq system-type 'darwin)
+       (use-package exec-path-from-shell
+	 :ensure t
+	 :init (exec-path-from-shell-initialize)
+	 )
 
-	#+BEGIN_SRC emacs-lisp
-	  (when (eq system-type 'darwin)
-		(use-package exec-path-from-shell
-		  :ensure t
-		  :init (exec-path-from-shell-initialize)
-		  )
-
-		(setq mac-command-modifier 'meta)
-		(setq mac-option-modifier 'nil)
-		)
-	#+END_SRC
-
+       (setq mac-command-modifier 'meta)
+       (setq mac-option-modifier 'nil)
+       )
+   #+END_SRC
 * Settings
 ** Encoding
-	#+BEGIN_SRC emacs-lisp
-	  (setq locale-coding-system 'utf-8)
-	  (set-terminal-coding-system 'utf-8)
-	  (set-keyboard-coding-system 'utf-8)
-	  (set-selection-coding-system 'utf-8)
-	  (prefer-coding-system 'utf-8)
-	#+END_SRC
+   #+BEGIN_SRC emacs-lisp
+     (setq locale-coding-system 'utf-8)
+     (set-terminal-coding-system 'utf-8)
+     (set-keyboard-coding-system 'utf-8)
+     (set-selection-coding-system 'utf-8)
+     (prefer-coding-system 'utf-8)
+   #+END_SRC
 ** Font
-	#+BEGIN_SRC emacs-lisp
-	  (set-default-font "Hack 16")
-	#+END_SRC
+   #+BEGIN_SRC emacs-lisp
+     (set-default-font "Hack 16")
+   #+END_SRC
 ** Themes
-*** Solarized
-#+BEGIN_SRC emacs-lisp
-  (use-package solarized-theme
-	:ensure t
-	:defer t
-  )
-#+END_SRC
-
-*** Darkburn
-#+BEGIN_SRC emacs-lisp
-  (use-package darkburn-theme
+*** Zenburn
+    #+BEGIN_SRC emacs-lisp
+      (use-package zenburn-theme
 	:ensure t
 	:defer t
 	)
-#+END_SRC
-
-*** Ample
-	#+BEGIN_SRC emacs-lisp
-	  (use-package ample-theme
-		:ensure t
-		:defer t
-	  )
-  #+END_SRC
-*** Zenburn
-	#+BEGIN_SRC emacs-lisp
-	  (use-package zenburn-theme
-		:ensure t
-		:defer t
-	  )
-  #+END_SRC
+    #+END_SRC
 *** Current Theme
-	#+BEGIN_SRC emacs-lisp
-	  (load-theme 'zenburn t)
-	#+END_SRC
-
+    #+BEGIN_SRC emacs-lisp
+      (load-theme 'zenburn t)
+    #+END_SRC
 ** UI
-	#+BEGIN_SRC emacs-lisp
-	  (defalias 'yes-or-no-p 'y-or-n-p)
-
-	  (add-hook 'emacs-startup-hook 'toggle-frame-fullscreen)
-
-	  (setq inhibit-startup-message t)
-	  (setq initial-scratch-message "")
-
-	  (menu-bar-mode 0)
-	  (set-scroll-bar-mode nil)
-	  (tool-bar-mode 0)
-	  (setq ring-bell-function 'ignore)
-
-	  ;;Set tabs to space 4
-	  (setq-default c-default-style "bsd"
-					c-basic-offset 4
-					indent-tabs-mode t
-					tab-width 4)
-
-	  (setq ns-pop-up-frames nil)
-
-	  ;;Highlight the cursor line
-	  (global-hl-line-mode t)
-	#+END_SRC
+   #+BEGIN_SRC emacs-lisp
+     (defalias 'yes-or-no-p 'y-or-n-p)
+     (add-hook 'emacs-startup-hook 'toggle-frame-fullscreen)
+     (setq inhibit-startup-message t)
+     (setq initial-scratch-message "")
+     (menu-bar-mode 0)
+     (set-scroll-bar-mode nil)
+     (tool-bar-mode 0)
+     (setq ring-bell-function 'ignore)
+     (setq ns-pop-up-frames nil)
+     (global-hl-line-mode t)
+   #+END_SRC
 ** Edition
+   #+BEGIN_SRC emacs-lisp
+     (add-hook 'after-init-hook 'electric-pair-mode)
 
-#+BEGIN_SRC emacs-lisp
-  (add-hook 'after-init-hook 'electric-pair-mode)
+     ;; Allow selected text to be replaced
+     (delete-selection-mode t)
 
-  ;; Allow selected text to be replaced
-  (delete-selection-mode t)
+     (setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
+     (setq auto-save-file-name-transforms '((".*" "~/.emacs.d/auto-save-list" t)))
 
-  (setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
-  (setq auto-save-file-name-transforms '((".*" "~/.emacs.d/auto-save-list" t)))
+     ;;Clean up spaces before saving
+     (add-hook 'before-save-hook 'whitespace-cleanup)
 
-  ;;Clean up spaces before saving
-  (add-hook 'before-save-hook 'whitespace-cleanup)
-
-  (show-paren-mode t)
-  (setq show-paren-delay 0)
-#+END_SRC
-
+     (show-paren-mode t)
+     (setq show-paren-delay 0)
+   #+END_SRC
 ** Mode Line
    #+BEGIN_SRC emacs-lisp
-	 ;; Custom time and date
-	 (setq display-time-day-and-date 1
-		   display-time-default-load-average nil
-		   display-time-24hr-format t)
+     ;; Custom time and date
+     (setq display-time-day-and-date 1
+	   display-time-default-load-average nil
+	   display-time-24hr-format t)
 
-	 (setq display-time-string-forms
+     (setq display-time-string-forms
 	   '((propertize
-		  (format-time-string " %d %b %H:%M "))))
+	      (format-time-string " %d %b %H:%M "))))
 
-	 (display-time-mode 1)
+     (display-time-mode 1)
 
-	 ;; Custom line / column number
-	 (setq mode-line-position
-		   '((line-number-mode ("l.%l")))
-		   )
+     ;; Custom line / column number
+     (setq mode-line-position
+	   '((line-number-mode ("l.%l")))
+	   )
 
-	 ;; Modeline Style
-	 (set-face-attribute 'mode-line nil
-						 :background "#656555"
-						 :foreground "#DCDCCC"
-						 :box '(:line-width 2 :color "#656555")
-						 :overline nil
-						 :underline nil)
+     ;; Modeline Style
+     (set-face-attribute 'mode-line nil
+			 :background "#656555"
+			 :foreground "#DCDCCC"
+			 :box '(:line-width 2 :color "#656555")
+			 :overline nil
+			 :underline nil)
 
-	 (set-face-attribute 'mode-line-inactive nil
-						 :background "#656555"
-						 :foreground "#DCDCCC"
-						 :box '(:line-width 2 :color "#656555")
-						 :overline nil
-						 :underline nil)
+     (set-face-attribute 'mode-line-inactive nil
+			 :background "#656555"
+			 :foreground "#DCDCCC"
+			 :box '(:line-width 2 :color "#656555")
+			 :overline nil
+			 :underline nil)
 
-	 (set-face-attribute 'mode-line-buffer-id nil :foreground "#93E0E3")
+     (set-face-attribute 'mode-line-buffer-id nil :foreground "#93E0E3")
   #+END_SRC
 * Modes
 ** Avy
    #+BEGIN_SRC emacs-lisp
-	 (use-package avy
-	   :ensure t
-	   :bind (
-			  ("M-s" . avy-goto-char)
-			  ("M-l" . avy-goto-line)
-			  )
-	   )
+     (use-package avy
+       :ensure t
+       :bind
+       (("M-s" . avy-goto-char)
+	("M-l" . avy-goto-line))
+       )
    #+END_SRC
 ** C# Development
 *** CSharp
-	#+BEGIN_SRC emacs-lisp
-	  (use-package csharp-mode
-		:ensure t
-		:mode ("\\.cs\\'" . csharp-mode)
-		:config
-		(yas-reload-all)
-		(progn
-		  (add-hook 'csharp-mode-hook 'omnisharp-mode)
-		  (add-hook 'csharp-mode-hook 'yas-minor-mode)
-		  )
-		)
-	#+END_SRC
+    #+BEGIN_SRC emacs-lisp
+      (use-package csharp-mode
+	:ensure t
+	:mode ("\\.cs\\'" . csharp-mode)
+	:config
+	(yas-reload-all)
+	(progn
+	  (add-hook 'csharp-mode-hook 'omnisharp-mode)
+	  (add-hook 'csharp-mode-hook 'yas-minor-mode)
+	  )
+
+	(defun csharp-style ()
+	  (c-set-style "k&r")
+	  (setq c-basic-offset 4)
+	  (setq indent-tabs-mode t)
+	  (setq tab-width 4)
+	  )
+	(add-hook 'csharp-mode-hook 'csharp-style t)
+	)
+  #+END_SRC
 *** Omnisharp
 	#+BEGIN_SRC emacs-lisp
-      (use-package omnisharp
-        :ensure t
-        :diminish omnisharp-mode
-        :bind (:map omnisharp-mode-map
-                 ("C-u" . omnisharp-navigate-to-solution-file)
-                 ("C-c u" . omnisharp-find-usages)
-                 ("C-c d" . omnisharp-go-to-definition)
-                 )
-        :config
-        ;; (setq omnisharp-server-executable-path "/usr/local/Cellar/omnisharp-mono/1.19.0/bin/omnisharp")
-        (add-to-list 'company-backends 'company-omnisharp)
-        (setq omnisharp-imenu-support t)
-        )
+	  (use-package omnisharp
+	    :ensure t
+	    :diminish omnisharp-mode
+	    :bind (:map omnisharp-mode-map
+			("C-u" . omnisharp-navigate-to-solution-file)
+			("C-c u" . omnisharp-find-usages)
+			("C-c d" . omnisharp-go-to-definition))
+	    :config
+	    (add-to-list 'company-backends 'company-omnisharp)
+	    ;; (setq omnisharp-server-executable-path "/usr/local/Cellar/omnisharp-mono/1.19.0/bin/omnisharp")
+	    (setq omnisharp-imenu-support t)
+	    (setq omnisharp-expected-server-version "1.24.0")
+	    )
 
-      ;; Use of omnisharp legacy (with old server and curl)
-      ;; (use-package omnisharp
-      ;;   ;;:ensure t
-      ;;   :load-path "legacy-mode/omnisharp/"
-      ;;   :pin manual
-      ;;   :diminish omnisharp-mode
-      ;;   :bind (:map omnisharp-mode-map
-      ;;               ("C-u" . omnisharp-navigate-to-solution-file)
-      ;;               ("C-c u" . omnisharp-find-usages)
-      ;;               ("C-c d" . omnisharp-go-to-definition)
-      ;;               )
-      ;;   :init (require 'omnisharp)
-      ;;   :config
-      ;;   ;;(setq omnisharp-server-executable-path "/usr/local/Cellar/omnisharp-mono/1.19.0/bin/omnisharp")
-      ;;   (eval-after-load 'company
-      ;;     '(add-to-list 'company-backends 'company-omnisharp))
-      ;;   (setq omnisharp-server-executable-path "~/Documents/Programming/Utils/omnisharp-server/OmniSharp/bin/Debug/OmniSharp.exe")
-      ;;   (setq omnisharp-curl-executable-path "/usr/bin/curl")
-      ;;   (setq omnisharp-imenu-support t)
-      ;;   )
+	  ;; Use of omnisharp legacy (with old server and curl)
+	  ;; (use-package omnisharp
+	  ;;   ;;:ensure t
+	  ;;   :load-path "legacy-mode/omnisharp/"
+	  ;;   :pin manual
+	  ;;   :diminish omnisharp-mode
+	  ;;   :bind (:map omnisharp-mode-map
+	  ;;			  ("C-u" . omnisharp-navigate-to-solution-file)
+	  ;;			  ("C-c u" . omnisharp-find-usages)
+	  ;;			  ("C-c d" . omnisharp-go-to-definition)
+	  ;;			  )
+	  ;;   :init (require 'omnisharp)
+	  ;;   :config
+	  ;;   ;;(setq omnisharp-server-executable-path "/usr/local/Cellar/omnisharp-mono/1.19.0/bin/omnisharp")
+	  ;;   (setq omnisharp-server-executable-path "c:/Programming/omnisharp-server/OmniSharp/bin/Debug/OmniSharp.exe")
+	  ;;   ;; (setq omnisharp-curl-executable-path "/usr/bin/curl")
+	  ;;   (setq omnisharp-imenu-support t)
+	  ;;   )
 	#+END_SRC
-** C++
-   #+BEGIN_SRC emacs-lisp
-   #+END_SRC
-** Circe
-   Not working properly yet. Probably need to set TLS correctly
-   #+BEGIN_SRC emacs-lisp
-	 ;; (use-package circe
-	 ;;   :ensure t
-	 ;;   :defer t
-	 ;;   :config
-	 ;;   (setq circe-network-options
-	 ;;			`(("Freenode"
-	 ;;			   :nick "triplem_161"
-	 ;;			   :channels ("#emacs")
-	 ;;			   :nickserv-password ,freenode-password)))
-	 ;;   )
-   #+END_SRC
 ** CMake
    #+BEGIN_SRC emacs-lisp
-	 ; Add cmake listfile names to the mode list.
-	 (setq auto-mode-alist
-		   (append
-			'(("CMakeLists\\.txt\\'" . cmake-mode))
-			'(("\\.cmake\\'" . cmake-mode))
-			auto-mode-alist))
+     ;; Add cmake listfile names to the mode list.
+     (setq auto-mode-alist
+	   (append
+	    '(("CMakeLists\\.txt\\'" . cmake-mode))
+	    '(("\\.cmake\\'" . cmake-mode))
+	    auto-mode-alist))
 
-	 (autoload 'cmake-mode "/usr/local/Cellar/cmake/3.8.2/share/emacs/site-lisp/cmake/cmake-mode.el" t)
+     (autoload 'cmake-mode "/usr/local/Cellar/cmake/3.8.2/share/emacs/site-lisp/cmake/cmake-mode.el" t)
    #+END_SRC
 ** Company
    #+BEGIN_SRC emacs-lisp
-	 (use-package company
-	   :ensure t
-	   :init (add-hook 'after-init-hook 'global-company-mode)
-	   :config (setq company-idle-delay 0.2
-					 company-minimum-prefix-length 2)
-	 )
+     (use-package company
+       :ensure t
+       :init
+       (add-hook 'after-init-hook 'global-company-mode)
+       )
    #+END_SRC
 ** Dsvn
    #+BEGIN_SRC emacs-lisp
-  (use-package dsvn
-	:ensure t
-	:bind ("C-c s" . svn-status)
-  )
+     (use-package dsvn
+       :ensure t
+       :bind ("C-c s" . svn-status)
+       )
    #+END_SRC
 ** Ediff
    #+BEGIN_SRC emacs-lisp
-	 (use-package ediff
-	   :defer t
-	   :config
-	   (setq ediff-window-setup-function 'ediff-setup-windows-plain)
-	 )
+     (use-package ediff
+       :defer t
+       :config
+       (setq ediff-window-setup-function 'ediff-setup-windows-plain)
+       )
    #+END_SRC
 ** Emmet
    #+BEGIN_SRC emacs-lisp
-	 (use-package emmet-mode
-	   :ensure t
-	   :defer t
-	   :config
-	   (add-hook 'web-mode-hook 'emmet-mode)
-	 )
+     (use-package emmet-mode
+       :ensure t
+       :defer t
+       :init
+       (add-hook 'web-mode-hook 'emmet-mode)
+       )
    #+END_SRC
 ** Flycheck
    #+BEGIN_SRC emacs-lisp
-	 (use-package flycheck
-	   :ensure t
-	   :diminish flycheck-mode
-	   :init
-	   (global-flycheck-mode t)
-	  )
+     (use-package flycheck
+       :ensure t
+       :diminish flycheck-mode
+       :init
+       (global-flycheck-mode t)
+       )
    #+END_SRC
 ** Google this
    #+BEGIN_SRC emacs-lisp
-	 (use-package google-this
-	   :ensure t
-	   :diminish google-this-mode
-	   :bind ("C-c w" . google-this-search)
-	   :init
-	   (google-this-mode t)
-	 )
+     (use-package google-this
+       :ensure t
+       :diminish google-this-mode
+       :bind ("C-c w" . google-this-search)
+       :init
+       (google-this-mode t)
+       )
    #+END_SRC
 ** Ivy / Swipper / Counsel / Smex
    #+BEGIN_SRC emacs-lisp
-	 (use-package ivy
-	   :ensure t
-	   :diminish ivy-mode
-	   :bind
-	   (("C-x b" . ivy-switch-buffer))
-	   :init
-	   (ivy-mode 1)
-	   :config
-	   (setq ivy-use-virtual-buffers t)
-	   (setq ivy-display-style 'fancy)
-	   )
+     (use-package ivy
+       :ensure t
+       :diminish ivy-mode
+       :bind
+       (("C-x b" . ivy-switch-buffer))
+       :init
+       (ivy-mode 1)
+       :config
+       (setq ivy-use-virtual-buffers t)
+       (setq ivy-display-style 'fancy)
+       )
 
-	 (use-package counsel
-	   :ensure t
-	   :bind
-	   (("C-c y" . counsel-yank-pop)
-		("C-c i" . counsel-imenu)
-		("M-x" . counsel-M-x)
-		("C-x r l" . counsel-bookmark))
-	 )
+     (use-package counsel
+       :ensure t
+       :bind
+       (("C-c y" . counsel-yank-pop)
+	("C-c i" . counsel-imenu)
+	("M-x" . counsel-M-x)
+	("C-x r l" . counsel-bookmark))
+       )
 
-	 (use-package swiper
-	   :ensure t
-	   :bind
-	   ("C-s" . swiper)
-	 )
+     (use-package swiper
+       :ensure t
+       :bind
+       ("C-s" . swiper)
+       )
 
-	 (use-package smex
-	   :ensure t
-	 )
+     (use-package smex
+       :ensure t
+       )
 
-	 (use-package avy-zap
-	   :ensure t
-	   :bind
-	   (("M-z" . avy-zap-to-char-dwim))
-	 )
-   #+END_SRC
-** JS2
-   #+BEGIN_SRC emacs-lisp
-	  (use-package js2-mode
-		 :ensure t
-		 :mode ("\\.js\\'" . js2-mode)
-	  )
+     (use-package avy-zap
+       :ensure t
+       :bind
+       (("M-z" . avy-zap-to-char-dwim))
+       )
    #+END_SRC
 ** Json Reformat
    #+BEGIN_SRC emacs-lisp
-	 (use-package json-reformat
-	   :ensure t
-	   :defer t
-	 )
+     (use-package json-reformat
+       :ensure t
+       :defer t
+       )
    #+END_SRC
-** Latex
-	#+BEGIN_SRC emacs-lisp
-	  (use-package tex
-		:defer t
-		:ensure auctex
-		)
-	#+END_SRC
 ** Less Mode
    [[https://github.com/purcell/less-css-mode][Less Mode Git]]
    #+BEGIN_SRC emacs-lisp
-	 (use-package less-css-mode
-	   :ensure t
-	   :defer t
-	 )
+     (use-package less-css-mode
+       :ensure t
+       :defer t
+       )
    #+END_SRC
 ** Magit
    #+BEGIN_SRC emacs-lisp
-	 (use-package magit
-	   :ensure t
-	   :bind ("C-c g" . magit-status)
-	 )
+     (use-package magit
+       :ensure t
+       :bind ("C-c g" . magit-status)
+       )
    #+END_SRC
 ** Move Text
    #+BEGIN_SRC emacs-lisp
-	 (use-package move-text
-	   :ensure t
-	   :init
-	   (bind-key "M-p" 'move-text-up)
-	   (bind-key "M-n" 'move-text-down)
-	 )
-   #+END_SRC
-** Org Bullet
-   #+BEGIN_SRC emacs-lisp
-	 (use-package org-bullets
-	   :ensure t
-	   :defer t
-	   :init (add-hook 'org-mode-hook 'org-bullets-mode)
-	   ;; :config
-	   ;; (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
-	 )
+     (use-package move-text
+       :ensure t
+       :init
+       (bind-key "M-p" 'move-text-up)
+       (bind-key "M-n" 'move-text-down)
+       )
    #+END_SRC
 ** Pivotal Tracker
    #+BEGIN_SRC emacs-lisp
-	 (use-package pivotal-tracker
-	   :ensure t
-	   :defer t
-	   :config
-	   (setq pivotal-api-token "4bfc18370422bbd2ff8ddaa63a387152")
-	   )
+     (use-package pivotal-tracker
+       :ensure t
+       :defer t
+       :config
+       (setq pivotal-api-token "")
+       )
 	#+END_SRC
 ** PlantUML
    #+BEGIN_SRC emacs-lisp
-	 (use-package plantuml-mode
-	   :ensure t
-	   :defer t
-	 )
+     (use-package plantuml-mode
+       :ensure t
+       :defer t
+       )
    #+END_SRC
 ** Python Development
 *** Elpy
+    #+BEGIN_SRC emacs-lisp
+      (use-package elpy
+	:ensure t
+	:defer t
+	:init (elpy-enable)
+	)
+    #+END_SRC
+*** Company-Jedi
 	#+BEGIN_SRC emacs-lisp
-	  (use-package elpy
-		:ensure t
-		:defer t
-		:config (elpy-enable)
-		)
+	  ;; (use-package python
+	  ;;   :defer t
+	  ;;   :config
+	  ;;   (add-to-list 'company-backends 'company-jedi)
+	  ;;   )
 	#+END_SRC
 ** Rainbow Mode
    [[https://julien.danjou.info/projects/emacs-packages#rainbow-mode][Rainbow Mode Website]]
    #+BEGIN_SRC emacs-lisp
-	 (use-package rainbow-mode
-	   :ensure t
-	   :diminish rainbow-mode
-	   :init (rainbow-mode 1)
-	   )
+     (use-package rainbow-mode
+       :ensure t
+       :diminish rainbow-mode
+       :init (rainbow-mode 1)
+       )
    #+END_SRC
 ** Rest Client
    #+BEGIN_SRC emacs-lisp
-	 (use-package restclient
-	   :ensure t
-	   :defer t
-	 )
+     (use-package restclient
+       :ensure t
+       :defer t
+       )
    #+END_SRC
 ** Shader Mode
    #+BEGIN_SRC emacs-lisp
-	 (use-package shader-mode
-	   :ensure t
-	   :defer t
-	 )
+     (use-package shader-mode
+       :ensure t
+       :defer t
+       )
    #+END_SRC
 ** Undo Tree
    #+BEGIN_SRC emacs-lisp
-	 (use-package undo-tree
-	   :ensure t
-	   :diminish undo-tree-mode
-	   :defer t
-	   :init (global-undo-tree-mode)
-	   )
+     (use-package undo-tree
+       :ensure t
+       :diminish undo-tree-mode
+       :defer t
+       :init (global-undo-tree-mode)
+       )
    #+END_SRC
 ** Web Mode
-	#+BEGIN_SRC emacs-lisp
-	  (use-package web-mode
-		:ensure t
-		:mode ("\\.js\\'" . web-mode)
-		:config
-		(setq web-mode-content-types
-			  '(("jsx" . "\\.js[x]?\\'"))
-			  )
-		)
-	#+END_SRC
+   #+BEGIN_SRC emacs-lisp
+     (use-package web-mode
+       :ensure t
+       :mode ("\\.js\\'" . web-mode)
+       :config
+       (setq web-mode-content-types
+	     '(("jsx" . "\\.js[x]?\\'"))
+	     )
+       )
+   #+END_SRC
 ** Whitespace Mode
    #+BEGIN_SRC emacs-lisp
-	 (use-package whitespace
-	   :diminish whitespace-mode
-	   :init ()
-	   (add-hook 'prog-mode-hook 'whitespace-mode)
-	   :config
-	   (setq whitespace-style '(tabs tab-mark trailing))
-	   (setq
-		whitespace-display-mappings
-		'(
-			  (tab-mark 9 [8728 9] [92 9])
-			  ))
-	 )
+     (use-package whitespace
+       :diminish whitespace-mode
+       :init ()
+       (add-hook 'prog-mode-hook 'whitespace-mode)
+       :config
+       (setq whitespace-style '(tabs tab-mark trailing))
+       (setq
+	whitespace-display-mappings
+	'(
+	  (tab-mark 9 [8728 9] [92 9])
+	  ))
+       )
    #+END_SRC
 ** Xcode / Swift
    Only called when the environment is a Mac OS
    [[https://github.com/swift-emacs/swift-mode][Swift Git Repository]]
    [[https://github.com/nathankot/company-sourcekit][Company Sourcekit]]
    #+BEGIN_SRC emacs-lisp
-	 (when (eq system-type 'darwin)
-		 (use-package swift-mode
-			   :ensure t
-			   :mode ("\\.swift\\'" . swift-mode)
-			   )
+     (when (eq system-type 'darwin)
+       (use-package swift-mode
+	 :ensure t
+	 :mode ("\\.swift\\'" . swift-mode)
+	 )
 
-		 (use-package company-sourcekit
-			 :ensure t
-			 :mode ("\\.swift\\'" . swift-mode)
-			 :config
-			  (add-to-list 'company-backends 'company-sourcekit)
-			  (setq sourcekit-sourcekittendaemon-executable "~/usr/local/Cellar/sourcekitten/0.17.2/bin/sourcekitten")
-			  (setq company-sourcekit-use-yasnippet nil)
-			  )
+       (use-package company-sourcekit
+	 :ensure t
+	 :mode ("\\.swift\\'" . swift-mode)
+	 :config
+	 (add-to-list 'company-backends 'company-sourcekit)
+	 (setq sourcekit-sourcekittendaemon-executable "~/usr/local/Cellar/sourcekitten/0.17.2/bin/sourcekitten")
+	 (setq company-sourcekit-use-yasnippet nil)
+	 )
 
-		 (use-package flycheck-swift
-			   :ensure t
-			   :mode ("\\.swift\\'" . swift-mode)
-			   :config
-				(setq flycheck-swift-sdk-path "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk")
-				(setq flycheck-swift-target "arm64-apple-ios10")
-				(eval-after-load 'flycheck '(flycheck-swift-setup))
-				)
-		 )
+       (use-package flycheck-swift
+	 :ensure t
+	 :mode ("\\.swift\\'" . swift-mode)
+	 :config
+	 (setq flycheck-swift-sdk-path "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk")
+	 (setq flycheck-swift-target "arm64-apple-ios10")
+	 (eval-after-load 'flycheck '(flycheck-swift-setup))
+	 )
+       )
    #+END_SRC
 ** Yasnippet
    #+BEGIN_SRC emacs-lisp
-	 (use-package yasnippet
-	   :ensure t
-	   :diminish yas-minor-mode
-	   :init (add-hook 'prog-mode-hook #'yas-minor-mode)
-	   :config
-	   (yas-reload-all)
-	 )
+     (use-package yasnippet
+       :ensure t
+       :diminish yas-minor-mode
+       :init (add-hook 'prog-mode-hook #'yas-minor-mode)
+       :config
+       (yas-reload-all)
+       )
    #+END_SRC
+* Custom function
+** Save TODO to org mode todo
+
+#+BEGIN_SRC emacs-lisp
+  (defun get-todos-in-file ()
+    "Test function to get todos in file"
+    (interactive test-todo)
+    )
+#+END_SRC
