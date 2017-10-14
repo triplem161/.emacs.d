@@ -13,8 +13,8 @@
     (require 'package)
     ;;(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
     (setq package-archives
-	  '(("gnu"				. "https://elpa.gnu.org/packages/")
-	    ("melpa"		   . "http://melpa.org/packages/")
+	  '(("gnu" . "https://elpa.gnu.org/packages/")
+	    ("melpa" . "http://melpa.org/packages/")
 	    ("melpa-stable" . "http://stable.melpa.org/packages/")
 	    ;; ("elpy"		   . "http://jorgenschaefer.github.io/packages/")
 	    ;; ("org"		   . "http://orgmode.org/elpa/") ;; for org-plus-contrib
@@ -134,7 +134,7 @@
   #+END_SRC
 * Modes
 ** Avy
-   #+BEGIN_SRC emacs-lisp
+    #+BEGIN_SRC emacs-lisp
      (use-package avy
        :ensure t
        :bind
@@ -163,44 +163,24 @@
 	  )
 	(add-hook 'csharp-mode-hook 'csharp-style t)
 	)
-  #+END_SRC
+    #+END_SRC
 *** Omnisharp
-	#+BEGIN_SRC emacs-lisp
-	  (use-package omnisharp
-	    :ensure t
-	    :diminish omnisharp-mode
-	    :bind (:map omnisharp-mode-map
-			("C-u" . omnisharp-navigate-to-solution-file)
-			("C-c u" . omnisharp-find-usages)
-			("C-c d" . omnisharp-go-to-definition))
-	    :config
-	    (add-to-list 'company-backends 'company-omnisharp)
-	    ;; (setq omnisharp-server-executable-path "/usr/local/Cellar/omnisharp-mono/1.19.0/bin/omnisharp")
-	    (setq omnisharp-imenu-support t)
-	    (setq omnisharp-expected-server-version "1.24.0")
-	    )
-
-	  ;; Use of omnisharp legacy (with old server and curl)
-	  ;; (use-package omnisharp
-	  ;;   ;;:ensure t
-	  ;;   :load-path "legacy-mode/omnisharp/"
-	  ;;   :pin manual
-	  ;;   :diminish omnisharp-mode
-	  ;;   :bind (:map omnisharp-mode-map
-	  ;;			  ("C-u" . omnisharp-navigate-to-solution-file)
-	  ;;			  ("C-c u" . omnisharp-find-usages)
-	  ;;			  ("C-c d" . omnisharp-go-to-definition)
-	  ;;			  )
-	  ;;   :init (require 'omnisharp)
-	  ;;   :config
-	  ;;   ;;(setq omnisharp-server-executable-path "/usr/local/Cellar/omnisharp-mono/1.19.0/bin/omnisharp")
-	  ;;   (setq omnisharp-server-executable-path "c:/Programming/omnisharp-server/OmniSharp/bin/Debug/OmniSharp.exe")
-	  ;;   ;; (setq omnisharp-curl-executable-path "/usr/bin/curl")
-	  ;;   (setq omnisharp-imenu-support t)
-	  ;;   )
-	#+END_SRC
+    #+BEGIN_SRC emacs-lisp
+      (use-package omnisharp
+        :ensure t
+        :diminish omnisharp-mode
+        :bind (:map omnisharp-mode-map
+                    ("C-u" . omnisharp-navigate-to-solution-file)
+                    ("C-c u" . omnisharp-find-usages)
+                    ("C-c d" . omnisharp-go-to-definition))
+        :config
+        (add-to-list 'company-backends 'company-omnisharp)
+        (setq omnisharp-imenu-support t)
+        (setq omnisharp-expected-server-version "1.24.0")
+        )
+    #+END_SRC
 ** CMake
-   #+BEGIN_SRC emacs-lisp
+    #+BEGIN_SRC emacs-lisp
      ;; Add cmake listfile names to the mode list.
      (setq auto-mode-alist
 	   (append
@@ -409,18 +389,19 @@
    #+END_SRC
 ** Whitespace Mode
    #+BEGIN_SRC emacs-lisp
-     (use-package whitespace
-       :diminish whitespace-mode
-       :init ()
-       (add-hook 'prog-mode-hook 'whitespace-mode)
-       :config
-       (setq whitespace-style '(tabs tab-mark trailing))
-       (setq
-	whitespace-display-mappings
-	'(
-	  (tab-mark 9 [8728 9] [92 9])
-	  ))
-       )
+     ;; (use-package whitespace
+     ;;   :diminish whitespace-mode
+     ;;   :init ()
+     ;;   (add-hook 'prog-mode-hook 'whitespace-mode)
+     ;;   :config
+     ;;   ;; (setq whitespace-style '(tabs tab-mark trailing))
+     ;;   (setq whitespace-style '(tabs tab-mark))
+     ;;   (setq
+     ;;    whitespace-display-mappings
+     ;;    '(
+     ;;      (tab-mark 9 [8728 9] [92 9])
+     ;;      ))
+     ;;   )
    #+END_SRC
 ** Xcode / Swift
    Only called when the environment is a Mac OS
