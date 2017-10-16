@@ -167,17 +167,17 @@
 *** Omnisharp
     #+BEGIN_SRC emacs-lisp
       (use-package omnisharp
-        :ensure t
-        :diminish omnisharp-mode
-        :bind (:map omnisharp-mode-map
-                    ("C-u" . omnisharp-navigate-to-solution-file)
-                    ("C-c u" . omnisharp-find-usages)
-                    ("C-c d" . omnisharp-go-to-definition))
-        :config
-        (add-to-list 'company-backends 'company-omnisharp)
-        (setq omnisharp-imenu-support t)
-        (setq omnisharp-expected-server-version "1.24.0")
-        )
+	:ensure t
+	:diminish omnisharp-mode
+	:bind (:map omnisharp-mode-map
+		    ("C-u" . omnisharp-navigate-to-solution-file)
+		    ("C-c u" . omnisharp-find-usages)
+		    ("C-c d" . omnisharp-go-to-definition))
+	:config
+	(add-to-list 'company-backends 'company-omnisharp)
+	(setq omnisharp-imenu-support t)
+	(setq omnisharp-expected-server-version "1.24.0")
+	)
     #+END_SRC
 ** CMake
     #+BEGIN_SRC emacs-lisp
@@ -196,6 +196,9 @@
        :ensure t
        :init
        (add-hook 'after-init-hook 'global-company-mode)
+       :config
+       (setq company-idle-delay 0.3
+	     company-minimum-prefix-length 2)
        )
    #+END_SRC
 ** Dsvn
@@ -325,6 +328,8 @@
      (use-package plantuml-mode
        :ensure t
        :defer t
+       :config
+       (setq plantuml-output-type "png")
        )
    #+END_SRC
 ** Python Development
