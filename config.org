@@ -258,6 +258,11 @@
        (setq ivy-display-style 'fancy)
        )
 
+     (defun mmm/counsel-ag-project-at-point ()
+       "use counsel ag to search for the word at point in the project"
+       (interactive)
+       (counsel-ag (thing-at-point 'symbol) (vc-root-dir)))
+
      (use-package counsel
        :ensure t
        :bind
