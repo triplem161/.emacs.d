@@ -288,11 +288,25 @@
        (("M-z" . avy-zap-to-char-dwim))
        )
    #+END_SRC
-** Json Reformat
+** Json
    #+BEGIN_SRC emacs-lisp
      (use-package json-reformat
        :ensure t
        :defer t
+       )
+
+     (use-package json-mode
+       :ensure t
+       :defer t
+       :config
+
+       (defun json-style ()
+	 (setq indent-tabs-mode nil)
+	 (setq tab-width 2)
+	 (setq standard-indent 2)
+	 (setq js-indent-level 2)
+	 )
+       (add-hook 'json-mode-hook 'json-style t)
        )
    #+END_SRC
 ** Less Mode
