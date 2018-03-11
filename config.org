@@ -44,6 +44,10 @@
        )
    #+END_SRC
 * Settings
+** Global Var
+   #+BEGIN_SRC emacs-lisp
+     (setq mmm_glo_ag-file-filter "")
+   #+END_SRC
 ** Encoding
    #+BEGIN_SRC emacs-lisp
      (setq locale-coding-system 'utf-8)
@@ -155,13 +159,14 @@
 	  (add-hook 'csharp-mode-hook 'yas-minor-mode)
 	  )
 
-	(defun csharp-style ()
+	(defun csharp-variable ()
 	  (c-set-style "k&r")
 	  (setq c-basic-offset 4)
 	  (setq indent-tabs-mode t)
 	  (setq tab-width 4)
+	  (setq mmm_glo_ag-file-filter "--csharp")
 	  )
-	(add-hook 'csharp-mode-hook 'csharp-style t)
+	(add-hook 'csharp-mode-hook 'csharp-variable t)
 	)
     #+END_SRC
 *** Omnisharp
@@ -258,18 +263,20 @@
        (setq ivy-display-style 'fancy)
        )
 
-     (defun mmm/counsel-ag-project-at-point ()
-       "use counsel ag to search for the word at point in the project"
-       (interactive)
-       (counsel-ag (thing-at-point 'symbol) (vc-root-dir)))
-
      (use-package counsel
        :ensure t
        :bind
        (("C-c y" . counsel-yank-pop)
 	("C-c i" . counsel-imenu)
 	("M-x" . counsel-M-x)
-	("C-x r l" . counsel-bookmark))
+	("C-x r l" . counsel-bookmark)
+	("C-c f w" . mmm/counsel-ag-project-at-point))
+       :config
+
+       (defun mmm/counsel-ag-project-at-point ()
+	 "use counsel ag to search for the word at point in the project"
+	 (interactive)
+	 (counsel-ag () (vc-root-dir) mmm_glo_ag-file-filter))
        )
 
      (use-package swiper
