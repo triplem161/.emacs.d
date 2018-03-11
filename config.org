@@ -270,9 +270,9 @@
 	("C-c i" . counsel-imenu)
 	("M-x" . counsel-M-x)
 	("C-x r l" . counsel-bookmark)
+	("C-c f f" . counsel-git)
 	("C-c f w" . mmm/counsel-ag-project-at-point))
        :config
-
        (defun mmm/counsel-ag-project-at-point ()
 	 "use counsel ag to search for the word at point in the project"
 	 (interactive)
