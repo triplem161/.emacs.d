@@ -153,10 +153,8 @@
 	:ensure t
 	:mode ("\\.cs\\'" . csharp-mode)
 	:config
-	(yas-reload-all)
 	(progn
 	  (add-hook 'csharp-mode-hook 'omnisharp-mode)
-	  (add-hook 'csharp-mode-hook 'yas-minor-mode)
 	  )
 
 	(defun csharp-variable ()
@@ -481,6 +479,10 @@
        :diminish yas-minor-mode
        :init (add-hook 'prog-mode-hook #'yas-minor-mode)
        :config
+
+       (use-package yasnippet-snippets
+	 :ensure t)
+
        (yas-reload-all)
        )
    #+END_SRC
