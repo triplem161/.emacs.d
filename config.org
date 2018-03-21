@@ -338,6 +338,21 @@
        (bind-key "M-n" 'move-text-down)
        )
    #+END_SRC
+** OrgMode
+   #+BEGIN_SRC emacs-lisp
+     (global-set-key (kbd "C-c c") 'org-capture)
+     (global-set-key (kbd "C-c a") 'org-agenda)
+
+     (setq org-agenda-files '("c:/Users/Marion/Google Drive/TODO/todo.org"))
+
+     (setq org-capture-templates '(("t" "Todo [inbox]" entry
+				    (file+headline "c:/Users/Marion/Google Drive/TODO/todo.org" "Tasks")
+				    "* TODO %i%?")))
+
+     (setq org-todo-keywords
+	   (quote (sequence "TODO(t)" "ON_GOING(o)" "DONE"(d))))
+
+   #+END_SRC
 ** Pivotal Tracker
    #+BEGIN_SRC emacs-lisp
      (use-package pivotal-tracker
@@ -346,7 +361,7 @@
        :config
        (setq pivotal-api-token "")
        )
-	#+END_SRC
+   #+END_SRC
 ** PlantUML
    #+BEGIN_SRC emacs-lisp
      (use-package plantuml-mode
