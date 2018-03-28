@@ -340,17 +340,15 @@
    #+END_SRC
 ** OrgMode
    #+BEGIN_SRC emacs-lisp
-     (global-set-key (kbd "C-c c") 'org-capture)
-     (global-set-key (kbd "C-c a") 'org-agenda)
+     (setq todo-file-path "c:/Users/Marion/Google \Drive/TODO/test.org")
+     (global-set-key (kbd "<f2> c") 'org-capture)
+     (global-set-key (kbd "<f2> a") 'org-agenda)
 
-     (setq org-agenda-files '("c:/Users/Marion/Google Drive/TODO/todo.org"))
+     (setq org-agenda-files '("c:\\Users\\Marion\\Google/Drive\\TODO\\todo.org"))
 
-     (setq org-capture-templates '(("t" "Todo [inbox]" entry
-				    (file+headline "c:/Users/Marion/Google Drive/TODO/todo.org" "Tasks")
+     (setq org-capture-templates '(("t" "TODO" entry
+				    (file+headline todo-file-path "Todo")
 				    "* TODO %i%?")))
-
-     (setq org-todo-keywords
-	   (quote (sequence "TODO(t)" "ON_GOING(o)" "DONE"(d))))
 
    #+END_SRC
 ** Pivotal Tracker
@@ -502,11 +500,3 @@
        )
    #+END_SRC
 * Custom function
-** Save TODO to org mode todo
-
-#+BEGIN_SRC emacs-lisp
-  (defun get-todos-in-file ()
-    "Test function to get todos in file"
-    (interactive test-todo)
-    )
-#+END_SRC
