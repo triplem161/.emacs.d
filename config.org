@@ -342,19 +342,37 @@
    #+END_SRC
 ** OrgMode
    #+BEGIN_SRC emacs-lisp
-     (setq todo-file-path "c:/Users/OpenMind2/Google \Drive/GTD/todo.org")
+     (setq todo-file-path "c:/Users/OpenMind2/Google \Drive/GTD/inbox.org")
      (setq project-file-path "c:/Users/OpenMind2/Google \Drive/GTD/projects.org")
-     (global-set-key (kbd "<f2> c") 'org-capture)
-     (global-set-key (kbd "<f2> a") 'org-agenda)
+     (global-set-key (kbd "C-c c") 'org-capture)
+     (global-set-key (kbd "C-c a") 'org-agenda)
 
-     ;; (setq org-agenda-files '("c:/Users/OpenMind2/Google \Drive/GTD/todo.org" "c:/Users/OpenMind2/Google \Drive/GTD/projects.org"))
+     (setq org-todo-keywords '((sequence "TODO(t)" "ONGOING(o)" "WAITING(w)" "|" "DONE(d)" "CANCELLED(c)")))
+     (setq org-todo-keyword-faces
+	   (quote (("TODO" :foreground "#cc9393" :weight bold)
+		   ("ONGOING" :foreground "#9fafaf" :weight bold)
+		   ("WAITING" :foreground "#ffcfaf" :weight bold)
+		   ("DONE" :foreground "#709080" :weight bold)
+		   ("CANCELLED" :foreground "#709080" :weight bold)
+		   )))
+
+     (setq org-agenda-files '("c:/Users/OpenMind2/Google \Drive/GTD/inbox.org"
+			      "c:/Users/OpenMind2/Google \Drive/GTD/projects.org"))
+     (setq org-agenda-dim-blocked-tasks nil)
+     (setq org-agenda-compact-blocks t)
+     (setq org-agenda-custom-commands
+	   '((" " "Agenda"
+	    ((agenda "" nil)
+	     (tags "BACKLOG" ((org-agenda-overriding-header "TODO")
+			      (org-tags-match-list-sublevels nil)))))))
+
      ;; (setq org-agenda-files '(todo-file-path project-file-path))
 
-     (setq org-refile-targets '((project-file-path :maxlevel . 1)))
+     (setq org-refile-targets '((project-file-path :level . 1)))
      (setq org-refile-allow-creating-parent-nodes 'confirm)
 
-     (setq org-capture-templates '(("t" "TODO" entry
-				    (file+headline todo-file-path "Todo")
+     (setq org-capture-templates '(("b" "Backlog" entry
+				    (file+headline todo-file-path "Backlog")
 				    "* TODO %i%?")))
 
    #+END_SRC
