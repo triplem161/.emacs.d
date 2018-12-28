@@ -136,6 +136,10 @@
 
      (set-face-attribute 'mode-line-buffer-id nil :foreground "#93E0E3")
   #+END_SRC
+** Keybinds
+   #+BEGIN_SRC emacs-lisp
+     (global-set-key (kbd "C-c r") 'query-replace)
+   #+END_SRC
 * Modes
 ** Avy
     #+BEGIN_SRC emacs-lisp
@@ -179,7 +183,6 @@
 	:config
 	(add-to-list 'company-backends 'company-omnisharp)
 	(setq omnisharp-imenu-support t)
-	(setq omnisharp-expected-server-version "1.26.3")
 	)
     #+END_SRC
 ** CMake
@@ -361,16 +364,6 @@
      (setq org-agenda-dim-blocked-tasks nil)
      (setq org-agenda-compact-blocks t)
 
-
-     ;; (setq org-agenda-custom-commands
-     ;;       '((" " "Agenda"
-     ;;          ((agenda " " nil)
-     ;;           (tags "BACKLOG"
-     ;;                 ((org-agenda-overriding-header "Tasks to Refile")
-     ;;                  (org-agenda-todo-ignore-with-date t)
-     ;;                  (org-tags-match-list-sublevels nil))))
-     ;;          nil)))
-
      (setq org-agenda-custom-commands
 	   '(
 	     ("a" "Backlog" ((agenda) (tags-todo "BACKLOG"
@@ -379,14 +372,20 @@
 	     )
 	   )
 
-     ;; (setq org-agenda-files '(todo-file-path project-file-path))
-
      (setq org-refile-targets '((project-file-path :maxlevel . 3)))
      (setq org-refile-allow-creating-parent-nodes 'confirm)
 
-     (setq org-capture-templates '(("b" "Backlog" entry
+     (setq org-capture-templates '(
+				   ("b" "Backlog" entry
 				    (file+headline todo-file-path "Backlog")
-				    "* TODO %i%?")))
+				    "* TODO %i%?")
+				   ("l" "List" plain
+				    (file+headline todo-file-path "Backlog")
+				    "* %i%?")
+				   ("e" "Element" plain
+				    (file+headline todo-file-path "Backlog")
+				    "* %i%?")
+				   ))
 
    #+END_SRC
 ** Pivotal Tracker
