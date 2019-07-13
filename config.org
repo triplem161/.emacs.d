@@ -495,30 +495,12 @@
 ** Xcode / Swift
    Only called when the environment is a Mac OS
    [[https://github.com/swift-emacs/swift-mode][Swift Git Repository]]
-   [[https://github.com/nathankot/company-sourcekit][Company Sourcekit]]
+   Check this link to have a LSP server setup: [[https://www.reddit.com/r/emacs/comments/a59hs5/emacs_as_an_ios_dev/][Link]]
    #+BEGIN_SRC emacs-lisp
      (when (eq system-type 'darwin)
        (use-package swift-mode
 	 :ensure t
 	 :mode ("\\.swift\\'" . swift-mode)
-	 )
-
-       (use-package company-sourcekit
-	 :ensure t
-	 :mode ("\\.swift\\'" . swift-mode)
-	 :config
-	 (add-to-list 'company-backends 'company-sourcekit)
-	 (setq sourcekit-sourcekittendaemon-executable "~/usr/local/Cellar/sourcekitten/0.17.2/bin/sourcekitten")
-	 (setq company-sourcekit-use-yasnippet nil)
-	 )
-
-       (use-package flycheck-swift
-	 :ensure t
-	 :mode ("\\.swift\\'" . swift-mode)
-	 :config
-	 (setq flycheck-swift-sdk-path "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk")
-	 (setq flycheck-swift-target "arm64-apple-ios10")
-	 (eval-after-load 'flycheck '(flycheck-swift-setup))
 	 )
        )
    #+END_SRC
