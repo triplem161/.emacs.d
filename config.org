@@ -1,6 +1,10 @@
 #+TITLE: Emacs Configuration
 #+AUTHOR: Marion Maignan
 
+#+BEGIN_SRC emacs-lisp
+  (setq gc-cons-threshold 100000000)
+#+END_SRC
+
 * Personnal Informations
   #+BEGIN_SRC emacs-lisp
     (setq user-full-name "Maignan Marion"
@@ -492,17 +496,28 @@
      ;;      ))
      ;;   )
    #+END_SRC
-** Xcode / Swift
+** Xcode / Switf
    Only called when the environment is a Mac OS
    [[https://github.com/swift-emacs/swift-mode][Swift Git Repository]]
-   Check this link to have a LSP server setup: [[https://www.reddit.com/r/emacs/comments/a59hs5/emacs_as_an_ios_dev/][Link]]
+   Check this link to have a LSP server setup: [[https://github.com/emacs-lsp/lsp-sourcekit][Swift LSP]] (using lsp-mode as well)
    #+BEGIN_SRC emacs-lisp
      (when (eq system-type 'darwin)
        (use-package swift-mode
+	 :ensure t)
+
+       (use-package lsp-mode
 	 :ensure t
-	 :mode ("\\.swift\\'" . swift-mode)
-	 )
+	 :init (add-hook 'swift-mode 'lsp-mode))
+
+       (use-package lsp-sourcekit
+	 :ensure t
+	 :after lsp-mode
+	 :config
+	 (setenv "SOURCEKIT_TOOLCHAIN_PATH" "/Library/Developer/Toolchains/swift-latest.xctoolchain")
+	 (setq lsp-sourcekit-executable (expand-file-name "~/Documents/Programming/Utils/sourcekit-lsp/.build/debug/sourcekit-lsp")))
        )
+
+
    #+END_SRC
 ** Yasnippet
    #+BEGIN_SRC emacs-lisp
