@@ -58,7 +58,7 @@
    #+END_SRC
 ** Font
    #+BEGIN_SRC emacs-lisp
-     (set-default-font "Hack 16")
+     (set-frame-font "Hack 16" nil t)
    #+END_SRC
 ** Themes
 *** Zenburn
@@ -181,6 +181,7 @@
 		    ("C-c u" . omnisharp-find-usages)
 		    ("C-c d" . omnisharp-go-to-definition))
 	:config
+	(setq omnisharp-server-executable-path "c:/Users/Marion/AppData/Roaming/.emacs.d/.cache/omnisharp/server/v1.34.7/OmniSharp.exe")
 	(add-to-list 'company-backends 'company-omnisharp)
 	(setq omnisharp-imenu-support t)
 	)
@@ -403,7 +404,8 @@
        :ensure t
        :defer t
        :config
-       (setq plantuml-output-type "png")
+       (setq plantuml-default-exec-mode 'jar)
+       (setq plantuml-output-type "PNG")
        )
    #+END_SRC
 ** Python Development
