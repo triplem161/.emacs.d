@@ -79,3 +79,5 @@ anaconda-mode/
 /snippets/csharp-mode/unity/.yas-compiled-snippets.el
 /network-security.data
 /ac-comphist.dat
+/games/*
+/url/*
