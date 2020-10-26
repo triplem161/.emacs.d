@@ -190,17 +190,6 @@
 	(setq omnisharp-imenu-support t)
 	)
     #+END_SRC
-** CMake
-    #+BEGIN_SRC emacs-lisp
-     ;; Add cmake listfile names to the mode list.
-     (setq auto-mode-alist
-	   (append
-	    '(("CMakeLists\\.txt\\'" . cmake-mode))
-	    '(("\\.cmake\\'" . cmake-mode))
-	    auto-mode-alist))
-
-     (autoload 'cmake-mode "/usr/local/Cellar/cmake/3.8.2/share/emacs/site-lisp/cmake/cmake-mode.el" t)
-   #+END_SRC
 ** Company
    #+BEGIN_SRC emacs-lisp
      (use-package company
@@ -301,35 +290,6 @@
        (("M-z" . avy-zap-to-char-dwim))
        )
    #+END_SRC
-** Json
-   #+BEGIN_SRC emacs-lisp
-     (use-package json-reformat
-       :ensure t
-       :defer t
-       )
-
-     (use-package json-mode
-       :ensure t
-       :defer t
-       :config
-
-       (defun json-style ()
-	 (setq indent-tabs-mode nil)
-	 (setq tab-width 2)
-	 (setq standard-indent 2)
-	 (setq js-indent-level 2)
-	 )
-       (add-hook 'json-mode-hook 'json-style t)
-       )
-   #+END_SRC
-** Less Mode
-   [[https://github.com/purcell/less-css-mode][Less Mode Git]]
-   #+BEGIN_SRC emacs-lisp
-     (use-package less-css-mode
-       :ensure t
-       :defer t
-       )
-   #+END_SRC
 ** Magit
    #+BEGIN_SRC emacs-lisp
      (use-package magit
@@ -346,60 +306,6 @@
        :init
        (bind-key "M-p" 'move-text-up)
        (bind-key "M-n" 'move-text-down)
-       )
-   #+END_SRC
-** OrgMode
-   #+BEGIN_SRC emacs-lisp
-     (setq todo-file-path "c:/Users/OpenMind2/Google \Drive/GTD/inbox.org")
-     (setq project-file-path "c:/Users/OpenMind2/Google \Drive/GTD/projects.org")
-     (global-set-key (kbd "C-c c") 'org-capture)
-     (global-set-key (kbd "C-c a") 'org-agenda)
-
-     (setq org-todo-keywords '((sequence "TODO(t)" "ONGOING(o)" "WAITING(w)" "|" "DONE(d)" "CANCELLED(c)")))
-     (setq org-todo-keyword-faces
-	   (quote (("TODO" :foreground "#cc9393" :weight bold)
-		   ("ONGOING" :foreground "#9fafaf" :weight bold)
-		   ("WAITING" :foreground "#ffcfaf" :weight bold)
-		   ("DONE" :foreground "#709080" :weight bold)
-		   ("CANCELLED" :foreground "#709080" :weight bold)
-		   )))
-
-     (setq org-agenda-files '("c:/Users/OpenMind2/Google \Drive/GTD/inbox.org"
-			      "c:/Users/OpenMind2/Google \Drive/GTD/projects.org"))
-     (setq org-agenda-dim-blocked-tasks nil)
-     (setq org-agenda-compact-blocks t)
-
-     (setq org-agenda-custom-commands
-	   '(
-	     ("a" "Backlog" ((agenda) (tags-todo "BACKLOG"
-						 ((org-agenda-overriding-header "BACKLOG"))
-						 )))
-	     )
-	   )
-
-     (setq org-refile-targets '((project-file-path :maxlevel . 3)))
-     (setq org-refile-allow-creating-parent-nodes 'confirm)
-
-     (setq org-capture-templates '(
-				   ("b" "Backlog" entry
-				    (file+headline todo-file-path "Backlog")
-				    "* TODO %i%?")
-				   ("l" "List" plain
-				    (file+headline todo-file-path "Backlog")
-				    "* %i%?")
-				   ("e" "Element" plain
-				    (file+headline todo-file-path "Backlog")
-				    "* %i%?")
-				   ))
-
-   #+END_SRC
-** Pivotal Tracker
-   #+BEGIN_SRC emacs-lisp
-     (use-package pivotal-tracker
-       :ensure t
-       :defer t
-       :config
-       (setq pivotal-api-token "")
        )
    #+END_SRC
 ** PlantUML
@@ -421,14 +327,6 @@
 	:init (elpy-enable)
 	)
     #+END_SRC
-*** Company-Jedi
-	#+BEGIN_SRC emacs-lisp
-	  ;; (use-package python
-	  ;;   :defer t
-	  ;;   :config
-	  ;;   (add-to-list 'company-backends 'company-jedi)
-	  ;;   )
-	#+END_SRC
 ** Rainbow Mode
    [[https://julien.danjou.info/projects/emacs-packages#rainbow-mode][Rainbow Mode Website]]
    #+BEGIN_SRC emacs-lisp
@@ -451,11 +349,6 @@
        :ensure t
        :defer t
        )
-   #+END_SRC
-** Try
-   #+BEGIN_SRC emacs-lisp
-     (use-package try
-       :ensure t)
    #+END_SRC
 ** Undo Tree
    #+BEGIN_SRC emacs-lisp
@@ -511,26 +404,26 @@
 	 :ensure t
 	 :hook (swift-mode . (lambda () (lsp))))
 
-       (use-package lsp-mode
-	 :ensure t
-	 :init
-	 (setq read-process-output-max (* 1024 1024))
-	 :config
-	 (setq lsp-completion-provider :capf)
-	 (setq lsp-idle-delay 1)
-	 )
+       ;; (use-package lsp-mode
+       ;;   :ensure t
+       ;;   :init
+       ;;   (setq read-process-output-max (* 1024 1024))
+       ;;   :config
+       ;;   (setq lsp-completion-provider :capf)
+       ;;   (setq lsp-idle-delay 1)
+       ;;   )
 
-       (use-package lsp-sourcekit
-	 :ensure t
-	 :after lsp-mode
-	 :config
-	 ;; (setenv "SOURCEKIT_TOOLCHAIN_PATH" "/Library/Developer/Toolchains/swift-latest.xctoolchain")
-	 ;; (setq lsp-sourcekit-executable (expand-file-name "~/Documents/Programming/Utils/sourcekit-lsp/.build/debug/sourcekit-lsp")))
-	 (setq lsp-sourcekit-executable "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/sourcekit-lsp")
+       ;; (use-package lsp-sourcekit
+       ;;   :ensure t
+       ;;   :after lsp-mode
+       ;;   :config
+       ;;   ;; (setenv "SOURCEKIT_TOOLCHAIN_PATH" "/Library/Developer/Toolchains/swift-latest.xctoolchain")
+       ;;   ;; (setq lsp-sourcekit-executable (expand-file-name "~/Documents/Programming/Utils/sourcekit-lsp/.build/debug/sourcekit-lsp")))
+       ;;   (setq lsp-sourcekit-executable "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/sourcekit-lsp")
 
-	 (setq company-idle-delay 0.1
-	       company-minimum-prefix-length 1)
-	 )
+       ;;   (setq company-idle-delay 0.1
+       ;;	  company-minimum-prefix-length 1)
+       ;;   )
        )
 
 
@@ -549,4 +442,3 @@
        (yas-reload-all)
        )
    #+END_SRC
-* Custom function

@@ -1,3 +1,0 @@
-[submodule "omnisharp-legacy"]
-	path = legacy-mode/omnisharp
-	url = https://github.com/OmniSharp/omnisharp-emacs.git
