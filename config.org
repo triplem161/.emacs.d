@@ -1,10 +1,6 @@
 #+TITLE: Emacs Configuration
 #+AUTHOR: Marion Maignan
 
-#+BEGIN_SRC emacs-lisp
-  (setq gc-cons-threshold 100000000)
-#+END_SRC
-
 * Personnal Informations
   #+BEGIN_SRC emacs-lisp
     (setq user-full-name "Maignan Marion"

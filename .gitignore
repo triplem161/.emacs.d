@@ -8,4 +8,5 @@ transient/
 # FILES
 config.el
 bookmarks
+recentf
 **/.yas-compiled-snippets.el
