@@ -1,6 +1,10 @@
 #+TITLE: Emacs Configuration
 #+AUTHOR: Marion Maignan
 
+#+BEGIN_SRC emacs-lisp
+  (setq gc-cons-threshold 100000000)
+#+END_SRC
+
 * Personnal Informations
   #+BEGIN_SRC emacs-lisp
     (setq user-full-name "Maignan Marion"
@@ -497,35 +501,39 @@
      ;;      ))
      ;;   )
    #+END_SRC
-** Xcode / Swift
+** Xcode / Switf
    Only called when the environment is a Mac OS
    [[https://github.com/swift-emacs/swift-mode][Swift Git Repository]]
-   [[https://github.com/nathankot/company-sourcekit][Company Sourcekit]]
+   Check this link to have a LSP server setup: [[https://github.com/emacs-lsp/lsp-sourcekit][Swift LSP]] (using lsp-mode as well)
    #+BEGIN_SRC emacs-lisp
      (when (eq system-type 'darwin)
        (use-package swift-mode
 	 :ensure t
-	 :mode ("\\.swift\\'" . swift-mode)
+	 :hook (swift-mode . (lambda () (lsp))))
+
+       (use-package lsp-mode
+	 :ensure t
+	 :init
+	 (setq read-process-output-max (* 1024 1024))
+	 :config
+	 (setq lsp-completion-provider :capf)
+	 (setq lsp-idle-delay 1)
 	 )
 
-       (use-package company-sourcekit
+       (use-package lsp-sourcekit
 	 :ensure t
-	 :mode ("\\.swift\\'" . swift-mode)
+	 :after lsp-mode
 	 :config
-	 (add-to-list 'company-backends 'company-sourcekit)
-	 (setq sourcekit-sourcekittendaemon-executable "~/usr/local/Cellar/sourcekitten/0.17.2/bin/sourcekitten")
-	 (setq company-sourcekit-use-yasnippet nil)
-	 )
+	 ;; (setenv "SOURCEKIT_TOOLCHAIN_PATH" "/Library/Developer/Toolchains/swift-latest.xctoolchain")
+	 ;; (setq lsp-sourcekit-executable (expand-file-name "~/Documents/Programming/Utils/sourcekit-lsp/.build/debug/sourcekit-lsp")))
+	 (setq lsp-sourcekit-executable "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/sourcekit-lsp")
 
-       (use-package flycheck-swift
-	 :ensure t
-	 :mode ("\\.swift\\'" . swift-mode)
-	 :config
-	 (setq flycheck-swift-sdk-path "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk")
-	 (setq flycheck-swift-target "arm64-apple-ios10")
-	 (eval-after-load 'flycheck '(flycheck-swift-setup))
+	 (setq company-idle-delay 0.1
+	       company-minimum-prefix-length 1)
 	 )
        )
+
+
    #+END_SRC
 ** Yasnippet
    #+BEGIN_SRC emacs-lisp
