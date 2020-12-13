@@ -8,16 +8,16 @@
   #+END_SRC
 * Require
   #+BEGIN_SRC emacs-lisp
-    (require 'cl)
-    (require 'cc-mode)
+    ;; (require 'cl)
+    ;; (require 'cc-mode)
     (require 'package)
     ;;(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
     (setq package-archives
 	  '(("gnu" . "https://elpa.gnu.org/packages/")
 	    ("melpa" . "http://melpa.org/packages/")
 	    ("melpa-stable" . "http://stable.melpa.org/packages/")
+	    ("org" . "http://orgmode.org/elpa/")
 	    ;; ("elpy"		   . "http://jorgenschaefer.github.io/packages/")
-	    ;; ("org"		   . "http://orgmode.org/elpa/") ;; for org-plus-contrib
 	    )
 	  )
   #+END_SRC
@@ -304,6 +304,30 @@
        (bind-key "M-n" 'move-text-down)
        )
    #+END_SRC
+** OrgMode
+   #+BEGIN_SRC  emacs-lisp
+     (use-package org
+       :config
+       (add-to-list 'org-src-lang-modes '("plantuml" . plantuml))
+       :custom
+       (org-agenda-files '("e:/Omind/Notes/coach_hub.org" "e:/Omind/Notes/user_hub.org"))
+       (org-todo-keywords '((sequence "TODO(t)" "|" "DONE(d)")
+			    (sequence "QUESTION(q)" "|" "ANSWERED(a)" "NO_ANSWER")))
+       )
+     (setq org-latex-packages-alist '(("margin=1cm" "geometry" nil)))
+     (setq org-plantuml-jar-path (expand-file-name "c:/Users/Marion/AppData/Roaming/plantuml.jar"))
+     (org-babel-do-load-languages
+      'org-babel-load-languages
+      '((plantuml . t)))
+     (setq org-capture-templates
+	   '(("u" "User" entry(file+headline "e:/Omind/Notes/user_hub.org" "Tasks")
+	      "* TODO %? %t")
+	     ("c" "Coach" entry(file+headline "e:/Omind/Notes/coach_hub.org" "Tasks")
+	      "* TODO %? %t")
+	     ))
+     (global-set-key (kbd "C-c c") 'org-capture)
+     (global-set-key (kbd "C-c a") 'org-agenda)
+   #+END_SRC
 ** PlantUML
    #+BEGIN_SRC emacs-lisp
      (use-package plantuml-mode
@@ -320,7 +344,9 @@
       (use-package elpy
 	:ensure t
 	:defer t
-	:init (elpy-enable)
+	:init
+	(advice-add 'python-mode :before 'elpy-enable)
+	(setq elpy-rpc-virtualenv-path 'current)
 	)
     #+END_SRC
 ** Rainbow Mode
@@ -337,6 +363,7 @@
      (use-package restclient
        :ensure t
        :defer t
+       :mode ("\\.rest\\'" . restclient)
        )
    #+END_SRC
 ** Shader Mode
@@ -359,14 +386,11 @@
    #+BEGIN_SRC emacs-lisp
      (use-package web-mode
        :ensure t
-       :mode ("\\.js\\'" . web-mode)
+       :mode ("\\.html\\'" . web-mode)
        :config
        (setq web-mode-code-indent-offset 2)
        (setq web-mode-css-indent-offset 2)
        (setq web-mode-markup-indent-offset 2)
-       (setq web-mode-content-types
-	     '(("jsx" . "\\.js[x]?\\'"))
-	     )
        )
    #+END_SRC
 ** Wgrep
@@ -423,6 +447,14 @@
        )
 
 
+   #+END_SRC
+** YAML
+   #+BEGIN_SRC emacs-lisp
+     (use-package yaml-mode
+       :ensure t
+       :defer t
+       :mode("\\.yaml\\'")
+       )
    #+END_SRC
 ** Yasnippet
    #+BEGIN_SRC emacs-lisp
