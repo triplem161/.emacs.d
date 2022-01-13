@@ -4,7 +4,7 @@
 * Personnal Informations
   #+BEGIN_SRC emacs-lisp
     (setq user-full-name "Maignan Marion"
-	  user-mail-address "maigmarion@gmail.com")
+          user-mail-address "maigmarion@gmail.com")
   #+END_SRC
 * Require
   #+BEGIN_SRC emacs-lisp
@@ -13,13 +13,13 @@
     (require 'package)
     ;;(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
     (setq package-archives
-	  '(("gnu" . "https://elpa.gnu.org/packages/")
-	    ("melpa" . "http://melpa.org/packages/")
-	    ("melpa-stable" . "http://stable.melpa.org/packages/")
-	    ("org" . "http://orgmode.org/elpa/")
-	    ;; ("elpy"		   . "http://jorgenschaefer.github.io/packages/")
-	    )
-	  )
+          '(("gnu" . "https://elpa.gnu.org/packages/")
+            ("melpa" . "http://melpa.org/packages/")
+            ("melpa-stable" . "http://stable.melpa.org/packages/")
+            ("org" . "http://orgmode.org/elpa/")
+            ;; ("elpy"		   . "http://jorgenschaefer.github.io/packages/")
+            )
+          )
   #+END_SRC
 * Systems
 ** Windows
@@ -35,9 +35,9 @@
    #+BEGIN_SRC emacs-lisp
      (when (eq system-type 'darwin)
        (use-package exec-path-from-shell
-	 :ensure t
-	 :init (exec-path-from-shell-initialize)
-	 )
+         :ensure t
+         :init (exec-path-from-shell-initialize)
+         )
 
        (setq mac-command-modifier 'meta)
        (setq mac-option-modifier 'nil)
@@ -50,11 +50,13 @@
    #+END_SRC
 ** Encoding
    #+BEGIN_SRC emacs-lisp
-     (setq locale-coding-system 'utf-8)
-     (set-terminal-coding-system 'utf-8)
-     (set-keyboard-coding-system 'utf-8)
-     (set-selection-coding-system 'utf-8)
+     (set-language-environment 'utf-8)
+     (setq-default buffer-file-coding-system 'utf-8)
      (prefer-coding-system 'utf-8)
+     (set-default-coding-systems 'utf-8)
+     (setq-default coding-system-for-read 'utf-8)
+     (set-selection-coding-system 'utf-8)
+     (set-clipboard-coding-system 'utf-8)
    #+END_SRC
 ** Font
    #+BEGIN_SRC emacs-lisp
@@ -64,9 +66,9 @@
 *** Zenburn
     #+BEGIN_SRC emacs-lisp
       (use-package zenburn-theme
-	:ensure t
-	:defer t
-	)
+        :ensure t
+        :defer t
+        )
     #+END_SRC
 *** Current Theme
     #+BEGIN_SRC emacs-lisp
@@ -89,6 +91,8 @@
    #+BEGIN_SRC emacs-lisp
      (add-hook 'after-init-hook 'electric-pair-mode)
 
+     (setq-default indent-tabs-mode nil)
+
      ;; Allow selected text to be replaced
      (delete-selection-mode t)
 
@@ -105,40 +109,42 @@
    #+BEGIN_SRC emacs-lisp
      ;; Custom time and date
      (setq display-time-day-and-date 1
-	   display-time-default-load-average nil
-	   display-time-24hr-format t)
+           display-time-default-load-average nil
+           display-time-24hr-format t)
 
      (setq display-time-string-forms
-	   '((propertize
-	      (format-time-string " %d %b %H:%M "))))
+           '((propertize
+              (format-time-string " %d %b %H:%M "))))
 
      (display-time-mode 1)
 
      ;; Custom line / column number
      (setq mode-line-position
-	   '((line-number-mode ("l.%l")))
-	   )
+           '((line-number-mode ("l.%l")))
+           )
 
      ;; Modeline Style
      (set-face-attribute 'mode-line nil
-			 :background "#656555"
-			 :foreground "#DCDCCC"
-			 :box '(:line-width 2 :color "#656555")
-			 :overline nil
-			 :underline nil)
+                         :background "#656555"
+                         :foreground "#DCDCCC"
+                         :box '(:line-width 2 :color "#656555")
+                         :overline nil
+                         :underline nil)
 
      (set-face-attribute 'mode-line-inactive nil
-			 :background "#656555"
-			 :foreground "#DCDCCC"
-			 :box '(:line-width 2 :color "#656555")
-			 :overline nil
-			 :underline nil)
+                         :background "#656555"
+                         :foreground "#DCDCCC"
+                         :box '(:line-width 2 :color "#656555")
+                         :overline nil
+                         :underline nil)
 
      (set-face-attribute 'mode-line-buffer-id nil :foreground "#93E0E3")
   #+END_SRC
 ** Keybinds
    #+BEGIN_SRC emacs-lisp
      (global-set-key (kbd "C-c r") 'query-replace)
+     (global-set-key (kbd "C-c C-m") 'point-to-register)
+     (global-set-key (kbd "C-c m") 'jump-to-register)
    #+END_SRC
 * Modes
 ** Avy
@@ -147,44 +153,44 @@
        :ensure t
        :bind
        (("M-s" . avy-goto-char)
-	("M-l" . avy-goto-line))
+        ("M-l" . avy-goto-line))
        )
    #+END_SRC
 ** C# Development
 *** CSharp
     #+BEGIN_SRC emacs-lisp
       (use-package csharp-mode
-	:ensure t
-	:mode ("\\.cs\\'" . csharp-mode)
-	:config
-	(progn
-	  (add-hook 'csharp-mode-hook 'omnisharp-mode)
-	  )
+        :ensure t
+        :mode ("\\.cs\\'" . csharp-mode)
+        :config
+        ;; (progn
+        ;;   (add-hook 'csharp-mode-hook 'omnisharp-mode)
+        ;;   )
 
-	(defun csharp-variable ()
-	  (c-set-style "k&r")
-	  (setq c-basic-offset 4)
-	  (setq indent-tabs-mode t)
-	  (setq tab-width 4)
-	  (setq mmm_glo_ag-file-filter "--csharp")
-	  )
-	(add-hook 'csharp-mode-hook 'csharp-variable t)
-	)
+        (defun csharp-variable ()
+          (c-set-style "k&r")
+          (setq c-basic-offset 4)
+          (setq indent-tabs-mode t)
+          (setq tab-width 4)
+          (setq mmm_glo_ag-file-filter "--csharp")
+          )
+        (add-hook 'csharp-mode-hook 'csharp-variable t)
+        )
     #+END_SRC
 *** Omnisharp
     #+BEGIN_SRC emacs-lisp
-      (use-package omnisharp
-	:ensure t
-	:diminish omnisharp-mode
-	:bind (:map omnisharp-mode-map
-		    ("C-u" . omnisharp-navigate-to-solution-file)
-		    ("C-c u" . omnisharp-find-usages)
-		    ("C-c d" . omnisharp-go-to-definition))
-	:config
-	(setq omnisharp-server-executable-path "c:/Users/Marion/AppData/Roaming/.emacs.d/.cache/omnisharp/server/v1.34.7/OmniSharp.exe")
-	(add-to-list 'company-backends 'company-omnisharp)
-	(setq omnisharp-imenu-support t)
-	)
+      ;; (use-package omnisharp
+      ;;   :ensure t
+      ;;   :diminish omnisharp-mode
+      ;;   :bind (:map omnisharp-mode-map
+      ;;	      ("C-u" . omnisharp-navigate-to-solution-file)
+      ;;	      ("C-c u" . omnisharp-find-usages)
+      ;;	      ("C-c d" . omnisharp-go-to-definition))
+      ;;   :config
+      ;;   (setq omnisharp-server-executable-path "c:/Users/Marion/AppData/Roaming/.emacs.d/.cache/omnisharp/server/v1.34.7/OmniSharp.exe")
+      ;;   (add-to-list 'company-backends 'company-omnisharp)
+      ;;   (setq omnisharp-imenu-support t)
+      ;;   )
     #+END_SRC
 ** Company
    #+BEGIN_SRC emacs-lisp
@@ -194,7 +200,7 @@
        (add-hook 'after-init-hook 'global-company-mode)
        :config
        (setq company-idle-delay 0.3
-	     company-minimum-prefix-length 2)
+             company-minimum-prefix-length 2)
        )
    #+END_SRC
 ** Dsvn
@@ -219,6 +225,7 @@
        :defer t
        :init
        (add-hook 'web-mode-hook 'emmet-mode)
+       (add-hook 'vue-mode-hook 'emmet-mode)
        )
    #+END_SRC
 ** Flycheck
@@ -258,16 +265,16 @@
        :ensure t
        :bind
        (("C-c y" . counsel-yank-pop)
-	("C-c i" . counsel-imenu)
-	("M-x" . counsel-M-x)
-	("C-x r l" . counsel-bookmark)
-	("C-c f f" . counsel-git)
-	("C-c f w" . mmm/counsel-ag-project-at-point))
+        ("C-c i" . counsel-imenu)
+        ("M-x" . counsel-M-x)
+        ("C-x r l" . counsel-bookmark)
+        ("C-c f f" . counsel-git)
+        ("C-c f w" . mmm/counsel-ag-project-at-point))
        :config
        (defun mmm/counsel-ag-project-at-point ()
-	 "use counsel ag to search for the word at point in the project"
-	 (interactive)
-	 (counsel-ag () (vc-root-dir) mmm_glo_ag-file-filter))
+         "use counsel ag to search for the word at point in the project"
+         (interactive)
+         (counsel-ag () (vc-root-dir) mmm_glo_ag-file-filter))
        )
 
      (use-package swiper
@@ -286,6 +293,42 @@
        (("M-z" . avy-zap-to-char-dwim))
        )
    #+END_SRC
+** JS2 Mode
+#+BEGIN_SRC emacs-lisp
+  ;; (use-package js2-mode
+  ;;   :ensure t
+  ;;   :defer t
+  ;;   :config
+  ;;   (setq-default indent-tabs-mode nil)
+  ;;   (setq js2-basic-offset 2)
+  ;; )
+#+END_SRC
+** LSP
+   #+begin_src emacs-lisp
+     (use-package lsp-mode
+       :ensure t
+       ;; :hook (python-mode .lsp)
+       :init (setq read-process-output-max (* 1024 1024))
+       :config
+       (setq lsp-completion-provider :capf)
+       (setq lsp-idle-delay 0.500)
+       (setq company-minimum-prefix-length 1
+                     company-idle-delay 0.0)
+       )
+
+     ;; (use-package lsp-python-ms
+     ;;   :ensure t
+     ;;   :init (setq lsp-python-ms-auto-install-server t)
+     ;;   :hook (python-mode . (lambda ()
+     ;;				 (require 'lsp-python-ms)
+     ;;				 (lsp))))  ; or lsp-deferred
+
+     (use-package lsp-pyright
+       :ensure t
+       :hook (python-mode . (lambda ()
+                                       (require 'lsp-pyright)
+                                       (lsp))))  ; or lsp-deferred
+   #+end_src
 ** Magit
    #+BEGIN_SRC emacs-lisp
      (use-package magit
@@ -294,6 +337,10 @@
        :config
        (setenv "GIT_ASKPASS" "git-gui--askpass")
        )
+
+     ;; (use-package forge
+     ;;   :ensure t
+     ;;   :after magit)
    #+END_SRC
 ** Move Text
    #+BEGIN_SRC emacs-lisp
@@ -309,24 +356,49 @@
      (use-package org
        :config
        (add-to-list 'org-src-lang-modes '("plantuml" . plantuml))
+       (org-babel-do-load-languages
+        'org-babel-load-languages '((sql . t)))
        :custom
-       (org-agenda-files '("e:/Omind/Notes/coach_hub.org" "e:/Omind/Notes/user_hub.org"))
-       (org-todo-keywords '((sequence "TODO(t)" "|" "DONE(d)")
-			    (sequence "QUESTION(q)" "|" "ANSWERED(a)" "NO_ANSWER")))
+       (org-agenda-files '("e:/Omind/Notes/omind_todo.org"))
+       (org-todo-keywords '((sequence "TODO(t)" "IN PROGRESS(p)" "|" "DONE(d)" "CANCEL(c)")))
        )
+
      (setq org-latex-packages-alist '(("margin=1cm" "geometry" nil)))
      (setq org-plantuml-jar-path (expand-file-name "c:/Users/Marion/AppData/Roaming/plantuml.jar"))
      (org-babel-do-load-languages
       'org-babel-load-languages
       '((plantuml . t)))
+
+
      (setq org-capture-templates
-	   '(("u" "User" entry(file+headline "e:/Omind/Notes/user_hub.org" "Tasks")
-	      "* TODO %? %t")
-	     ("c" "Coach" entry(file+headline "e:/Omind/Notes/coach_hub.org" "Tasks")
-	      "* TODO %? %t")
-	     ))
+           '(("t" "Todo")
+             ("tt" "todo" entry(file "e:/Omind/Notes/omind_todo.org")
+              "* TODO %?")
+             ("tp" "todo" entry(file "e:/Omind/Notes/omind_todo.org")
+              "* TODO %? %^G")
+             ("tl" "todo" entry(file "e:/Omind/Notes/omind_todo.org")
+              "* TODO %?\n %a")
+           ))
+
+
      (global-set-key (kbd "C-c c") 'org-capture)
      (global-set-key (kbd "C-c a") 'org-agenda)
+     (setq org-refile-targets '(
+                                ("e:/Omind/Notes/omind_archive.org" :maxlevel . 1)
+                                ))
+
+     (advice-add 'org-refile :after 'org-save-all-org-buffers)
+     (setq org-todo-keyword-faces '(
+                                    ("TODO" . "#abdee6")
+                                    ("IN PROGRESS" . "#ffffb5")
+                                    ("DONE" . "#cce2cb")
+                                    ("CANCEL" . "#f3b0c3")
+                                    ))
+     (setq org-agenda-start-with-log-mode t)
+     (setq org-log-done 'time)
+     (setq org-log-done 'note)
+     (setq org-log-into-drawer t)
+     (setq org-confirm-babel-evaluate nil)
    #+END_SRC
 ** PlantUML
    #+BEGIN_SRC emacs-lisp
@@ -338,16 +410,67 @@
        (setq plantuml-output-type "PNG")
        )
    #+END_SRC
+** Polymode
+#+BEGIN_SRC emacs-lisp
+  ;; (use-package polymode
+  ;;   :ensure t
+  ;;   :defer t
+  ;;   :mode ("\\.vue\\'" . vue-polymode)
+  ;;   :config
+
+  ;;   (define-hostmode vue-hostmode :mode 'html-mode)
+
+  ;;   ;; (define-innermode poly-vue-template-innermode
+  ;;   ;;   :mode 'html-mode
+  ;;   ;;   :head-matcher "<[[:space:]]*template[[:space:]]*[[:space:]]*>"
+  ;;   ;;   :tail-matcher "</[[:space:]]*template[[:space:]]*[[:space:]]*>"
+  ;;   ;;   :head-mode 'host
+  ;;   ;;   :tail-mode 'host)
+  ;;   (define-innermode poly-vue-script-innermode
+  ;;     :mode 'js-mode
+  ;;     :head-matcher "^[ \t]*<script.*>"
+  ;;     :tail-matcher "^[ \t]*</script.*>"
+  ;;     :head-mode 'host
+  ;;     :tail-mode 'host)
+  ;;   (define-innermode poly-vue-style-innermode
+  ;;     :mode 'css-mode
+  ;;     :head-matcher "<[[:space:]]*style[[:space:]]*\\(?:scoped\\|[[:space:]]\\)*>"
+  ;;     :tail-matcher "</[[:space:]]*style[[:space:]]*[[:space:]]*>"
+  ;;     :head-mode 'host
+  ;;     :tail-mode 'host)
+
+  ;;   (define-polymode vue-polymode
+  ;;     :hostmode 'vue-hostmode
+  ;;     :innermodes '(
+  ;;                   ;; poly-vue-template-innermode
+  ;;                   poly-vue-script-innermode
+  ;;                   poly-vue-style-innermode
+  ;;                   ))
+
+  ;;   (add-hook 'js-mode-hook
+  ;;             (function (lambda () (setq indent-tabs-mode nil
+  ;;                                        js-indent-level 2)))
+  ;;             )
+  ;;   )
+#+END_SRC
 ** Python Development
 *** Elpy
     #+BEGIN_SRC emacs-lisp
-      (use-package elpy
-	:ensure t
-	:defer t
-	:init
-	(advice-add 'python-mode :before 'elpy-enable)
-	(setq elpy-rpc-virtualenv-path 'current)
-	)
+            (use-package poetry
+              :ensure t
+              ;; :hook
+              ;; (python-mode . (lambda () (when (poetry-venv-exist-p)
+              ;;			    (setq-local lsp-pyls-server-command '("poetry" "run" "pyls"))
+              ;;			    (poetry-venv-workon))))
+              )
+
+      ;; (use-package elpy
+            ;;   :ensure t
+            ;;   :defer t
+            ;;   :init
+            ;;   (advice-add 'python-mode :before 'elpy-enable)
+            ;;   (setq elpy-rpc-virtualenv-path 'current)
+            ;;   )
     #+END_SRC
 ** Rainbow Mode
    [[https://julien.danjou.info/projects/emacs-packages#rainbow-mode][Rainbow Mode Website]]
@@ -382,16 +505,31 @@
        :init (global-undo-tree-mode)
        )
    #+END_SRC
+** Vue Mode
+#+BEGIN_SRC emacs-lisp
+  (use-package vue-mode
+    :ensure t
+    :mode "\\.vue\\'"
+    :config
+    (setq indent-tabs-mode nil)
+    (setq js-indent-level 2)
+    (add-hook 'js-mode-hook
+    (function (lambda () (setq indent-tabs-mode nil
+                                        tab-width 2)))
+    )
+    (add-hook 'mmm-mode-hook (lambda () (set-face-background 'mmm-default-submode-face nil)))
+    )
+#+END_SRC
 ** Web Mode
    #+BEGIN_SRC emacs-lisp
-     (use-package web-mode
-       :ensure t
-       :mode ("\\.html\\'" . web-mode)
-       :config
-       (setq web-mode-code-indent-offset 2)
-       (setq web-mode-css-indent-offset 2)
-       (setq web-mode-markup-indent-offset 2)
-       )
+     ;; (use-package web-mode
+     ;;   :ensure t
+     ;;   :mode (("\\.html\\'" . web-mode) ("\\.vue\\'" . web-mode))
+     ;;   :config
+     ;;   (setq web-mode-code-indent-offset 2)
+     ;;   (setq web-mode-css-indent-offset 2)
+     ;;   (setq web-mode-markup-indent-offset 2)
+     ;;   )
    #+END_SRC
 ** Wgrep
    #+BEGIN_SRC emacs-lisp
@@ -419,10 +557,9 @@
    [[https://github.com/swift-emacs/swift-mode][Swift Git Repository]]
    Check this link to have a LSP server setup: [[https://github.com/emacs-lsp/lsp-sourcekit][Swift LSP]] (using lsp-mode as well)
    #+BEGIN_SRC emacs-lisp
-     (when (eq system-type 'darwin)
-       (use-package swift-mode
-	 :ensure t
-	 :hook (swift-mode . (lambda () (lsp))))
+          (use-package swift-mode
+         :ensure t
+         :hook (swift-mode . (lambda () (lsp))))
 
        ;; (use-package lsp-mode
        ;;   :ensure t
@@ -444,7 +581,6 @@
        ;;   (setq company-idle-delay 0.1
        ;;	  company-minimum-prefix-length 1)
        ;;   )
-       )
 
 
    #+END_SRC
@@ -465,7 +601,7 @@
        :config
 
        (use-package yasnippet-snippets
-	 :ensure t)
+         :ensure t)
 
        (yas-reload-all)
        )
