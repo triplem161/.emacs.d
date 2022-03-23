@@ -47,6 +47,7 @@
  ("straight.el" . "af5437f2afd00936c883124d6d3098721c2d306c")
  ("swift-mode" . "0d1ef0ef183398143b13fb8c76c1284df0d5e616")
  ("swiper" . "c97ea72285f2428ed61b519269274d27f2b695f9")
+ ("tempel" . "a725dfc5bcd21423ebc108cd4d5d92fb33becded")
  ("transient" . "ecf340cbfff8434ad00a26b408bd3587a10ef59b")
  ("treemacs" . "b18a05b1f62074a40e6011d83cd4c92cbee040dd")
  ("undo-tree" . "16f4121032d09ef44b3d7d02c4d02c3c2f18041f")

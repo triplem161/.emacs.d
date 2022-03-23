@@ -1,0 +1,8 @@
+;; -*- mode: lisp -*-
+
+prog-mode
+
+(fixme (if (derived-mode-p 'emacs-lisp-mode) ";; " comment-start) "FIXME(Marion) ")
+(todo (if (derived-mode-p 'emacs-lisp-mode) ";; " comment-start) "TODO(Marion) ")
+(bug (if (derived-mode-p 'emacs-lisp-mode) ";; " comment-start) "BUG(Marion) ")
+(hack (if (derived-mode-p 'emacs-lisp-mode) ";; " comment-start) "HACK(Marion) ")
