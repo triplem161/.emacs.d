@@ -57,6 +57,22 @@
      (setq-default coding-system-for-read 'utf-8)
      (set-selection-coding-system 'utf-8)
      (set-clipboard-coding-system 'utf-8)
+     (if (eq system-type 'windows-nt)
+         (progn
+           (set-clipboard-coding-system 'utf-16-le)
+           (set-selection-coding-system 'utf-16-le))
+       (set-selection-coding-system 'utf-8))
+     ;; (unless *sys/win32*
+     ;;   (set-selection-coding-system 'utf-8)
+     ;;   (prefer-coding-system 'utf-8)
+     ;;   (set-language-environment "UTF-8")
+     ;;   (set-default-coding-systems 'utf-8)
+     ;;   (set-terminal-coding-system 'utf-8)
+     ;;   (set-keyboard-coding-system 'utf-8)
+     ;;   (setq locale-coding-system 'utf-8))
+     ;; ;; Treat clipboard input as UTF-8 string first; compound text next, etc.
+     ;; (when (display-graphic-p)
+     ;;   (setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING)))
    #+END_SRC
 ** Font
    #+BEGIN_SRC emacs-lisp
@@ -203,6 +219,19 @@
              company-minimum-prefix-length 2)
        )
    #+END_SRC
+** Dart
+#+BEGIN_SRC emacs-lisp
+  (use-package dart-mode
+    :ensure t
+    :defer t)
+
+  (use-package lsp-dart
+    :ensure t
+    :defer t
+    :config
+    (add-hook 'dart-mode-hook 'lsp))
+
+#+END_SRC
 ** Dsvn
    #+BEGIN_SRC emacs-lisp
      (use-package dsvn
@@ -269,12 +298,7 @@
         ("M-x" . counsel-M-x)
         ("C-x r l" . counsel-bookmark)
         ("C-c f f" . counsel-git)
-        ("C-c f w" . mmm/counsel-ag-project-at-point))
-       :config
-       (defun mmm/counsel-ag-project-at-point ()
-         "use counsel ag to search for the word at point in the project"
-         (interactive)
-         (counsel-ag () (vc-root-dir) mmm_glo_ag-file-filter))
+        ("C-c f w" . counsel-rg))
        )
 
      (use-package swiper
@@ -303,6 +327,15 @@
   ;;   (setq js2-basic-offset 2)
   ;; )
 #+END_SRC
+** Ledger
+#+begin_src emacs-lisp
+  (use-package ledger-mode
+    :ensure t
+    :defer t
+    :config
+    (setq ledger-binary-path "c:/Programming/Ledger/ledger.exe")
+    )
+#+end_src
 ** LSP
    #+begin_src emacs-lisp
      (use-package lsp-mode
@@ -360,7 +393,7 @@
         'org-babel-load-languages '((sql . t)))
        :custom
        (org-agenda-files '("e:/Omind/Notes/omind_todo.org"))
-       (org-todo-keywords '((sequence "TODO(t)" "IN PROGRESS(p)" "|" "DONE(d)" "CANCEL(c)")))
+       (org-todo-keywords '((sequence "TODO(t)" "NEXT(n)" "IN PROGRESS(p)" "|" "VALIDATE(v)" "DONE(d)" "CANCEL(c)")))
        )
 
      (setq org-latex-packages-alist '(("margin=1cm" "geometry" nil)))
@@ -389,16 +422,26 @@
 
      (advice-add 'org-refile :after 'org-save-all-org-buffers)
      (setq org-todo-keyword-faces '(
-                                    ("TODO" . "#abdee6")
-                                    ("IN PROGRESS" . "#ffffb5")
-                                    ("DONE" . "#cce2cb")
-                                    ("CANCEL" . "#f3b0c3")
+                                    ("TODO" . "#FAF3E7")
+                                    ("NEXT" . "#A0D8E9")
+                                    ("IN PROGRESS" . "#EEA579")
+                                    ("VALIDATE" . "#A7DB8C")
+                                    ("DONE" . "#B4A7EB")
+                                    ("CANCEL" . "#F3A5BC")
                                     ))
      (setq org-agenda-start-with-log-mode t)
      (setq org-log-done 'time)
      (setq org-log-done 'note)
      (setq org-log-into-drawer t)
      (setq org-confirm-babel-evaluate nil)
+
+
+     (use-package org-jira
+       :ensure t
+       :config
+       (setq jiralib-url "https://openmindneurotech.atlassian.net/")
+       (setq jiralib-update-issue-fields-exclude-list '(priority components))
+       )
    #+END_SRC
 ** PlantUML
    #+BEGIN_SRC emacs-lisp
@@ -498,12 +541,14 @@
    #+END_SRC
 ** Undo Tree
    #+BEGIN_SRC emacs-lisp
-     (use-package undo-tree
-       :ensure t
-       :diminish undo-tree-mode
-       :defer t
-       :init (global-undo-tree-mode)
-       )
+          (use-package undo-tree
+            :ensure t
+            :diminish undo-tree-mode
+            :defer t
+            :init (global-undo-tree-mode)
+            :config
+            (setq undo-tree-auto-save-history nil)
+            )
    #+END_SRC
 ** Vue Mode
 #+BEGIN_SRC emacs-lisp
