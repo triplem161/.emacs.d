@@ -1,5 +1,0 @@
-# -*- mode: snippet -*-
-# name: Debug Unity Plus
-# key: ud+
-# --
-Debug.Log("$1" + $2);

@@ -1,4 +1,0 @@
-# key: sd
-# name: swift insert variable in print message
-# --
-\\($1)
