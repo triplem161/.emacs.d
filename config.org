@@ -8,18 +8,24 @@
   #+END_SRC
 * Require
   #+BEGIN_SRC emacs-lisp
-    ;; (require 'cl)
-    ;; (require 'cc-mode)
-    (require 'package)
-    ;;(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
-    (setq package-archives
-          '(("gnu" . "https://elpa.gnu.org/packages/")
-            ("melpa" . "http://melpa.org/packages/")
-            ("melpa-stable" . "http://stable.melpa.org/packages/")
-            ("org" . "http://orgmode.org/elpa/")
-            ;; ("elpy"		   . "http://jorgenschaefer.github.io/packages/")
-            )
-          )
+    (defvar bootstrap-version)
+    (let ((bootstrap-file
+           (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+          (bootstrap-version 5))
+      (unless (file-exists-p bootstrap-file)
+        (with-current-buffer
+            (url-retrieve-synchronously
+             "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+             'silent 'inhibit-cookies)
+          (goto-char (point-max))
+          (eval-print-last-sexp)))
+      (load bootstrap-file nil 'nomessage))
+
+    (setq package-enable-at-startup nil)
+
+    (straight-use-package 'use-package)
+
+    (setq straight-use-package-by-default t)
   #+END_SRC
 * Systems
 ** Windows
@@ -35,7 +41,6 @@
    #+BEGIN_SRC emacs-lisp
      (when (eq system-type 'darwin)
        (use-package exec-path-from-shell
-         :ensure t
          :init (exec-path-from-shell-initialize)
          )
 
@@ -82,7 +87,6 @@
 *** Zenburn
     #+BEGIN_SRC emacs-lisp
       (use-package zenburn-theme
-        :ensure t
         :defer t
         )
     #+END_SRC
@@ -166,7 +170,6 @@
 ** Avy
     #+BEGIN_SRC emacs-lisp
      (use-package avy
-       :ensure t
        :bind
        (("M-s" . avy-goto-char)
         ("M-l" . avy-goto-line))
@@ -176,13 +179,8 @@
 *** CSharp
     #+BEGIN_SRC emacs-lisp
       (use-package csharp-mode
-        :ensure t
         :mode ("\\.cs\\'" . csharp-mode)
         :config
-        ;; (progn
-        ;;   (add-hook 'csharp-mode-hook 'omnisharp-mode)
-        ;;   )
-
         (defun csharp-variable ()
           (c-set-style "k&r")
           (setq c-basic-offset 4)
@@ -193,25 +191,9 @@
         (add-hook 'csharp-mode-hook 'csharp-variable t)
         )
     #+END_SRC
-*** Omnisharp
-    #+BEGIN_SRC emacs-lisp
-      ;; (use-package omnisharp
-      ;;   :ensure t
-      ;;   :diminish omnisharp-mode
-      ;;   :bind (:map omnisharp-mode-map
-      ;;	      ("C-u" . omnisharp-navigate-to-solution-file)
-      ;;	      ("C-c u" . omnisharp-find-usages)
-      ;;	      ("C-c d" . omnisharp-go-to-definition))
-      ;;   :config
-      ;;   (setq omnisharp-server-executable-path "c:/Users/Marion/AppData/Roaming/.emacs.d/.cache/omnisharp/server/v1.34.7/OmniSharp.exe")
-      ;;   (add-to-list 'company-backends 'company-omnisharp)
-      ;;   (setq omnisharp-imenu-support t)
-      ;;   )
-    #+END_SRC
 ** Company
    #+BEGIN_SRC emacs-lisp
      (use-package company
-       :ensure t
        :init
        (add-hook 'after-init-hook 'global-company-mode)
        :config
@@ -222,11 +204,9 @@
 ** Dart
 #+BEGIN_SRC emacs-lisp
   (use-package dart-mode
-    :ensure t
     :defer t)
 
   (use-package lsp-dart
-    :ensure t
     :defer t
     :config
     (add-hook 'dart-mode-hook 'lsp))
@@ -235,7 +215,6 @@
 ** Dsvn
    #+BEGIN_SRC emacs-lisp
      (use-package dsvn
-       :ensure t
        :bind ("C-c s" . svn-status)
        )
    #+END_SRC
@@ -250,17 +229,14 @@
 ** Emmet
    #+BEGIN_SRC emacs-lisp
      (use-package emmet-mode
-       :ensure t
        :defer t
        :init
-       (add-hook 'web-mode-hook 'emmet-mode)
        (add-hook 'vue-mode-hook 'emmet-mode)
        )
    #+END_SRC
 ** Flycheck
    #+BEGIN_SRC emacs-lisp
      (use-package flycheck
-       :ensure t
        :diminish flycheck-mode
        :init
        (global-flycheck-mode t)
@@ -269,7 +245,6 @@
 ** Google this
    #+BEGIN_SRC emacs-lisp
      (use-package google-this
-       :ensure t
        :diminish google-this-mode
        :bind ("C-c w" . google-this-search)
        :init
@@ -279,7 +254,6 @@
 ** Ivy / Swipper / Counsel / Smex
    #+BEGIN_SRC emacs-lisp
      (use-package ivy
-       :ensure t
        :diminish ivy-mode
        :bind
        (("C-x b" . ivy-switch-buffer))
@@ -291,7 +265,6 @@
        )
 
      (use-package counsel
-       :ensure t
        :bind
        (("C-c y" . counsel-yank-pop)
         ("C-c i" . counsel-imenu)
@@ -302,35 +275,21 @@
        )
 
      (use-package swiper
-       :ensure t
        :bind
        ("C-s" . swiper)
        )
 
      (use-package smex
-       :ensure t
        )
 
      (use-package avy-zap
-       :ensure t
        :bind
        (("M-z" . avy-zap-to-char-dwim))
        )
    #+END_SRC
-** JS2 Mode
-#+BEGIN_SRC emacs-lisp
-  ;; (use-package js2-mode
-  ;;   :ensure t
-  ;;   :defer t
-  ;;   :config
-  ;;   (setq-default indent-tabs-mode nil)
-  ;;   (setq js2-basic-offset 2)
-  ;; )
-#+END_SRC
 ** Ledger
 #+begin_src emacs-lisp
   (use-package ledger-mode
-    :ensure t
     :defer t
     :config
     (setq ledger-binary-path "c:/Programming/Ledger/ledger.exe")
@@ -339,7 +298,6 @@
 ** LSP
    #+begin_src emacs-lisp
      (use-package lsp-mode
-       :ensure t
        ;; :hook (python-mode .lsp)
        :init (setq read-process-output-max (* 1024 1024))
        :config
@@ -357,15 +315,13 @@
      ;;				 (lsp))))  ; or lsp-deferred
 
      (use-package lsp-pyright
-       :ensure t
-       :hook (python-mode . (lambda ()
-                                       (require 'lsp-pyright)
-                                       (lsp))))  ; or lsp-deferred
+     :hook (python-mode . (lambda ()
+     (require 'lsp-pyright)
+     (lsp))))  ; or lsp-deferred
    #+end_src
 ** Magit
    #+BEGIN_SRC emacs-lisp
      (use-package magit
-       :ensure t
        :bind ("C-c g" . magit-status)
        :config
        (setenv "GIT_ASKPASS" "git-gui--askpass")
@@ -378,7 +334,6 @@
 ** Move Text
    #+BEGIN_SRC emacs-lisp
      (use-package move-text
-       :ensure t
        :init
        (bind-key "M-p" 'move-text-up)
        (bind-key "M-n" 'move-text-down)
@@ -386,6 +341,7 @@
    #+END_SRC
 ** OrgMode
    #+BEGIN_SRC  emacs-lisp
+     (straight-use-package '(org :type built-in))
      (use-package org
        :config
        (add-to-list 'org-src-lang-modes '("plantuml" . plantuml))
@@ -436,17 +392,15 @@
      (setq org-confirm-babel-evaluate nil)
 
 
-     (use-package org-jira
-       :ensure t
-       :config
-       (setq jiralib-url "https://openmindneurotech.atlassian.net/")
-       (setq jiralib-update-issue-fields-exclude-list '(priority components))
-       )
+     ;; (use-package org-jira
+     ;;   :config
+     ;;   (setq jiralib-url "https://openmindneurotech.atlassian.net/")
+     ;;   (setq jiralib-update-issue-fields-exclude-list '(priority components))
+     ;;   )
    #+END_SRC
 ** PlantUML
    #+BEGIN_SRC emacs-lisp
      (use-package plantuml-mode
-       :ensure t
        :defer t
        :config
        (setq plantuml-default-exec-mode 'jar)
@@ -454,72 +408,12 @@
        )
    #+END_SRC
 ** Polymode
-#+BEGIN_SRC emacs-lisp
-  ;; (use-package polymode
-  ;;   :ensure t
-  ;;   :defer t
-  ;;   :mode ("\\.vue\\'" . vue-polymode)
-  ;;   :config
-
-  ;;   (define-hostmode vue-hostmode :mode 'html-mode)
-
-  ;;   ;; (define-innermode poly-vue-template-innermode
-  ;;   ;;   :mode 'html-mode
-  ;;   ;;   :head-matcher "<[[:space:]]*template[[:space:]]*[[:space:]]*>"
-  ;;   ;;   :tail-matcher "</[[:space:]]*template[[:space:]]*[[:space:]]*>"
-  ;;   ;;   :head-mode 'host
-  ;;   ;;   :tail-mode 'host)
-  ;;   (define-innermode poly-vue-script-innermode
-  ;;     :mode 'js-mode
-  ;;     :head-matcher "^[ \t]*<script.*>"
-  ;;     :tail-matcher "^[ \t]*</script.*>"
-  ;;     :head-mode 'host
-  ;;     :tail-mode 'host)
-  ;;   (define-innermode poly-vue-style-innermode
-  ;;     :mode 'css-mode
-  ;;     :head-matcher "<[[:space:]]*style[[:space:]]*\\(?:scoped\\|[[:space:]]\\)*>"
-  ;;     :tail-matcher "</[[:space:]]*style[[:space:]]*[[:space:]]*>"
-  ;;     :head-mode 'host
-  ;;     :tail-mode 'host)
-
-  ;;   (define-polymode vue-polymode
-  ;;     :hostmode 'vue-hostmode
-  ;;     :innermodes '(
-  ;;                   ;; poly-vue-template-innermode
-  ;;                   poly-vue-script-innermode
-  ;;                   poly-vue-style-innermode
-  ;;                   ))
-
-  ;;   (add-hook 'js-mode-hook
-  ;;             (function (lambda () (setq indent-tabs-mode nil
-  ;;                                        js-indent-level 2)))
-  ;;             )
-  ;;   )
-#+END_SRC
+   TODO TO REPLACE VUE-MODE ?
 ** Python Development
-*** Elpy
-    #+BEGIN_SRC emacs-lisp
-            (use-package poetry
-              :ensure t
-              ;; :hook
-              ;; (python-mode . (lambda () (when (poetry-venv-exist-p)
-              ;;			    (setq-local lsp-pyls-server-command '("poetry" "run" "pyls"))
-              ;;			    (poetry-venv-workon))))
-              )
-
-      ;; (use-package elpy
-            ;;   :ensure t
-            ;;   :defer t
-            ;;   :init
-            ;;   (advice-add 'python-mode :before 'elpy-enable)
-            ;;   (setq elpy-rpc-virtualenv-path 'current)
-            ;;   )
-    #+END_SRC
 ** Rainbow Mode
    [[https://julien.danjou.info/projects/emacs-packages#rainbow-mode][Rainbow Mode Website]]
    #+BEGIN_SRC emacs-lisp
      (use-package rainbow-mode
-       :ensure t
        :diminish rainbow-mode
        :init (rainbow-mode 1)
        )
@@ -527,22 +421,19 @@
 ** Rest Client
    #+BEGIN_SRC emacs-lisp
      (use-package restclient
-       :ensure t
        :defer t
        :mode ("\\.rest\\'" . restclient)
        )
    #+END_SRC
 ** Shader Mode
    #+BEGIN_SRC emacs-lisp
-     (use-package shader-mode
-       :ensure t
-       :defer t
-       )
+   (use-package shader-mode
+   :defer t
+   )
    #+END_SRC
 ** Undo Tree
    #+BEGIN_SRC emacs-lisp
           (use-package undo-tree
-            :ensure t
             :diminish undo-tree-mode
             :defer t
             :init (global-undo-tree-mode)
@@ -553,7 +444,6 @@
 ** Vue Mode
 #+BEGIN_SRC emacs-lisp
   (use-package vue-mode
-    :ensure t
     :mode "\\.vue\\'"
     :config
     (setq indent-tabs-mode nil)
@@ -565,89 +455,19 @@
     (add-hook 'mmm-mode-hook (lambda () (set-face-background 'mmm-default-submode-face nil)))
     )
 #+END_SRC
-** Web Mode
-   #+BEGIN_SRC emacs-lisp
-     ;; (use-package web-mode
-     ;;   :ensure t
-     ;;   :mode (("\\.html\\'" . web-mode) ("\\.vue\\'" . web-mode))
-     ;;   :config
-     ;;   (setq web-mode-code-indent-offset 2)
-     ;;   (setq web-mode-css-indent-offset 2)
-     ;;   (setq web-mode-markup-indent-offset 2)
-     ;;   )
-   #+END_SRC
 ** Wgrep
    #+BEGIN_SRC emacs-lisp
-     (use-package wgrep
-       :ensure t)
+     (use-package wgrep)
    #+END_SRC
-** Whitespace Mode
+** Swift
    #+BEGIN_SRC emacs-lisp
-     ;; (use-package whitespace
-     ;;   :diminish whitespace-mode
-     ;;   :init ()
-     ;;   (add-hook 'prog-mode-hook 'whitespace-mode)
-     ;;   :config
-     ;;   ;; (setq whitespace-style '(tabs tab-mark trailing))
-     ;;   (setq whitespace-style '(tabs tab-mark))
-     ;;   (setq
-     ;;    whitespace-display-mappings
-     ;;    '(
-     ;;      (tab-mark 9 [8728 9] [92 9])
-     ;;      ))
-     ;;   )
-   #+END_SRC
-** Xcode / Switf
-   Only called when the environment is a Mac OS
-   [[https://github.com/swift-emacs/swift-mode][Swift Git Repository]]
-   Check this link to have a LSP server setup: [[https://github.com/emacs-lsp/lsp-sourcekit][Swift LSP]] (using lsp-mode as well)
-   #+BEGIN_SRC emacs-lisp
-          (use-package swift-mode
-         :ensure t
-         :hook (swift-mode . (lambda () (lsp))))
-
-       ;; (use-package lsp-mode
-       ;;   :ensure t
-       ;;   :init
-       ;;   (setq read-process-output-max (* 1024 1024))
-       ;;   :config
-       ;;   (setq lsp-completion-provider :capf)
-       ;;   (setq lsp-idle-delay 1)
-       ;;   )
-
-       ;; (use-package lsp-sourcekit
-       ;;   :ensure t
-       ;;   :after lsp-mode
-       ;;   :config
-       ;;   ;; (setenv "SOURCEKIT_TOOLCHAIN_PATH" "/Library/Developer/Toolchains/swift-latest.xctoolchain")
-       ;;   ;; (setq lsp-sourcekit-executable (expand-file-name "~/Documents/Programming/Utils/sourcekit-lsp/.build/debug/sourcekit-lsp")))
-       ;;   (setq lsp-sourcekit-executable "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/sourcekit-lsp")
-
-       ;;   (setq company-idle-delay 0.1
-       ;;	  company-minimum-prefix-length 1)
-       ;;   )
-
-
+   (use-package swift-mode
+   :hook (swift-mode . (lambda () (lsp))))
    #+END_SRC
 ** YAML
    #+BEGIN_SRC emacs-lisp
      (use-package yaml-mode
-       :ensure t
        :defer t
        :mode("\\.yaml\\'")
-       )
-   #+END_SRC
-** Yasnippet
-   #+BEGIN_SRC emacs-lisp
-     (use-package yasnippet
-       :ensure t
-       :diminish yas-minor-mode
-       :init (add-hook 'prog-mode-hook #'yas-minor-mode)
-       :config
-
-       (use-package yasnippet-snippets
-         :ensure t)
-
-       (yas-reload-all)
        )
    #+END_SRC
