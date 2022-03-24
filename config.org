@@ -124,6 +124,7 @@
 
      (show-paren-mode t)
      (setq show-paren-delay 0)
+
    #+END_SRC
 ** Mode Line
    #+BEGIN_SRC emacs-lisp
@@ -167,14 +168,6 @@
      (global-set-key (kbd "C-c m") 'jump-to-register)
    #+END_SRC
 * Modes
-** Avy
-    #+BEGIN_SRC emacs-lisp
-     (use-package avy
-       :bind
-       (("M-s" . avy-goto-char)
-        ("M-l" . avy-goto-line))
-       )
-   #+END_SRC
 ** C# Development
 *** CSharp
     #+BEGIN_SRC emacs-lisp
@@ -253,39 +246,88 @@
    #+END_SRC
 ** Ivy / Swipper / Counsel / Smex
    #+BEGIN_SRC emacs-lisp
-     (use-package ivy
-       :diminish ivy-mode
-       :bind
-       (("C-x b" . ivy-switch-buffer))
+     (straight-use-package '( vertico :files (:defaults "extensions/*")
+                                      :includes (vertico-directory)))
+
+     (use-package vertico
+       :straight nil
        :init
-       (ivy-mode 1)
-       :config
-       (setq ivy-use-virtual-buffers t)
-       (setq ivy-display-style 'fancy)
+       (vertico-mode)
+       (setq vertico-cycle t)
        )
 
-     (use-package counsel
+     (use-package vertico-directory
+       :after vertico
+       :straight nil
+       :bind (:map vertico-map
+                   ("RET" . vertico-directory-enter)
+                   ("DEL" . vertico-directory-delete-char)
+                   ("M-DEL" . vertico-directory-delete-word))
+       ;; Tidy shadowed file names
+       :hook (rfn-eshadow-update-overlay . vertico-directory-tidy))
+
+
+
+     (use-package consult
+       :bind ("C-s" . consult-line)
+       ("C-x b" . consult-buffer)
+       ("M-g g" . consult-goto-line)
+       ("C-c f w" . consult-ripgrep)
+       ("C-c y" . consult-yank-from-kill-ring)
+       )
+
+     (use-package orderless
+       :init
+       (setq completion-styles '(orderless)
+             completion-category-defaults nil
+             completion-category-overrides '((file (styles partial-completion)))))
+
+     (use-package savehist
+       :init
+       (savehist-mode))
+
+     (use-package avy
        :bind
-       (("C-c y" . counsel-yank-pop)
-        ("C-c i" . counsel-imenu)
-        ("M-x" . counsel-M-x)
-        ("C-x r l" . counsel-bookmark)
-        ("C-c f f" . counsel-git)
-        ("C-c f w" . counsel-rg))
-       )
-
-     (use-package swiper
-       :bind
-       ("C-s" . swiper)
-       )
-
-     (use-package smex
+       (("M-s" . avy-goto-char)
+        ("M-l" . avy-goto-line))
        )
 
      (use-package avy-zap
        :bind
        (("M-z" . avy-zap-to-char-dwim))
        )
+
+
+     ;; (use-package ivy
+     ;;   :diminish ivy-mode
+     ;;   :bind
+     ;;   (("C-x b" . ivy-switch-buffer))
+     ;;   :init
+     ;;   (ivy-mode 1)
+     ;;   :config
+     ;;   (setq ivy-use-virtual-buffers t)
+     ;;   (setq ivy-display-style 'fancy)
+     ;;   )
+
+     ;; (use-package counsel
+     ;;   :bind
+     ;;   (("C-c y" . counsel-yank-pop)
+     ;;    ("C-c i" . counsel-imenu)
+     ;;    ("M-x" . counsel-M-x)
+     ;;    ("C-x r l" . counsel-bookmark)
+     ;;    ("C-c f f" . counsel-git)
+     ;;    ("C-c f w" . counsel-rg))
+     ;;   )
+
+     ;; (use-package swiper
+     ;;   :bind
+     ;;   ("C-s" . swiper)
+     ;;   )
+
+     ;; (use-package smex
+     ;;   )
+
+
    #+END_SRC
 ** Ledger
 #+begin_src emacs-lisp
@@ -456,8 +498,8 @@
 
     ;; Optionally make the Tempel templates available to Abbrev,
     ;; either locally or globally. `expand-abbrev' is bound to C-x '.
-    ;; (add-hook 'prog-mode-hook #'tempel-abbrev-mode)
-    ;; (tempel-global-abbrev-mode)
+    (add-hook 'prog-mode-hook #'tempel-abbrev-mode)
+    (tempel-global-abbrev-mode)
     )
 #+end_src
 ** Undo Tree
