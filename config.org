@@ -266,8 +266,6 @@
        ;; Tidy shadowed file names
        :hook (rfn-eshadow-update-overlay . vertico-directory-tidy))
 
-
-
      (use-package consult
        :bind ("C-s" . consult-line)
        ("C-x b" . consult-buffer)
@@ -275,6 +273,9 @@
        ("C-c f w" . consult-ripgrep)
        ("C-c y" . consult-yank-from-kill-ring)
        )
+
+     (use-package marginalia
+       :init (marginalia-mode))
 
      (use-package orderless
        :init

@@ -29,6 +29,7 @@
  ("lsp-pyright" . "d428dbcf1802fbe147271c8dc74b073bd9cd7403")
  ("lsp-treemacs" . "72d367757a89453a712f6ba1df9b6e789ece2bbd")
  ("magit" . "b32521d5432b5fbc33a2e47b72f2258bf98cb8b4")
+ ("marginalia" . "e63d27e6fb24ed16339de9d813c555d40aa1e4ca")
  ("markdown-mode" . "521658eb32e456681592443e04ae507c3a59ed07")
  ("melpa" . "1a054aba2409fb8ae12a634952f3d1336a14eb70")
  ("mmm-mode" . "0d00cdf4d02cc166304f6967a20fa22e2eaf208b")
