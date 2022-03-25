@@ -26,6 +26,19 @@
     (straight-use-package 'use-package)
 
     (setq straight-use-package-by-default t)
+
+
+
+    ;; display startup time and garbage collections
+    ;; (setq use-package-verbose t)
+    ;; (defun efs/display-startup-time ()
+    ;;   (message "Emacs loaded in %s with %d garbage collections."
+    ;;            (format "%.2f seconds"
+    ;;                    (float-time
+    ;;                     (time-subtract after-init-time before-init-time)))
+    ;;            gcs-done))
+
+    ;; (add-hook 'emacs-startup-hook #'efs/display-startup-time)
   #+END_SRC
 * Systems
 ** Windows
@@ -49,10 +62,6 @@
        )
    #+END_SRC
 * Settings
-** Global Var
-   #+BEGIN_SRC emacs-lisp
-     (setq mmm_glo_ag-file-filter "")
-   #+END_SRC
 ** Encoding
    #+BEGIN_SRC emacs-lisp
      (set-language-environment 'utf-8)
@@ -79,21 +88,14 @@
      ;; (when (display-graphic-p)
      ;;   (setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING)))
    #+END_SRC
-** Font
-   #+BEGIN_SRC emacs-lisp
-     (set-frame-font "Hack 16" nil t)
-   #+END_SRC
 ** Themes
-*** Zenburn
-    #+BEGIN_SRC emacs-lisp
-      (use-package zenburn-theme
-        :defer t
-        )
-    #+END_SRC
-*** Current Theme
-    #+BEGIN_SRC emacs-lisp
-      (load-theme 'zenburn t)
-    #+END_SRC
+#+BEGIN_SRC emacs-lisp
+  (set-frame-font "Hack 16" nil t)
+
+  (use-package zenburn-theme
+    :defer t
+    :init (load-theme 'zenburn t))
+#+END_SRC
 ** UI
    #+BEGIN_SRC emacs-lisp
      (defalias 'yes-or-no-p 'y-or-n-p)
@@ -179,7 +181,6 @@
           (setq c-basic-offset 4)
           (setq indent-tabs-mode t)
           (setq tab-width 4)
-          (setq mmm_glo_ag-file-filter "--csharp")
           )
         (add-hook 'csharp-mode-hook 'csharp-variable t)
         )
@@ -187,20 +188,18 @@
 ** Company
    #+BEGIN_SRC emacs-lisp
      (use-package company
-       :init
-       (add-hook 'after-init-hook 'global-company-mode)
+       :after lsp
        :config
        (setq company-idle-delay 0.3
-             company-minimum-prefix-length 2)
-       )
+             company-minimum-prefix-length 2))
    #+END_SRC
 ** Dart
 #+BEGIN_SRC emacs-lisp
   (use-package dart-mode
-    :defer t)
+    :mode "\\.dart\\'")
 
   (use-package lsp-dart
-    :defer t
+    :after lsp
     :config
     (add-hook 'dart-mode-hook 'lsp))
 
@@ -230,10 +229,8 @@
 ** Flycheck
    #+BEGIN_SRC emacs-lisp
      (use-package flycheck
-       :diminish flycheck-mode
-       :init
-       (global-flycheck-mode t)
-       )
+       :after lsp
+       :diminish flycheck-mode)
    #+END_SRC
 ** Google this
    #+BEGIN_SRC emacs-lisp
@@ -244,7 +241,7 @@
        (google-this-mode t)
        )
    #+END_SRC
-** Ivy / Swipper / Counsel / Smex
+** Vertico / Consult / Marginalia / Orderless / Savehist / Avy
    #+BEGIN_SRC emacs-lisp
      (straight-use-package '( vertico :files (:defaults "extensions/*")
                                       :includes (vertico-directory)))
@@ -341,8 +338,7 @@
 ** LSP
    #+begin_src emacs-lisp
      (use-package lsp-mode
-       ;; :hook (python-mode .lsp)
-       :init (setq read-process-output-max (* 1024 1024))
+       :commands (lsp lsp-deferred)
        :config
        (setq lsp-completion-provider :capf)
        (setq lsp-idle-delay 0.500)
@@ -358,6 +354,7 @@
      ;;				 (lsp))))  ; or lsp-deferred
 
      (use-package lsp-pyright
+     :after lsp
      :hook (python-mode . (lambda ()
      (require 'lsp-pyright)
      (lsp))))  ; or lsp-deferred
@@ -377,62 +374,65 @@
 ** Move Text
    #+BEGIN_SRC emacs-lisp
      (use-package move-text
-       :init
-       (bind-key "M-p" 'move-text-up)
-       (bind-key "M-n" 'move-text-down)
-       )
+       :bind (("M-p" . move-text-up)
+              ("M-n" . move-text-down)))
    #+END_SRC
 ** OrgMode
    #+BEGIN_SRC  emacs-lisp
      (straight-use-package '(org :type built-in))
+
      (use-package org
+       :commands (org-capture org-agenda)
+       :custom
+       (org-agenda-files '("e:/Omind/Notes/omind_todo.org"))
+       (org-todo-keywords '((sequence "TODO(t)" "NEXT(n)" "IN PROGRESS(p)" "|" "VALIDATE(v)" "DONE(d)" "CANCEL(c)")))
        :config
        (add-to-list 'org-src-lang-modes '("plantuml" . plantuml))
        (org-babel-do-load-languages
         'org-babel-load-languages '((sql . t)))
-       :custom
-       (org-agenda-files '("e:/Omind/Notes/omind_todo.org"))
-       (org-todo-keywords '((sequence "TODO(t)" "NEXT(n)" "IN PROGRESS(p)" "|" "VALIDATE(v)" "DONE(d)" "CANCEL(c)")))
+
+       (setq org-latex-packages-alist '(("margin=1cm" "geometry" nil)))
+       (setq org-plantuml-jar-path (expand-file-name "c:/Users/Marion/AppData/Roaming/plantuml.jar"))
+       (org-babel-do-load-languages
+        'org-babel-load-languages
+        '((plantuml . t)))
+
+
+       (setq org-capture-templates
+             '(("t" "Todo")
+               ("tt" "todo" entry(file "e:/Omind/Notes/omind_todo.org")
+                "* TODO %?")
+               ("tp" "todo" entry(file "e:/Omind/Notes/omind_todo.org")
+                "* TODO %? %^G")
+               ("tl" "todo" entry(file "e:/Omind/Notes/omind_todo.org")
+                "* TODO %?\n %a")
+               ))
+
+
+       (global-set-key (kbd "C-c c") 'org-capture)
+       (global-set-key (kbd "C-c a") 'org-agenda)
+       (setq org-refile-targets '(
+                                  ("e:/Omind/Notes/omind_archive.org" :maxlevel . 1)
+                                  ))
+
+       (advice-add 'org-refile :after 'org-save-all-org-buffers)
+       (setq org-todo-keyword-faces '(
+                                      ("TODO" . "#FAF3E7")
+                                      ("NEXT" . "#A0D8E9")
+                                      ("IN PROGRESS" . "#EEA579")
+                                      ("VALIDATE" . "#A7DB8C")
+                                      ("DONE" . "#B4A7EB")
+                                      ("CANCEL" . "#F3A5BC")
+                                      ))
+       (setq org-agenda-start-with-log-mode t)
+       (setq org-log-done 'time)
+       (setq org-log-done 'note)
+       (setq org-log-into-drawer t)
+       (setq org-confirm-babel-evaluate nil)
+
        )
 
-     (setq org-latex-packages-alist '(("margin=1cm" "geometry" nil)))
-     (setq org-plantuml-jar-path (expand-file-name "c:/Users/Marion/AppData/Roaming/plantuml.jar"))
-     (org-babel-do-load-languages
-      'org-babel-load-languages
-      '((plantuml . t)))
 
-
-     (setq org-capture-templates
-           '(("t" "Todo")
-             ("tt" "todo" entry(file "e:/Omind/Notes/omind_todo.org")
-              "* TODO %?")
-             ("tp" "todo" entry(file "e:/Omind/Notes/omind_todo.org")
-              "* TODO %? %^G")
-             ("tl" "todo" entry(file "e:/Omind/Notes/omind_todo.org")
-              "* TODO %?\n %a")
-           ))
-
-
-     (global-set-key (kbd "C-c c") 'org-capture)
-     (global-set-key (kbd "C-c a") 'org-agenda)
-     (setq org-refile-targets '(
-                                ("e:/Omind/Notes/omind_archive.org" :maxlevel . 1)
-                                ))
-
-     (advice-add 'org-refile :after 'org-save-all-org-buffers)
-     (setq org-todo-keyword-faces '(
-                                    ("TODO" . "#FAF3E7")
-                                    ("NEXT" . "#A0D8E9")
-                                    ("IN PROGRESS" . "#EEA579")
-                                    ("VALIDATE" . "#A7DB8C")
-                                    ("DONE" . "#B4A7EB")
-                                    ("CANCEL" . "#F3A5BC")
-                                    ))
-     (setq org-agenda-start-with-log-mode t)
-     (setq org-log-done 'time)
-     (setq org-log-done 'note)
-     (setq org-log-into-drawer t)
-     (setq org-confirm-babel-evaluate nil)
 
 
      ;; (use-package org-jira
@@ -452,11 +452,16 @@
    #+END_SRC
 ** Polymode
    TODO TO REPLACE VUE-MODE ?
+** Project
+#+BEGIN_SRC emacs-lisp
+  (use-package project)
+#+END_SRC
 ** Python Development
 ** Rainbow Mode
    [[https://julien.danjou.info/projects/emacs-packages#rainbow-mode][Rainbow Mode Website]]
    #+BEGIN_SRC emacs-lisp
      (use-package rainbow-mode
+       :after vue
        :diminish rainbow-mode
        :init (rainbow-mode 1)
        )
@@ -464,15 +469,13 @@
 ** Rest Client
    #+BEGIN_SRC emacs-lisp
      (use-package restclient
-       :defer t
-       :mode ("\\.rest\\'" . restclient)
-       )
+       :mode ("\\.rest\\'" . restclient))
    #+END_SRC
 ** Shader Mode
    #+BEGIN_SRC emacs-lisp
-   (use-package shader-mode
-   :defer t
-   )
+     ;; (use-package shader-mode
+     ;;   :commands shader
+     ;;   )
    #+END_SRC
 ** Tempel
 #+begin_src emacs-lisp
@@ -533,8 +536,9 @@
    #+END_SRC
 ** Swift
    #+BEGIN_SRC emacs-lisp
-   (use-package swift-mode
-   :hook (swift-mode . (lambda () (lsp))))
+     (use-package swift-mode
+       :mode "\\.swift\\'"
+       :hook (swift-mode . (lambda () (lsp))))
    #+END_SRC
 ** YAML
    #+BEGIN_SRC emacs-lisp
