@@ -34,6 +34,7 @@
  ("markdown-mode" . "521658eb32e456681592443e04ae507c3a59ed07")
  ("melpa" . "1a054aba2409fb8ae12a634952f3d1336a14eb70")
  ("mmm-mode" . "0d00cdf4d02cc166304f6967a20fa22e2eaf208b")
+ ("modus-themes" . "03f7046dff86c5342af778ad3f9850af7e950aed")
  ("move-text" . "bfc255110ad05732a43cf25d6a0e3b4a6710b58c")
  ("orderless" . "f2c78c4a6059c5f892e48a3887d4368a547515ff")
  ("pfuture" . "bde5b06795e3e35bfb2bba4c34b538d506a0856e")
@@ -59,6 +60,5 @@
  ("vue-mode" . "031edd1f97db6e7d8d6c295c0e6d58dd128b9e71")
  ("with-editor" . "e8569e027ff5c9bef8d9ff0734e3293e1c0574a2")
  ("xref" . "169455e1205bab1c7b7a1519ec21589e7eb7a19f")
- ("yaml-mode" . "535273d5a1eb76999d20afbcf4d9f056d8ffd2da")
- ("zenburn-emacs" . "cef1e26146c1b8b32fc5ce346f2cfa9861eb67d4"))
+ ("yaml-mode" . "535273d5a1eb76999d20afbcf4d9f056d8ffd2da"))
 :beta

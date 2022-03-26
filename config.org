@@ -103,11 +103,16 @@
      ;;   (setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING)))
    #+END_SRC
 ** Themes
+Ioveska -> [[https://github.com/be5invis/Iosevka/blob/v15.1.0/doc/PACKAGE-LIST.md][Github Releases]] -> TTF/Iosevka Fixed -> [[https://github.com/be5invis/Iosevka/releases/download/v15.1.0/ttf-iosevka-fixed-15.1.0.zip][Direct Dowload (15.1.0)]]
 #+BEGIN_SRC emacs-lisp
-  (set-frame-font "Hack 16" nil t)
+  (set-frame-font "Iosevka Fixed 16" nil t)
 
-  (use-package zenburn-theme
-    :init (load-theme 'zenburn t))
+  ;; (use-package zenburn-theme
+  ;;   :init (load-theme 'zenburn t))
+
+  (use-package modus-themes
+    :init  (modus-themes-load-themes)
+    :config (modus-themes-load-vivendi))
 #+END_SRC
 ** UI
    #+BEGIN_SRC emacs-lisp
@@ -179,8 +184,6 @@
 ** Keybinds
    #+BEGIN_SRC emacs-lisp
      (global-set-key (kbd "C-c r") 'query-replace)
-     (global-set-key (kbd "C-c C-m") 'point-to-register)
-     (global-set-key (kbd "C-c m") 'jump-to-register)
    #+END_SRC
 * Modes
 ** C# Development
@@ -212,10 +215,7 @@
     :mode "\\.dart\\'")
 
   (use-package lsp-dart
-    :after lsp
-    :config
-    (add-hook 'dart-mode-hook 'lsp))
-
+    :hook (dart-mode . lsp-deferred))
 #+END_SRC
 ** Dsvn
    #+BEGIN_SRC emacs-lisp
@@ -273,7 +273,9 @@
               ("C-x b" . consult-buffer)
               ("M-g g" . consult-goto-line)
               ("C-c f w" . consult-ripgrep)
-              ("C-c y" . consult-yank-from-kill-ring))
+              ("C-c y" . consult-yank-from-kill-ring)
+              ("C-c C-m" . consult-register-store)
+              ("C-c m" . consult-register))
        :config
        (consult-customize consult--source-bookmark :preview-key nil))
 
@@ -345,12 +347,13 @@
    #+begin_src emacs-lisp
      (use-package lsp-mode
        :commands (lsp lsp-deferred)
+       :init (setq lsp-keymap-prefix "C-c l")
        :config
+       (lsp-enable-which-key-integration t)
        (setq lsp-completion-provider :capf)
        (setq lsp-idle-delay 0.500)
        (setq company-minimum-prefix-length 1
-                     company-idle-delay 0.0)
-       )
+                     company-idle-delay 0.0))
 
      ;; (use-package lsp-python-ms
      ;;   :ensure t
