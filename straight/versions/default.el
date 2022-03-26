@@ -14,6 +14,7 @@
  ("edit-indirect" . "e3d86416bcf8ddca951d7d112e57ad30c5f9a081")
  ("el-get" . "9353309744e4f8a7c9b1adf22ec99536fb2146b0")
  ("emacs-google-this" . "8a2e3ca5da6a8c89bfe99a21486c6c7db125dc84")
+ ("emacs-which-key" . "1217db8c6356659e67b35dedd9f5f260c06f6e99")
  ("emacsmirror-mirror" . "75b9477acee5ab4bf6f404d6d6700d0524cdb4e3")
  ("emmet-mode" . "6b2e554f7fd27f732810f4b14ea01e3c54b7b3da")
  ("epl" . "78ab7a85c08222cd15582a298a364774e3282ce6")

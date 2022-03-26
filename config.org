@@ -8,6 +8,11 @@
   #+END_SRC
 * Require
   #+BEGIN_SRC emacs-lisp
+
+    ;; increase GC for fast startup time
+    (setq gc-cons-threshold (* 50 1000 1000))
+
+
     (defvar bootstrap-version)
     (let ((bootstrap-file
            (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
@@ -29,7 +34,16 @@
 
 
 
-    ;; display startup time and garbage collections
+
+    ;; Package to profile startup time
+    ;; (use-package benchmark-init
+    ;;   :ensure t
+    ;;   :config
+    ;;   ;; To disable collection of benchmark data after init is done.
+    ;;   (add-hook 'after-init-hook 'benchmark-init/deactivate))
+
+    ;; (use-package esup)
+
     ;; (setq use-package-verbose t)
     ;; (defun efs/display-startup-time ()
     ;;   (message "Emacs loaded in %s with %d garbage collections."
@@ -45,8 +59,8 @@
    Set putty for tramp mode : [[http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html][Bin for putty]]
    #+BEGIN_SRC emacs-lisp
      (when (eq system-type 'windows-nt)
-       (require 'tramp)
-       (set-default 'tramp-default-method "plink")
+       ;; (require 'tramp)
+       ;; (set-default 'tramp-default-method "plink")
        )
    #+END_SRC
 ** Mac
@@ -93,7 +107,6 @@
   (set-frame-font "Hack 16" nil t)
 
   (use-package zenburn-theme
-    :defer t
     :init (load-theme 'zenburn t))
 #+END_SRC
 ** UI
@@ -236,10 +249,7 @@
    #+BEGIN_SRC emacs-lisp
      (use-package google-this
        :diminish google-this-mode
-       :bind ("C-c w" . google-this-search)
-       :init
-       (google-this-mode t)
-       )
+       :bind ("C-c w" . google-this-search))
    #+END_SRC
 ** Vertico / Consult / Marginalia / Orderless / Savehist / Avy
    #+BEGIN_SRC emacs-lisp
@@ -250,7 +260,7 @@
        :straight nil
        :init
        (vertico-mode)
-       (setq vertico-cycle t)
+       ;; (setq vertico-cycle t)
        )
 
      (use-package vertico-directory
@@ -264,12 +274,13 @@
        :hook (rfn-eshadow-update-overlay . vertico-directory-tidy))
 
      (use-package consult
-       :bind ("C-s" . consult-line)
-       ("C-x b" . consult-buffer)
-       ("M-g g" . consult-goto-line)
-       ("C-c f w" . consult-ripgrep)
-       ("C-c y" . consult-yank-from-kill-ring)
-       )
+       :bind (("C-s" . consult-line)
+              ("C-x b" . consult-buffer)
+              ("M-g g" . consult-goto-line)
+              ("C-c f w" . consult-ripgrep)
+              ("C-c y" . consult-yank-from-kill-ring))
+       :config
+       (consult-customize consult--source-bookmark :preview-key nil))
 
      (use-package marginalia
        :init (marginalia-mode))
@@ -364,12 +375,7 @@
      (use-package magit
        :bind ("C-c g" . magit-status)
        :config
-       (setenv "GIT_ASKPASS" "git-gui--askpass")
-       )
-
-     ;; (use-package forge
-     ;;   :ensure t
-     ;;   :after magit)
+       (setenv "GIT_ASKPASS" "git-gui--askpass"))
    #+END_SRC
 ** Move Text
    #+BEGIN_SRC emacs-lisp
@@ -382,21 +388,14 @@
      (straight-use-package '(org :type built-in))
 
      (use-package org
+       :defer t
        :commands (org-capture org-agenda)
        :custom
        (org-agenda-files '("e:/Omind/Notes/omind_todo.org"))
        (org-todo-keywords '((sequence "TODO(t)" "NEXT(n)" "IN PROGRESS(p)" "|" "VALIDATE(v)" "DONE(d)" "CANCEL(c)")))
        :config
-       (add-to-list 'org-src-lang-modes '("plantuml" . plantuml))
-       (org-babel-do-load-languages
-        'org-babel-load-languages '((sql . t)))
 
        (setq org-latex-packages-alist '(("margin=1cm" "geometry" nil)))
-       (setq org-plantuml-jar-path (expand-file-name "c:/Users/Marion/AppData/Roaming/plantuml.jar"))
-       (org-babel-do-load-languages
-        'org-babel-load-languages
-        '((plantuml . t)))
-
 
        (setq org-capture-templates
              '(("t" "Todo")
@@ -407,7 +406,6 @@
                ("tl" "todo" entry(file "e:/Omind/Notes/omind_todo.org")
                 "* TODO %?\n %a")
                ))
-
 
        (global-set-key (kbd "C-c c") 'org-capture)
        (global-set-key (kbd "C-c a") 'org-agenda)
@@ -433,7 +431,28 @@
        )
 
 
+     (with-eval-after-load 'org
+       (org-babel-do-load-languages
+        'org-babel-load-languages
+        '((plantuml . t)
+          (sql . t))))
 
+
+
+     ;; DO IT NEED THIS ?
+     ;; (add-to-list 'org-src-lang-modes '("plantuml" . plantuml))
+
+
+
+     (use-package ob-plantuml
+       :straight nil
+       :after org
+       :custom
+       (org-plantuml-jar-path (expand-file-name "c:/Users/Marion/AppData/Roaming/plantuml.jar")))
+
+     (use-package ob-sql
+       :straight nil
+       :after org)
 
      ;; (use-package org-jira
      ;;   :config
@@ -447,14 +466,14 @@
        :defer t
        :config
        (setq plantuml-default-exec-mode 'jar)
-       (setq plantuml-output-type "PNG")
-       )
+       (setq plantuml-output-type "PNG"))
    #+END_SRC
 ** Polymode
    TODO TO REPLACE VUE-MODE ?
 ** Project
 #+BEGIN_SRC emacs-lisp
-  (use-package project)
+  (use-package project
+    :defer t)
 #+END_SRC
 ** Python Development
 ** Rainbow Mode
@@ -508,13 +527,11 @@
 #+end_src
 ** Undo Tree
    #+BEGIN_SRC emacs-lisp
-          (use-package undo-tree
-            :diminish undo-tree-mode
-            :defer t
-            :init (global-undo-tree-mode)
-            :config
-            (setq undo-tree-auto-save-history nil)
-            )
+     (use-package undo-tree
+       :bind (("C-x u" . undo-tree-visualize))
+       :diminish undo-tree-mode
+       :config
+       (setq undo-tree-auto-save-history nil))
    #+END_SRC
 ** Vue Mode
 #+BEGIN_SRC emacs-lisp
@@ -530,9 +547,18 @@
     (add-hook 'mmm-mode-hook (lambda () (set-face-background 'mmm-default-submode-face nil)))
     )
 #+END_SRC
+** Which Key
+#+begin_src emacs-lisp
+  (use-package which-key
+    :init (which-key-mode)
+    :diminish which-key-mode
+    :config
+    (setq which-key-idle-delay 0.3))
+#+end_src
 ** Wgrep
    #+BEGIN_SRC emacs-lisp
-     (use-package wgrep)
+     (use-package wgrep
+       :defer t)
    #+END_SRC
 ** Swift
    #+BEGIN_SRC emacs-lisp
@@ -547,3 +573,7 @@
        :mode("\\.yaml\\'")
        )
    #+END_SRC
+* Final
+  #+begin_src emacs-lisp
+    (setq gc-cons-threshold (* 2 1000 1000))
+  #+end_src
