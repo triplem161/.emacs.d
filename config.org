@@ -126,6 +126,10 @@ Ioveska -> [[https://github.com/be5invis/Iosevka/blob/v15.1.0/doc/PACKAGE-LIST.m
      (setq ring-bell-function 'ignore)
      (setq ns-pop-up-frames nil)
      (global-hl-line-mode t)
+
+     ;; Prefer horizontal split window (magit and such)
+     (setq split-height-threshold 80)
+     (setq split-width-threshold nil)
    #+END_SRC
 ** Edition
    #+BEGIN_SRC emacs-lisp
