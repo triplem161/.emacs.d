@@ -341,7 +341,16 @@ Ioveska -> [[https://github.com/be5invis/Iosevka/blob/v15.1.0/doc/PACKAGE-LIST.m
     :defer t
     :config
     (setq ledger-binary-path "c:/Programming/Ledger/ledger.exe")
-    )
+    (setq ledger-reports '(("bal" "%(binary) -f %(ledger-file) bal")
+                           ("budget" "%(binary) -f %(ledger-file) --p %(month) budget")
+                           ("unbudgeted" "%(binary) -f %(ledger-file) --p %(month) bal --unbudgeted ^expenses"))))
+  ;; '(ledger-reports
+  ;; '(("unbudgeted" "\"C:/Programming/Ledger/ledger.exe\" -f \"g:/Mon Drive/Comptability/main.journal\" --period \"2022-3\" reg --unbudgeted")
+  ;;   ("budget" "\"C:/Programming/Ledger/ledger.exe\" -f \"g:/Mon Drive/Comptability/main.journal\" --period \"2022-3\" budget")
+  ;;   ("bal" "%(binary) -f %(ledger-file) bal")
+  ;;   ("reg" "%(binary) -f %(ledger-file) reg")
+  ;;   ("payee" "%(binary) -f %(ledger-file) reg @%(payee)")
+  ;;   ("account" "%(binary) -f %(ledger-file) reg %(account)")))
 #+end_src
 ** LSP
    #+begin_src emacs-lisp
