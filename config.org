@@ -235,6 +235,13 @@ Ioveska -> [[https://github.com/be5invis/Iosevka/blob/v15.1.0/doc/PACKAGE-LIST.m
        (setq ediff-window-setup-function 'ediff-setup-windows-plain)
        )
    #+END_SRC
+** Eglot
+#+begin_src emacs-lisp
+  ;; (use-package eglot
+  ;;   :defer t
+  ;;   :config
+  ;;   (add-to-list 'eglot-server-programs '(python-mode . ("c:/Users/Marion/AppData/Roaming/.emacs.d/.cache/lsp/npm/pyright/pyright" "--lib"))))
+#+end_src
 ** Emmet
    #+BEGIN_SRC emacs-lisp
      (use-package emmet-mode
@@ -245,9 +252,9 @@ Ioveska -> [[https://github.com/be5invis/Iosevka/blob/v15.1.0/doc/PACKAGE-LIST.m
    #+END_SRC
 ** Flycheck
    #+BEGIN_SRC emacs-lisp
-     (use-package flycheck
-       :after lsp
-       :diminish flycheck-mode)
+     ;; (use-package flycheck
+     ;;   :after lsp
+     ;;   :diminish flycheck-mode)
    #+END_SRC
 ** Google this
    #+BEGIN_SRC emacs-lisp
@@ -357,30 +364,17 @@ Ioveska -> [[https://github.com/be5invis/Iosevka/blob/v15.1.0/doc/PACKAGE-LIST.m
   ;;   ("account" "%(binary) -f %(ledger-file) reg %(account)")))
 #+end_src
 ** LSP
-   #+begin_src emacs-lisp
-     (use-package lsp-mode
-       :commands (lsp lsp-deferred)
-       :init (setq lsp-keymap-prefix "C-c l")
-       :config
-       (lsp-enable-which-key-integration t)
-       (setq lsp-completion-provider :capf)
-       (setq lsp-idle-delay 0.500)
-       (setq company-minimum-prefix-length 1
-                     company-idle-delay 0.0))
-
-     ;; (use-package lsp-python-ms
-     ;;   :ensure t
-     ;;   :init (setq lsp-python-ms-auto-install-server t)
-     ;;   :hook (python-mode . (lambda ()
-     ;;				 (require 'lsp-python-ms)
-     ;;				 (lsp))))  ; or lsp-deferred
-
-     (use-package lsp-pyright
-     :after lsp
-     :hook (python-mode . (lambda ()
-     (require 'lsp-pyright)
-     (lsp))))  ; or lsp-deferred
-   #+end_src
+#+begin_src emacs-lisp
+  (use-package lsp-mode
+    :commands (lsp lsp-deferred)
+    :init (setq lsp-keymap-prefix "C-c l")
+    :config
+    (lsp-enable-which-key-integration t)
+    (setq lsp-completion-provider :capf)
+    (setq lsp-idle-delay 0.500)
+    (setq company-minimum-prefix-length 1
+          company-idle-delay 0.0))
+#+end_src
 ** Magit
    #+BEGIN_SRC emacs-lisp
      (use-package magit
@@ -487,6 +481,16 @@ Ioveska -> [[https://github.com/be5invis/Iosevka/blob/v15.1.0/doc/PACKAGE-LIST.m
     :defer t)
 #+END_SRC
 ** Python Development
+#+begin_src emacs-lisp
+  (use-package python
+    :mode ("\\.py\\'" . python-mode))
+
+  (use-package lsp-pyright
+    :after python
+    :hook (python-mode . (lambda ()
+                           (require 'lsp-pyright)
+                           (lsp-deferred))))
+#+end_src
 ** Rainbow Mode
    [[https://julien.danjou.info/projects/emacs-packages#rainbow-mode][Rainbow Mode Website]]
    #+BEGIN_SRC emacs-lisp
