@@ -356,6 +356,7 @@ Ioveska -> [[https://github.com/be5invis/Iosevka/blob/v15.1.0/doc/PACKAGE-LIST.m
     (when (eq system-type 'windows-nt)
       (setq ledger-binary-path "c:/Programming/Ledger/ledger.exe"))
     (setq ledger-reports '(("bal" "%(binary) -f %(ledger-file) bal")
+                           ("reg" "%(binary) -f %(ledger-file) reg")
                            ("budget" "%(binary) -f %(ledger-file) --p %(month) budget")
                            ("unbudgeted" "%(binary) -f %(ledger-file) --p %(month) bal --unbudgeted ^expenses"))))
   ;; '(ledger-reports
