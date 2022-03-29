@@ -256,6 +256,8 @@ Ioveska -> [[https://github.com/be5invis/Iosevka/blob/v15.1.0/doc/PACKAGE-LIST.m
      ;;   :after lsp
      ;;   :diminish flycheck-mode)
    #+END_SRC
+** Flymake
+   Need to bind next and prev error !!!
 ** Google this
    #+BEGIN_SRC emacs-lisp
      (use-package google-this
@@ -501,10 +503,10 @@ Ioveska -> [[https://github.com/be5invis/Iosevka/blob/v15.1.0/doc/PACKAGE-LIST.m
        )
    #+END_SRC
 ** Rest Client
-   #+BEGIN_SRC emacs-lisp
-     (use-package restclient
-       :mode ("\\.rest\\'" . restclient))
-   #+END_SRC
+#+begin_src emacs-lisp
+  (use-package restclient
+    :mode ("\\.rest\\'" . restclient-mode))
+#+END_SRC
 ** Shader Mode
    #+BEGIN_SRC emacs-lisp
      ;; (use-package shader-mode
