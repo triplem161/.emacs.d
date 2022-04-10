@@ -6,3 +6,4 @@ prog-mode
 (todo (if (derived-mode-p 'emacs-lisp-mode) ";; " comment-start) "TODO(Marion) ")
 (bug (if (derived-mode-p 'emacs-lisp-mode) ";; " comment-start) "BUG(Marion) ")
 (hack (if (derived-mode-p 'emacs-lisp-mode) ";; " comment-start) "HACK(Marion) ")
+(note (if (derived-mode-p 'emacs-lisp-mode) ";; " comment-start) "NOTE(Marion) ")
