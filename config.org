@@ -62,7 +62,6 @@
     (require 'tramp)
     (set-default 'tramp-default-method "plink")
     )
-
 #+END_SRC
 ** Mac
    Exec-path-from-shell : get paths file

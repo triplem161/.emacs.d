@@ -7,3 +7,8 @@ prog-mode
 (bug (if (derived-mode-p 'emacs-lisp-mode) ";; " comment-start) "BUG(Marion) ")
 (hack (if (derived-mode-p 'emacs-lisp-mode) ";; " comment-start) "HACK(Marion) ")
 (note (if (derived-mode-p 'emacs-lisp-mode) ";; " comment-start) "NOTE(Marion) ")
+
+
+vue-mode
+
+(sts "<script>" n p n "</script>" n n n "<template>" n n "</template>" n n n "<style lang=\"scss\" scoped>" n n "</style>")
