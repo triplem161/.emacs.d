@@ -557,8 +557,8 @@ Ioveska -> [[https://github.com/be5invis/Iosevka/blob/v15.1.0/doc/PACKAGE-LIST.m
 
     ;; Optionally make the Tempel templates available to Abbrev,
     ;; either locally or globally. `expand-abbrev' is bound to C-x '.
-    (add-hook 'prog-mode-hook #'tempel-abbrev-mode)
-    (tempel-global-abbrev-mode)
+    ;; (add-hook 'prog-mode-hook #'tempel-abbrev-mode)
+    ;; (tempel-global-abbrev-mode)
     )
 #+end_src
 ** Undo Tree
@@ -599,7 +599,13 @@ Ioveska -> [[https://github.com/be5invis/Iosevka/blob/v15.1.0/doc/PACKAGE-LIST.m
 ** Swift
 #+BEGIN_SRC emacs-lisp
   (use-package swift-mode
-    :mode "\\.swift\\'")
+    :mode "\\.swift\\'"
+    :hook (swift-mode . (lambda () (lsp))))
+
+  (use-package lsp-sourcekit
+    :after lsp-mode
+    :config
+    (setq lsp-sourcekit-executable "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/sourcekit-lsp"))
 #+END_SRC
 ** YAML
    #+BEGIN_SRC emacs-lisp
