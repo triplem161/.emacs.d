@@ -12,3 +12,9 @@ prog-mode
 vue-mode
 
 (sts "<script>" n p n "</script>" n n n "<template>" n n "</template>" n n n "<style lang=\"scss\" scoped>" n n "</style>")
+
+
+js-mode
+
+(cl "console.log("p")")
+(for> "for (let i = 0; i < "p".length; i++) {" n >n >p >n "}")

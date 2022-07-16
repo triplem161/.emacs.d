@@ -207,19 +207,27 @@ Ioveska -> [[https://github.com/be5invis/Iosevka/blob/v15.1.0/doc/PACKAGE-LIST.m
     #+END_SRC
 ** Company
    #+BEGIN_SRC emacs-lisp
-     (use-package company
-       :after lsp
-       :config
-       (setq company-idle-delay 0.3
-             company-minimum-prefix-length 2))
+     ;; (use-package company
+     ;;   :after lsp
+     ;;   :config
+     ;;   (setq company-idle-delay 0.3
+     ;;         company-minimum-prefix-length 2))
    #+END_SRC
+** Corfu
+#+begin_src emacs-lisp
+  (use-package corfu
+    :init
+    (global-corfu-mode)
+    :custom
+    (corfu-auto t))
+#+end_src
 ** Dart
 #+BEGIN_SRC emacs-lisp
-  (use-package dart-mode
-    :mode "\\.dart\\'")
+  ;; (use-package dart-mode
+  ;;   :mode "\\.dart\\'")
 
-  (use-package lsp-dart
-    :hook (dart-mode . lsp-deferred))
+  ;; (use-package lsp-dart
+  ;;   :hook (dart-mode . lsp-deferred))
 #+END_SRC
 ** Dsvn
    #+BEGIN_SRC emacs-lisp
@@ -240,7 +248,9 @@ Ioveska -> [[https://github.com/be5invis/Iosevka/blob/v15.1.0/doc/PACKAGE-LIST.m
   ;; (use-package eglot                      ;
   ;;   :defer t
   ;;   :config
-  ;;   (add-to-list 'eglot-server-programs '(python-mode . ("c:/Users/Marion/AppData/Roaming/.emacs.d/.cache/lsp/npm/pyright/pyright" "-w --outputjson"))))
+  ;;   (add-to-list 'eglot-server-programs '(python-mode . ("c:/Users/Marion/AppData/Roaming/.emacs.d/.cache/lsp/npm/pyright/pyright")))
+  ;;   ;; (add-to-list 'eglot-server-programs '(python-mode . ("pyright-langserver" "--stdio")))
+  ;;   )
 #+end_src
 ** Emmet
    #+BEGIN_SRC emacs-lisp
@@ -356,8 +366,10 @@ Ioveska -> [[https://github.com/be5invis/Iosevka/blob/v15.1.0/doc/PACKAGE-LIST.m
     :config
     (when (eq system-type 'windows-nt)
       (setq ledger-binary-path "c:/Programming/Ledger/ledger.exe"))
-    (setq ledger-reports '(("assets" "%(binary) -f %(ledger-file) bal ^assets")
+    (setq ledger-reports '(("assets" "%(binary) -f %(ledger-file) bal ^assets ^budget")
                            ("bal" "%(binary) -f %(ledger-file) bal")
+                           ("bal monthly" "%(binary) -f %(ledger-file) bal --p %(month)")
+                           ("gain lost" "%(binary) -f %(ledger-file) bal ^Expenses ^Income --p %(month)")
                            ("reg" "%(binary) -f %(ledger-file) reg")
                            ("budget" "%(binary) -f %(ledger-file) --p %(month) budget -R")
                            ("unbudgeted" "%(binary) -f %(ledger-file) --p %(month) bal --unbudgeted ^expenses")
@@ -376,11 +388,10 @@ Ioveska -> [[https://github.com/be5invis/Iosevka/blob/v15.1.0/doc/PACKAGE-LIST.m
     :commands (lsp lsp-deferred)
     :init (setq lsp-keymap-prefix "C-c l")
     :config
+    (setq read-process-output-max (* 1024 1024))
     (lsp-enable-which-key-integration t)
     (setq lsp-completion-provider :capf)
-    (setq lsp-idle-delay 0.500)
-    (setq company-minimum-prefix-length 1
-          company-idle-delay 0.0))
+    (setq lsp-idle-delay 0.500))
 #+end_src
 ** Magit
    #+BEGIN_SRC emacs-lisp
@@ -464,6 +475,9 @@ Ioveska -> [[https://github.com/be5invis/Iosevka/blob/v15.1.0/doc/PACKAGE-LIST.m
 
      (use-package ob-sql
        :straight nil
+       :after org)
+
+     (use-package ox-gfm
        :after org)
 
      ;; (use-package org-jira
