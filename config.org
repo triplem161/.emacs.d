@@ -363,7 +363,7 @@ Ioveska -> [[https://github.com/be5invis/Iosevka/blob/v15.1.0/doc/PACKAGE-LIST.m
     :config
     (when (eq system-type 'windows-nt)
       (setq ledger-binary-path "c:/Programming/Ledger/ledger.exe"))
-    (setq ledger-reports '(("assets" "%(binary) -f %(ledger-file) bal ^assets ^budget")
+    (setq ledger-reports '(("assets" "%(binary) -f %(ledger-file) bal ^assets ^budget ^savings")
                            ("bank bal" "%(binary) -f %(ledger-file) bal ^assets and not cash and not reimbursement --real --cleared")
                            ("liabilities" "%(binary) -f %(ledger-file) bal ^liabilities")
                            ("bal" "%(binary) -f %(ledger-file) bal")
@@ -372,7 +372,8 @@ Ioveska -> [[https://github.com/be5invis/Iosevka/blob/v15.1.0/doc/PACKAGE-LIST.m
                            ("reg" "%(binary) -f %(ledger-file) reg")
                            ("groceries avg" "%(binary) -f %(ledger-file) -p \"from 2022/04/01\" --monthly --average --collapse register ^expenses:groceries")
                            ("phone avg" "%(binary) -f %(ledger-file) -p \"from 2022/04/01\" --monthly --average register ^expenses:utilities:phone")
-                           ("fun avg" "%(binary) -f %(ledger-file) -p \"from 2022/04/01\" --monthly --average register --collapse ^expenses:fun"))))
+                           ("food avg" "%(binary) -f %(ledger-file) -p \"from 2022/04/01\" --monthly --average register --collapse ^expenses:food")
+                           ("leisure avg" "%(binary) -f %(ledger-file) -p \"from 2022/04/01\" --monthly --average register --collapse ^expenses:leisure"))))
   ;; '(ledger-reports
   ;; '(("unbudgeted" "\"C:/Programming/Ledger/ledger.exe\" -f \"g:/Mon Drive/Comptability/main.journal\" --period \"2022-3\" reg --unbudgeted")
   ;;   ("budget" "\"C:/Programming/Ledger/ledger.exe\" -f \"g:/Mon Drive/Comptability/main.journal\" --period \"2022-3\" budget")
