@@ -13,18 +13,18 @@
     (setq gc-cons-threshold (* 50 1000 1000))
 
 
-    (defvar bootstrap-version)
-    (let ((bootstrap-file
-           (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
-          (bootstrap-version 5))
-      (unless (file-exists-p bootstrap-file)
-        (with-current-buffer
-            (url-retrieve-synchronously
-             "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
-             'silent 'inhibit-cookies)
-          (goto-char (point-max))
-          (eval-print-last-sexp)))
-      (load bootstrap-file nil 'nomessage))
+(defvar bootstrap-version)
+(let ((bootstrap-file
+       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+      (bootstrap-version 6))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
 
     (setq package-enable-at-startup nil)
 
@@ -106,13 +106,9 @@
 Ioveska -> [[https://github.com/be5invis/Iosevka/blob/v15.1.0/doc/PACKAGE-LIST.md][Github Releases]] -> TTF/Iosevka Fixed -> [[https://github.com/be5invis/Iosevka/releases/download/v15.1.0/ttf-iosevka-fixed-15.1.0.zip][Direct Dowload (15.1.0)]]
 #+BEGIN_SRC emacs-lisp
   (set-frame-font "Iosevka Fixed 16" nil t)
+  (load-theme 'modus-vivendi t)
 
-  ;; (use-package zenburn-theme
-  ;;   :init (load-theme 'zenburn t))
 
-  (use-package modus-themes
-    :init  (modus-themes-load-themes)
-    :config (modus-themes-load-vivendi))
 #+END_SRC
 ** UI
    #+BEGIN_SRC emacs-lisp
@@ -403,6 +399,10 @@ Ioveska -> [[https://github.com/be5invis/Iosevka/blob/v15.1.0/doc/PACKAGE-LIST.m
        :config
        (setenv "GIT_ASKPASS" "git-gui--askpass"))
    #+END_SRC
+** Mermaid
+#+begin_src emacs-lisp
+  (use-package mermaid-mode)
+#+end_src
 ** Move Text
    #+BEGIN_SRC emacs-lisp
      (use-package move-text
@@ -413,6 +413,11 @@ Ioveska -> [[https://github.com/be5invis/Iosevka/blob/v15.1.0/doc/PACKAGE-LIST.m
    #+BEGIN_SRC  emacs-lisp
      (straight-use-package '(org :type built-in))
 
+     (use-package ob-mermaid
+       :after org)
+       ;; :config
+       ;; (setq ob-mermaid-cli-path "~/AppData/Roaming/npm/mmdc"))
+
      (use-package org
        :defer t
        :commands (org-capture org-agenda)
@@ -422,6 +427,7 @@ Ioveska -> [[https://github.com/be5invis/Iosevka/blob/v15.1.0/doc/PACKAGE-LIST.m
        :config
 
        (setq org-latex-packages-alist '(("margin=1cm" "geometry" nil)))
+       (setq org-plantuml-jar-path (expand-file-name "C:/Programming/plantuml-1.2022.8.jar"))
 
        (setq org-capture-templates
              '(("t" "Todo")
@@ -461,6 +467,7 @@ Ioveska -> [[https://github.com/be5invis/Iosevka/blob/v15.1.0/doc/PACKAGE-LIST.m
        (org-babel-do-load-languages
         'org-babel-load-languages
         '((plantuml . t)
+          (mermaid . t)
           (sql . t))))
 
 
@@ -470,11 +477,15 @@ Ioveska -> [[https://github.com/be5invis/Iosevka/blob/v15.1.0/doc/PACKAGE-LIST.m
 
 
 
-     (use-package ob-plantuml
-       :straight nil
-       :after org
-       :custom
-       (org-plantuml-jar-path (expand-file-name "c:/Users/Marion/AppData/Roaming/plantuml.jar")))
+     ;; (use-package ob-plantuml
+     ;;   :straight nil
+     ;;   :after org
+     ;;   :custom
+     ;;   ;; (org-plantuml-jar-path (expand-file-name "c:/Users/Marion/AppData/Roaming/plantuml.jar"))
+     ;;   )
+     ;;   ;; )
+
+
 
      (use-package ob-sql
        :straight nil
@@ -494,6 +505,7 @@ Ioveska -> [[https://github.com/be5invis/Iosevka/blob/v15.1.0/doc/PACKAGE-LIST.m
      (use-package plantuml-mode
        :defer t
        :config
+       (setq plantuml-jar-path "C:/Programming/plantuml-1.2022.8.jar")
        (setq plantuml-default-exec-mode 'jar)
        (setq plantuml-output-type "PNG"))
    #+END_SRC
