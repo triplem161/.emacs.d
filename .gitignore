@@ -1,7 +1,3 @@
-straight/*
-!straight/versions/
-
-
 # FOLDERS
 .tmp/
 elpa/
@@ -12,4 +8,10 @@ transient/
 config.el
 bookmarks
 recentf
-**/.yas-compiled-snippets.el
+
+# Packages
+
+# Straight
+straight/*
+# Keep versions folder which contains lockfile
+!straight/versions
