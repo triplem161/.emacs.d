@@ -1,214 +1,163 @@
 #+TITLE: Emacs Configuration
-#+AUTHOR: Marion Maignan
 
-* Personnal Informations
-  #+BEGIN_SRC emacs-lisp
-    (setq user-full-name "Maignan Marion"
-          user-mail-address "maigmarion@gmail.com")
-  #+END_SRC
-* Require
+* Straight setup
   #+BEGIN_SRC emacs-lisp
 
-    ;; increase GC for fast startup time
-    (setq gc-cons-threshold (* 50 1000 1000))
+        ;; increase GC for fast startup time
+        ;; (setq gc-cons-threshold (* 50 1000 1000))
+        (setq package-enable-at-startup nil)
 
+        (defvar bootstrap-version)
+        (let ((bootstrap-file
+               (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+              (bootstrap-version 6))
+          (unless (file-exists-p bootstrap-file)
+            (with-current-buffer
+                (url-retrieve-synchronously
+                 "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
+                 'silent 'inhibit-cookies)
+              (goto-char (point-max))
+              (eval-print-last-sexp)))
+          (load bootstrap-file nil 'nomessage))
 
-(defvar bootstrap-version)
-(let ((bootstrap-file
-       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
-      (bootstrap-version 6))
-  (unless (file-exists-p bootstrap-file)
-    (with-current-buffer
-        (url-retrieve-synchronously
-         "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
-         'silent 'inhibit-cookies)
-      (goto-char (point-max))
-      (eval-print-last-sexp)))
-  (load bootstrap-file nil 'nomessage))
+        (straight-use-package 'use-package)
+        (setq straight-use-package-by-default t)
 
-    (setq package-enable-at-startup nil)
+    ;;    Package to profile startup time
+        ;; (use-package benchmark-init
+        ;;   :ensure t
+        ;;   :config
+        ;;   ;; To disable collection of benchmark data after init is done.
+        ;;   (add-hook 'after-init-hook 'benchmark-init/deactivate))
 
-    (straight-use-package 'use-package)
+        ;; (use-package esup)
 
-    (setq straight-use-package-by-default t)
+        ;; (setq use-package-verbose t)
+        ;; (defun efs/display-startup-time ()
+        ;;   (message "Emacs loaded in %s with %d garbage collections."
+        ;;            (format "%.2f seconds"
+        ;;                    (float-time
+        ;;                     (time-subtract after-init-time before-init-time)))
+        ;;            gcs-done))
 
-
-
-
-    ;; Package to profile startup time
-    ;; (use-package benchmark-init
-    ;;   :ensure t
-    ;;   :config
-    ;;   ;; To disable collection of benchmark data after init is done.
-    ;;   (add-hook 'after-init-hook 'benchmark-init/deactivate))
-
-    ;; (use-package esup)
-
-    ;; (setq use-package-verbose t)
-    ;; (defun efs/display-startup-time ()
-    ;;   (message "Emacs loaded in %s with %d garbage collections."
-    ;;            (format "%.2f seconds"
-    ;;                    (float-time
-    ;;                     (time-subtract after-init-time before-init-time)))
-    ;;            gcs-done))
-
-    ;; (add-hook 'emacs-startup-hook #'efs/display-startup-time)
+        ;; (add-hook 'emacs-startup-hook #'efs/display-startup-time)
   #+END_SRC
+
+
 * Systems
-** Windows
-   Set putty for tramp mode : [[http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html][Bin for putty]]
-#+BEGIN_SRC emacs-lisp
-  (when (eq system-type 'windows-nt)
-    (require 'tramp)
-    (set-default 'tramp-default-method "plink")
-    )
-#+END_SRC
-** Mac
-   Exec-path-from-shell : get paths file
-   #+BEGIN_SRC emacs-lisp
-     (when (eq system-type 'darwin)
-       (use-package exec-path-from-shell
-         :init (exec-path-from-shell-initialize)
-         )
 
-       (setq mac-command-modifier 'meta)
-       (setq mac-option-modifier 'nil)
-       )
-   #+END_SRC
-* Settings
-** Encoding
-   #+BEGIN_SRC emacs-lisp
-     (set-language-environment 'utf-8)
-     (setq-default buffer-file-coding-system 'utf-8)
-     (prefer-coding-system 'utf-8)
-     (set-default-coding-systems 'utf-8)
-     (setq-default coding-system-for-read 'utf-8)
-     (set-selection-coding-system 'utf-8)
-     (set-clipboard-coding-system 'utf-8)
-     (if (eq system-type 'windows-nt)
-         (progn
-           (set-clipboard-coding-system 'utf-16-le)
-           (set-selection-coding-system 'utf-16-le))
-       (set-selection-coding-system 'utf-8))
-     ;; (unless *sys/win32*
-     ;;   (set-selection-coding-system 'utf-8)
-     ;;   (prefer-coding-system 'utf-8)
-     ;;   (set-language-environment "UTF-8")
-     ;;   (set-default-coding-systems 'utf-8)
-     ;;   (set-terminal-coding-system 'utf-8)
-     ;;   (set-keyboard-coding-system 'utf-8)
-     ;;   (setq locale-coding-system 'utf-8))
-     ;; ;; Treat clipboard input as UTF-8 string first; compound text next, etc.
-     ;; (when (display-graphic-p)
-     ;;   (setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING)))
-   #+END_SRC
-** Themes
-Ioveska -> [[https://github.com/be5invis/Iosevka/blob/v15.1.0/doc/PACKAGE-LIST.md][Github Releases]] -> TTF/Iosevka Fixed -> [[https://github.com/be5invis/Iosevka/releases/download/v15.1.0/ttf-iosevka-fixed-15.1.0.zip][Direct Dowload (15.1.0)]]
-#+BEGIN_SRC emacs-lisp
-  (set-frame-font "Iosevka Fixed 16" nil t)
+
+** Mac Os
+#+begin_src emacs-lisp
+  (when (eq system-type 'darwin)
+    ;; to remove bug in emacs v28, remove it when 29 is out
+    (customize-set-variable 'native-comp-driver-options '("-Wl,-w"))
+
+    (set-frame-font "Andale Mono 22" nil t)
+    (setq mac-command-modifier 'meta)
+    (setq mac-option-modifier 'nil)
+    )
+#+end_src
+
+
+* UI
+
+
+#+begin_src emacs-lisp
   (load-theme 'modus-vivendi t)
 
+  (global-set-key (kbd "C-c r") 'query-replace)
 
-#+END_SRC
-** UI
-   #+BEGIN_SRC emacs-lisp
-     (defalias 'yes-or-no-p 'y-or-n-p)
-     (add-hook 'emacs-startup-hook 'toggle-frame-fullscreen)
-     (setq inhibit-startup-message t)
-     (setq initial-scratch-message "")
-     (menu-bar-mode 0)
-     (set-scroll-bar-mode nil)
-     (tool-bar-mode 0)
-     (setq ring-bell-function 'ignore)
-     (setq ns-pop-up-frames nil)
-     (global-hl-line-mode t)
 
-     ;; Prefer horizontal split window (magit and such)
-     (setq split-height-threshold 80)
-     (setq split-width-threshold nil)
-   #+END_SRC
-** Edition
-   #+BEGIN_SRC emacs-lisp
-     (add-hook 'after-init-hook 'electric-pair-mode)
+  (setq custom-file (locate-user-emacs-file ".tmp/custom.el"))
+  (load custom-file)
 
-     (setq-default indent-tabs-mode nil)
+  (global-hl-line-mode t)
+  (menu-bar-mode 0)
+  (tool-bar-mode 0)
+  (set-scroll-bar-mode nil)
+  (delete-selection-mode t)
+  (show-paren-mode t)
+  (setq show-paren-delay 0)
 
-     ;; Allow selected text to be replaced
-     (delete-selection-mode t)
+  (setq inhibit-startup-message t)
+  (setq initial-scratch-message "")
+  (setq ring-bell-function 'ignore)
+  (defalias 'yes-or-no-p 'y-or-n-p)
+  (setq-default indent-tabs-mode nil)
 
-     (setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
-     (setq auto-save-file-name-transforms '((".*" "~/.emacs.d/auto-save-list" t)))
+  (setq backup-directory-alist `(("." . ,(expand-file-name ".tmp/backups/" user-emacs-directory))))
 
-     ;;Clean up spaces before saving
-     (add-hook 'before-save-hook 'whitespace-cleanup)
+  (make-directory (expand-file-name ".tmp/auto-saves/" user-emacs-directory) t)
+  (setq auto-save-list-file-prefix (expand-file-name ".tmp/auto-saves/sessions/" user-emacs-directory)
+        auto-save-file-name-transforms `((".*" ,(expand-file-name ".tmp/auto-saves/" user-emacs-directory) t)))
 
-     (show-paren-mode t)
-     (setq show-paren-delay 0)
 
-   #+END_SRC
-** Mode Line
-   #+BEGIN_SRC emacs-lisp
-     ;; Custom time and date
-     (setq display-time-day-and-date 1
-           display-time-default-load-average nil
-           display-time-24hr-format t)
+  (add-hook 'emacs-startup-hook 'toggle-frame-fullscreen)
+  (add-hook 'after-init-hook 'electric-pair-mode)
+  (add-hook 'before-save-hook 'whitespace-cleanup)
+  ;; (setq ns-pop-up-frames nil)
+  ;; (setq split-height-threshold 80)
+  ;; (setq split-width-threshold nil)
 
-     (setq display-time-string-forms
-           '((propertize
-              (format-time-string " %d %b %H:%M "))))
 
-     (display-time-mode 1)
+  ;; mode line
+  (setq display-time-day-and-date 1
+        display-time-default-load-average nil)
 
-     ;; Custom line / column number
-     (setq mode-line-position
-           '((line-number-mode ("l.%l")))
-           )
+  (setq display-time-string-forms
+        '((propertize
+           (format-time-string "%d/%m %H:%M"))))
+  (display-time-mode 1)
+  ;; Custom line / column number
+  (setq mode-line-position
+        '((line-number-mode ("%l|%c"))))
 
-     ;; Modeline Style
-     (set-face-attribute 'mode-line nil
-                         :background "#656555"
-                         :foreground "#DCDCCC"
-                         :box '(:line-width 2 :color "#656555")
-                         :overline nil
-                         :underline nil)
 
-     (set-face-attribute 'mode-line-inactive nil
-                         :background "#656555"
-                         :foreground "#DCDCCC"
-                         :box '(:line-width 2 :color "#656555")
-                         :overline nil
-                         :underline nil)
+  ;; utf 8
+  (set-language-environment 'utf-8)
+  (setq-default buffer-file-coding-system 'utf-8)
+  (prefer-coding-system 'utf-8)
+  (set-default-coding-systems 'utf-8)
+  (setq-default coding-system-for-read 'utf-8)
+  (set-selection-coding-system 'utf-8)
+  (set-clipboard-coding-system 'utf-8)
+  (if (eq system-type 'windows-nt)
+      (progn
+        (set-clipboard-coding-system 'utf-16-le)
+        (set-selection-coding-system 'utf-16-le))
+    (set-selection-coding-system 'utf-8))
+#+end_src
 
-     (set-face-attribute 'mode-line-buffer-id nil :foreground "#93E0E3")
-  #+END_SRC
-** Keybinds
-   #+BEGIN_SRC emacs-lisp
-     (global-set-key (kbd "C-c r") 'query-replace)
-   #+END_SRC
-* Modes
-** C# Development
-*** CSharp
-    #+BEGIN_SRC emacs-lisp
-      (use-package csharp-mode
-        :mode ("\\.cs\\'" . csharp-mode)
-        :config
-        (defun csharp-variable ()
-          (c-set-style "k&r")
-          (setq c-basic-offset 4)
-          (setq indent-tabs-mode t)
-          (setq tab-width 4)
-          )
-        (add-hook 'csharp-mode-hook 'csharp-variable t)
-        )
-    #+END_SRC
-** Company
-   #+BEGIN_SRC emacs-lisp
-     ;; (use-package company
-     ;;   :after lsp
-     ;;   :config
-     ;;   (setq company-idle-delay 0.3
-     ;;         company-minimum-prefix-length 2))
-   #+END_SRC
+
+* Packages
+
+
+** Avy
+#+begin_src emacs-lisp
+  (use-package avy
+    :bind (("M-s" . avy-goto-char)
+           ("M-l" . avy-goto-line)))
+#+end_src
+
+
+** Consult
+#+begin_src emacs-lisp
+  (use-package consult
+    :bind (("C-s" . consult-line)
+           ("C-x b" . consult-buffer)
+           ("M-g g" . consult-goto-line)
+           ("C-c f w" . consult-ripgrep)
+           ("C-c y" . consult-yank-from-kill-ring)
+           ("C-c m" . consult-register-load)
+           ("C-c M" . consult-register)
+           ("C-c C-m" . consult-register-store)
+           ("C-c i" . consult-imenu))
+    :config
+    (consult-customize consult--source-bookmark :preview-key nil))
+#+end_src
+
+
 ** Corfu
 #+begin_src emacs-lisp
   (use-package corfu
@@ -217,172 +166,24 @@ Ioveska -> [[https://github.com/be5invis/Iosevka/blob/v15.1.0/doc/PACKAGE-LIST.m
     :custom
     (corfu-auto t))
 #+end_src
-** Dart
-#+BEGIN_SRC emacs-lisp
-  ;; (use-package dart-mode
-  ;;   :mode "\\.dart\\'")
 
-  ;; (use-package lsp-dart
-  ;;   :hook (dart-mode . lsp-deferred))
-#+END_SRC
-** Dsvn
-   #+BEGIN_SRC emacs-lisp
-     (use-package dsvn
-       :bind ("C-c s" . svn-status)
-       )
-   #+END_SRC
-** Ediff
-   #+BEGIN_SRC emacs-lisp
-     (use-package ediff
-       :defer t
-       :config
-       (setq ediff-window-setup-function 'ediff-setup-windows-plain)
-       )
-   #+END_SRC
-** Eglot
+
+** Google-This
 #+begin_src emacs-lisp
-  ;; (use-package eglot                      ;
-  ;;   :defer t
-  ;;   :config
-  ;;   (add-to-list 'eglot-server-programs '(python-mode . ("c:/Users/Marion/AppData/Roaming/.emacs.d/.cache/lsp/npm/pyright/pyright")))
-  ;;   ;; (add-to-list 'eglot-server-programs '(python-mode . ("pyright-langserver" "--stdio")))
-  ;;   )
+  (use-package google-this
+    :diminish google-this-mode
+    :bind ("C-c w" . google-this-search))
 #+end_src
-** Emmet
-   #+BEGIN_SRC emacs-lisp
-     (use-package emmet-mode
-       :defer t
-       :init
-       (add-hook 'vue-mode-hook 'emmet-mode)
-       )
-   #+END_SRC
-** Flycheck
-   #+BEGIN_SRC emacs-lisp
-     ;; (use-package flycheck
-     ;;   :after lsp
-     ;;   :diminish flycheck-mode)
-   #+END_SRC
-** Flymake
-   Need to bind next and prev error !!!
-** Google this
-   #+BEGIN_SRC emacs-lisp
-     (use-package google-this
-       :diminish google-this-mode
-       :bind ("C-c w" . google-this-search))
-   #+END_SRC
-** Vertico / Consult / Marginalia / Orderless / Savehist / Avy
-   #+BEGIN_SRC emacs-lisp
-     (use-package vertico
-       :init
-       (vertico-mode))
-
-     (use-package vertico-directory
-       :straight nil
-       :load-path "straight/repos/vertico/extensions/"
-       :after vertico
-       :bind (:map vertico-map
-                   ("RET" . vertico-directory-enter)
-                   ("DEL" . vertico-directory-delete-char)
-                   ("M-DEL" . vertico-directory-delete-word))
-       ;; Tidy shadowed file names
-       :hook (rfn-eshadow-update-overlay . vertico-directory-tidy))
-
-     (use-package consult
-       :bind (("C-s" . consult-line)
-              ("C-x b" . consult-buffer)
-              ("M-g g" . consult-goto-line)
-              ("C-c f w" . consult-ripgrep)
-              ("C-c y" . consult-yank-from-kill-ring)
-              ("C-c m" . consult-register-load)
-              ("C-c M" . consult-register)
-              ("C-c C-m" . consult-register-store)
-              ("C-c i" . consult-imenu))
-       :config
-       (consult-customize consult--source-bookmark :preview-key nil))
-
-     (use-package marginalia
-       :init (marginalia-mode))
-
-     (use-package orderless
-       :init
-       (setq completion-styles '(orderless)
-             completion-category-defaults nil
-             completion-category-overrides '((file (styles partial-completion)))))
-
-     (use-package savehist
-       :init
-       (savehist-mode))
-
-     (use-package avy
-       :bind
-       (("M-s" . avy-goto-char)
-        ("M-l" . avy-goto-line))
-       )
-
-     (use-package avy-zap
-       :bind
-       (("M-z" . avy-zap-to-char-dwim))
-       )
 
 
-     ;; (use-package ivy
-     ;;   :diminish ivy-mode
-     ;;   :bind
-     ;;   (("C-x b" . ivy-switch-buffer))
-     ;;   :init
-     ;;   (ivy-mode 1)
-     ;;   :config
-     ;;   (setq ivy-use-virtual-buffers t)
-     ;;   (setq ivy-display-style 'fancy)
-     ;;   )
-
-     ;; (use-package counsel
-     ;;   :bind
-     ;;   (("C-c y" . counsel-yank-pop)
-     ;;    ("C-c i" . counsel-imenu)
-     ;;    ("M-x" . counsel-M-x)
-     ;;    ("C-x r l" . counsel-bookmark)
-     ;;    ("C-c f f" . counsel-git)
-     ;;    ("C-c f w" . counsel-rg))
-     ;;   )
-
-     ;; (use-package swiper
-     ;;   :bind
-     ;;   ("C-s" . swiper)
-     ;;   )
-
-     ;; (use-package smex
-     ;;   )
-
-
-   #+END_SRC
-** Ledger
+** Ledger-Mode
 #+begin_src emacs-lisp
   (use-package ledger-mode
-    :defer t
-    :config
-    (when (eq system-type 'windows-nt)
-      (setq ledger-binary-path "c:/Programming/Ledger/ledger.exe"))
-    (setq ledger-reports '(("assets" "%(binary) -f %(ledger-file) bal ^assets ^budget ^savings")
-                           ("bank bal" "%(binary) -f %(ledger-file) bal ^assets and not cash and not reimbursement --real --cleared")
-                           ("liabilities" "%(binary) -f %(ledger-file) bal ^liabilities")
-                           ("bal" "%(binary) -f %(ledger-file) bal")
-                           ("bal monthly" "%(binary) -f %(ledger-file) bal --p %(month)")
-                           ("gain lost" "%(binary) -f %(ledger-file) bal ^Expenses ^Income --p %(month)")
-                           ("reg" "%(binary) -f %(ledger-file) reg")
-                           ("groceries avg" "%(binary) -f %(ledger-file) -p \"from 2022/04/01\" --monthly --average --collapse register ^expenses:groceries")
-                           ("phone avg" "%(binary) -f %(ledger-file) -p \"from 2022/04/01\" --monthly --average register ^expenses:utilities:phone")
-                           ("food avg" "%(binary) -f %(ledger-file) -p \"from 2022/04/01\" --monthly --average register --collapse ^expenses:food")
-                           ("leisure avg" "%(binary) -f %(ledger-file) -p \"from 2022/04/01\" --monthly --average register --collapse ^expenses:leisure"))))
-  ;; '(ledger-reports
-  ;; '(("unbudgeted" "\"C:/Programming/Ledger/ledger.exe\" -f \"g:/Mon Drive/Comptability/main.journal\" --period \"2022-3\" reg --unbudgeted")
-  ;;   ("budget" "\"C:/Programming/Ledger/ledger.exe\" -f \"g:/Mon Drive/Comptability/main.journal\" --period \"2022-3\" budget")
-  ;;   ("bal" "%(binary) -f %(ledger-file) bal")
-  ;;   ("reg" "%(binary) -f %(ledger-file) reg")
-  ;;   ("payee" "%(binary) -f %(ledger-file) reg @%(payee)")
-  ;;   ("account" "%(binary) -f %(ledger-file) reg %(account)")))
+    :defer t)
 #+end_src
-** LSP
+
+
+** LSP-Mode
 #+begin_src emacs-lisp
   (use-package lsp-mode
     :commands (lsp lsp-deferred)
@@ -393,213 +194,136 @@ Ioveska -> [[https://github.com/be5invis/Iosevka/blob/v15.1.0/doc/PACKAGE-LIST.m
     (setq lsp-completion-provider :capf)
     (setq lsp-idle-delay 0.500))
 #+end_src
+
+
+** LSP-Pyright
+#+begin_src emacs-lisp
+  ;; (use-package lsp-pyright
+  ;;   :after python
+  ;;   :hook (python-mode . (lambda ()
+  ;;                          (require 'lsp-pyright)
+  ;;                          (lsp-deferred))))
+#+end_src
+
+
 ** Magit
-   #+BEGIN_SRC emacs-lisp
-     (use-package magit
-       :bind ("C-c g" . magit-status)
-       :config
-       (setenv "GIT_ASKPASS" "git-gui--askpass"))
-   #+END_SRC
-** Mermaid
 #+begin_src emacs-lisp
-  (use-package mermaid-mode)
+  (use-package magit
+    :bind ("C-c g" . magit-status))
 #+end_src
-** Move Text
-   #+BEGIN_SRC emacs-lisp
-     (use-package move-text
-       :bind (("M-p" . move-text-up)
-              ("M-n" . move-text-down)))
-   #+END_SRC
+
+
+** Marginalia
+#+begin_src emacs-lisp
+  (use-package marginalia
+    :init (marginalia-mode))
+#+end_src
+
+
+** Move-Text
+#+begin_src emacs-lisp
+  (use-package move-text
+    :bind (("M-p" . move-text-up)
+           ("M-n" . move-text-down)))
+#+end_src
+
+
+** Orderless
+#+begin_src emacs-lisp
+  (use-package orderless
+    :custom
+    (completion-styles '(orderless basic))
+    (completion-category-overrides '((file (styles basic partial-completion)))))
+#+end_src
+
+
 ** OrgMode
-   #+BEGIN_SRC  emacs-lisp
-     (straight-use-package '(org :type built-in))
-
-     (use-package ob-mermaid
-       :after org)
-       ;; :config
-       ;; (setq ob-mermaid-cli-path "~/AppData/Roaming/npm/mmdc"))
-
-     (use-package org
-       :defer t
-       :commands (org-capture org-agenda)
-       :custom
-       (org-agenda-files '("e:/Omind/Notes/omind_todo.org"))
-       (org-todo-keywords '((sequence "TODO(t)" "NEXT(n)" "IN PROGRESS(p)" "|" "VALIDATE(v)" "DONE(d)" "CANCEL(c)")))
-       :config
-
-       (setq org-latex-packages-alist '(("margin=1cm" "geometry" nil)))
-       (setq org-plantuml-jar-path (expand-file-name "C:/Programming/plantuml-1.2022.8.jar"))
-
-       (setq org-capture-templates
-             '(("t" "Todo")
-               ("tt" "todo" entry(file "e:/Omind/Notes/omind_todo.org")
-                "* TODO %?")
-               ("tp" "todo" entry(file "e:/Omind/Notes/omind_todo.org")
-                "* TODO %? %^G")
-               ("tl" "todo" entry(file "e:/Omind/Notes/omind_todo.org")
-                "* TODO %?\n %a")
-               ))
-
-       (global-set-key (kbd "C-c c") 'org-capture)
-       (global-set-key (kbd "C-c a") 'org-agenda)
-       (setq org-refile-targets '(
-                                  ("e:/Omind/Notes/omind_archive.org" :maxlevel . 1)
-                                  ))
-
-       (advice-add 'org-refile :after 'org-save-all-org-buffers)
-       (setq org-todo-keyword-faces '(
-                                      ("TODO" . "#FAF3E7")
-                                      ("NEXT" . "#A0D8E9")
-                                      ("IN PROGRESS" . "#EEA579")
-                                      ("VALIDATE" . "#A7DB8C")
-                                      ("DONE" . "#B4A7EB")
-                                      ("CANCEL" . "#F3A5BC")
-                                      ))
-       (setq org-agenda-start-with-log-mode t)
-       (setq org-log-done 'time)
-       (setq org-log-done 'note)
-       (setq org-log-into-drawer t)
-       (setq org-confirm-babel-evaluate nil)
-
-       )
-
-
-     (with-eval-after-load 'org
-       (org-babel-do-load-languages
-        'org-babel-load-languages
-        '((plantuml . t)
-          (mermaid . t)
-          (sql . t))))
-
-
-
-     ;; DO IT NEED THIS ?
-     ;; (add-to-list 'org-src-lang-modes '("plantuml" . plantuml))
-
-
-
-     ;; (use-package ob-plantuml
-     ;;   :straight nil
-     ;;   :after org
-     ;;   :custom
-     ;;   ;; (org-plantuml-jar-path (expand-file-name "c:/Users/Marion/AppData/Roaming/plantuml.jar"))
-     ;;   )
-     ;;   ;; )
-
-
-
-     (use-package ob-sql
-       :straight nil
-       :after org)
-
-     (use-package ox-gfm
-       :after org)
-
-     ;; (use-package org-jira
-     ;;   :config
-     ;;   (setq jiralib-url "https://openmindneurotech.atlassian.net/")
-     ;;   (setq jiralib-update-issue-fields-exclude-list '(priority components))
-     ;;   )
-   #+END_SRC
-** PlantUML
-   #+BEGIN_SRC emacs-lisp
-     (use-package plantuml-mode
-       :defer t
-       :config
-       (setq plantuml-jar-path "C:/Programming/plantuml-1.2022.8.jar")
-       (setq plantuml-default-exec-mode 'jar)
-       (setq plantuml-output-type "PNG"))
-   #+END_SRC
-** Polymode
-   TODO TO REPLACE VUE-MODE ?
-** Project
-#+BEGIN_SRC emacs-lisp
-  (use-package project
-    :defer t)
-#+END_SRC
-** Python Development
 #+begin_src emacs-lisp
-  (use-package python
-    :mode ("\\.py\\'" . python-mode))
+  (global-set-key (kbd "C-c c") 'org-capture)
+  (global-set-key (kbd "C-c a") 'org-agenda)
 
-  (use-package lsp-pyright
-    :after python
-    :hook (python-mode . (lambda ()
-                           (require 'lsp-pyright)
-                           (lsp-deferred))))
+  (setq org-agenda-start-with-log-mode t
+        org-confirm-babel-evaluate nil
+        org-log-done 'time
+        org-log-done 'note
+        org-log-into-drawer t)
+
+  (with-eval-after-load 'org
+    (org-babel-do-load-languages
+     'org-babel-load-languages
+     '((plantuml . t)
+       (sql . t))))
 #+end_src
-** Rainbow Mode
-   [[https://julien.danjou.info/projects/emacs-packages#rainbow-mode][Rainbow Mode Website]]
-   #+BEGIN_SRC emacs-lisp
-     (use-package rainbow-mode
-       :after vue
-       :diminish rainbow-mode
-       :init (rainbow-mode 1)
-       )
-   #+END_SRC
-** Rest Client
+
+
+** Restclient
 #+begin_src emacs-lisp
   (use-package restclient
     :mode ("\\.rest\\'" . restclient-mode))
 #+END_SRC
-** Shader Mode
-   #+BEGIN_SRC emacs-lisp
-     ;; (use-package shader-mode
-     ;;   :commands shader
-     ;;   )
-   #+END_SRC
-** Tempel
+
+
+** Swift-Mode
+#+begin_src emacs-lisp
+  (use-package swift-mode
+    :mode "\\.swift\\'")
+#+end_src
+
+
+** [[https://github.com/minad/tempel][Tempel]]
 #+begin_src emacs-lisp
   (use-package tempel
-    :bind (("M-+" . tempel-complete) ;; Alternative tempel-expand
+    :bind (("M-+" . tempel-complete)
            ("M-*" . tempel-insert))
-
     :init
-
     ;; Setup completion at point
     (defun tempel-setup-capf ()
-      ;; Add the Tempel Capf to `completion-at-point-functions'. `tempel-expand'
-      ;; only triggers on exact matches. Alternatively use `tempel-complete' if
-      ;; you want to see all matches, but then Tempel will probably trigger too
-      ;; often when you don't expect it.
-      ;; NOTE: We add `tempel-expand' *before* the main programming mode Capf,
-      ;; such that it will be tried first.
       (setq-local completion-at-point-functions
                   (cons #'tempel-expand
                         completion-at-point-functions)))
 
     (add-hook 'prog-mode-hook 'tempel-setup-capf)
-    (add-hook 'text-mode-hook 'tempel-setup-capf)
-
-    ;; Optionally make the Tempel templates available to Abbrev,
-    ;; either locally or globally. `expand-abbrev' is bound to C-x '.
-    ;; (add-hook 'prog-mode-hook #'tempel-abbrev-mode)
-    ;; (tempel-global-abbrev-mode)
-    )
+    (add-hook 'text-mode-hook 'tempel-setup-capf))
 #+end_src
+
+
 ** Undo Tree
-   #+BEGIN_SRC emacs-lisp
-     (use-package undo-tree
-       :bind (("C-x u" . undo-tree-visualize))
-       :diminish undo-tree-mode
-       :config
-       (setq undo-tree-auto-save-history nil))
-   #+END_SRC
-** Vue Mode
-#+BEGIN_SRC emacs-lisp
-  (use-package vue-mode
-    :mode "\\.vue\\'"
+#+begin_src emacs-lisp
+  (use-package undo-tree
+    :diminish undo-tree-mode
+    :init
+    (global-undo-tree-mode)
     :config
-    (setq indent-tabs-mode nil)
-    (setq js-indent-level 2)
-    (add-hook 'js-mode-hook
-    (function (lambda () (setq indent-tabs-mode nil
-                                        tab-width 2)))
-    )
-    (add-hook 'mmm-mode-hook (lambda () (set-face-background 'mmm-default-submode-face nil)))
-    )
-#+END_SRC
-** Which Key
+    (setq undo-tree-auto-save-history nil))
+#+end_src
+
+
+** Vertico
+#+begin_src emacs-lisp
+  (use-package vertico
+    :init
+    (vertico-mode))
+#+end_src
+
+
+** Vertico-Directory
+Allow to quickly delete word in path when using C-x C-f.
+And probably other things too.
+#+begin_src emacs-lisp
+  (use-package vertico-directory
+    :straight nil
+    :load-path "straight/repos/vertico/extensions/"
+    :after vertico
+    :bind (:map vertico-map
+                ("RET" . vertico-directory-enter)
+                ("DEL" . vertico-directory-delete-char)
+                ("M-DEL" . vertico-directory-delete-word))
+    ;; Tidy shadowed file names
+    :hook (rfn-eshadow-update-overlay . vertico-directory-tidy))
+#+end_src
+
+
+** Which-Key
 #+begin_src emacs-lisp
   (use-package which-key
     :init (which-key-mode)
@@ -607,29 +331,18 @@ Ioveska -> [[https://github.com/be5invis/Iosevka/blob/v15.1.0/doc/PACKAGE-LIST.m
     :config
     (setq which-key-idle-delay 0.3))
 #+end_src
-** Wgrep
-   #+BEGIN_SRC emacs-lisp
-     (use-package wgrep
-       :defer t)
-   #+END_SRC
-** Swift
-#+BEGIN_SRC emacs-lisp
-  (use-package swift-mode
-    :mode "\\.swift\\'")
 
-  ;; (use-package lsp-sourcekit
-  ;;   :after lsp-mode
-  ;;   :config
-  ;;   (setq lsp-sourcekit-executable "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/sourcekit-lsp"))
-#+END_SRC
+
 ** YAML
-   #+BEGIN_SRC emacs-lisp
-     (use-package yaml-mode
-       :defer t
-       :mode("\\.yaml\\'")
-       )
-   #+END_SRC
-* Final
+#+begin_src emacs-lisp
+  (use-package yaml-mode
+    :defer t
+    :mode("\\.yaml\\'"))
+#+end_src
+
+
+
+* End
   #+begin_src emacs-lisp
     (setq gc-cons-threshold (* 2 1000 1000))
   #+end_src

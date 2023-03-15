@@ -3,8 +3,7 @@ straight/*
 
 
 # FOLDERS
-auto-save-list/
-backups/
+.tmp/
 elpa/
 server/
 transient/
