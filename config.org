@@ -2,9 +2,9 @@
 
 * Straight setup
   #+BEGIN_SRC emacs-lisp
-
         ;; increase GC for fast startup time
-        ;; (setq gc-cons-threshold (* 50 1000 1000))
+        (setq gc-cons-threshold (* 50 1000 1000))
+
         (setq package-enable-at-startup nil)
 
         (defvar bootstrap-version)
@@ -77,8 +77,6 @@
   (tool-bar-mode 0)
   (set-scroll-bar-mode nil)
   (delete-selection-mode t)
-  (show-paren-mode t)
-  (setq show-paren-delay 0)
 
   (setq inhibit-startup-message t)
   (setq initial-scratch-message "")
@@ -96,10 +94,6 @@
   (add-hook 'emacs-startup-hook 'toggle-frame-fullscreen)
   (add-hook 'after-init-hook 'electric-pair-mode)
   (add-hook 'before-save-hook 'whitespace-cleanup)
-  ;; (setq ns-pop-up-frames nil)
-  ;; (setq split-height-threshold 80)
-  ;; (setq split-width-threshold nil)
-
 
   ;; mode line
   (setq display-time-day-and-date 1
@@ -193,16 +187,6 @@
     (lsp-enable-which-key-integration t)
     (setq lsp-completion-provider :capf)
     (setq lsp-idle-delay 0.500))
-#+end_src
-
-
-** LSP-Pyright
-#+begin_src emacs-lisp
-  ;; (use-package lsp-pyright
-  ;;   :after python
-  ;;   :hook (python-mode . (lambda ()
-  ;;                          (require 'lsp-pyright)
-  ;;                          (lsp-deferred))))
 #+end_src
 
 
@@ -339,7 +323,6 @@ And probably other things too.
     :defer t
     :mode("\\.yaml\\'"))
 #+end_src
-
 
 
 * End
