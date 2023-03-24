@@ -53,7 +53,7 @@
     ;; to remove bug in emacs v28, remove it when 29 is out
     (customize-set-variable 'native-comp-driver-options '("-Wl,-w"))
 
-    (set-frame-font "Andale Mono 22" nil t)
+    (set-frame-font "Andale Mono 20" nil t)
     (setq mac-command-modifier 'meta)
     (setq mac-option-modifier 'nil)
     )
