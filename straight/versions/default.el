@@ -14,6 +14,7 @@
  ("hydra" . "317e1de33086637579a7aeb60f77ed0405bf359b")
  ("ledger-mode" . "1310b0ccbd4574d7f0ede0f432bea341258ae3ed")
  ("lsp-mode" . "3ccb52dd28115bc0bc311aefc449c88bf2f660fb")
+ ("lsp-pyright" . "4cd2adbb32287278d9d9da59a3212a53ecdf8036")
  ("magit" . "f55be50f1416830df20d11565f4ed790821525ff")
  ("marginalia" . "f04a5b8693d7ec11ba62008cceeb5a62fab10f1f")
  ("markdown-mode" . "ece1dd845904b08ab78598dc7e1a2eaf7875d1c4")
