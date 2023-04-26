@@ -165,6 +165,16 @@
 #+end_src
 
 
+** Exec-Path-From-Shell
+#+begin_src emacs-lisp
+  (use-package exec-path-from-shell
+    :if (memq window-system '(mac ns))
+    :ensure t
+    :config
+    (exec-path-from-shell-initialize))
+#+end_src
+
+
 ** Google-This
 #+begin_src emacs-lisp
   (use-package google-this
@@ -207,6 +217,13 @@
 #+begin_src emacs-lisp
   (use-package magit
     :bind ("C-c g" . magit-status))
+#+end_src
+
+
+** Magit-Todos
+#+begin_src emacs-lisp
+  (use-package magit-todos
+    :init (magit-todos-mode))
 #+end_src
 
 
