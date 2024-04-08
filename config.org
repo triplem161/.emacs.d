@@ -10,7 +10,7 @@
         (defvar bootstrap-version)
         (let ((bootstrap-file
                (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
-              (bootstrap-version 6))
+              (bootstrap-version 7))
           (unless (file-exists-p bootstrap-file)
             (with-current-buffer
                 (url-retrieve-synchronously
@@ -187,29 +187,6 @@
 #+begin_src emacs-lisp
   (use-package ledger-mode
     :defer t)
-#+end_src
-
-
-** LSP-Mode
-#+begin_src emacs-lisp
-  (use-package lsp-mode
-    :commands (lsp lsp-deferred)
-    :init (setq lsp-keymap-prefix "C-c l")
-    :config
-    (setq read-process-output-max (* 1024 1024))
-    (lsp-enable-which-key-integration t)
-    (setq lsp-completion-provider :capf)
-    (setq lsp-idle-delay 0.500))
-#+end_src
-
-
-** LSP-Pyright
-#+begin_src emacs-lisp
-  (use-package lsp-pyright
-    :after python
-    :hook (python-mode . (lambda ()
-                           (require 'lsp-pyright)
-                           (lsp-deferred))))
 #+end_src
 
 
